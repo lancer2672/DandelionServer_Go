@@ -11,8 +11,9 @@ migrateup1:
 migratedown:
 	 migrate -path db/migration -database "postgresql://root:JBdragonfire1135@localhost:5432/dandelion_go?sslmode=disable" -verbose down
 migratedown1:
-	 migrate -path db/migration -database "postgresql://root:JBdragonfire1135@localhost:5432/dandelion_go?sslmode=disable" -verbose down 1sqlc: 
+	 migrate -path db/migration -database "postgresql://root:JBdragonfire1135@localhost:5432/dandelion_go?sslmode=disable" -verbose down 1
 sqlc: 
 	sqlc generate
-
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc migrateup1 migratedown1
+server: 
+	go run main.go
+.PHONY: server postgres createdb dropdb migrateup migratedown sqlc migrateup1 migratedown1
