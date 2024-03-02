@@ -1,2 +1,2 @@
 ALTER TABLE movies
-ADD COLUMN actor_avatars text[];
+ADD COLUMN actor_avatars varchar[];
