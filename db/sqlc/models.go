@@ -5,69 +5,81 @@
 package database
 
 import (
-	"database/sql"
+	"time"
 )
 
 type Genre struct {
-	ID   int32
-	Name sql.NullString
+	ID   int32  `json:"id"`
+	Name string `json:"name"`
 }
 
 type Movie struct {
-	ID          int32
-	Title       sql.NullString
-	Description sql.NullString
+	ID           int32    `json:"id"`
+	Title        string   `json:"title"`
+	Duration     int32    `json:"duration"`
+	Description  string   `json:"description"`
+	ActorAvatars []string `json:"actor_avatars"`
+	Trailer      string   `json:"trailer"`
 	// Path to the movie file
-	FilePath sql.NullString
+	FilePath string `json:"file_path"`
 	// Path to the thumbnail image
-	Thumbnail sql.NullString
-	// ID of the series the movie belongs to, can be null
-	SeriesID sql.NullInt32
+	Thumbnail string `json:"thumbnail"`
 	// Number of views
-	Views sql.NullInt32
+	Views int32 `json:"views"`
 	// Total star votes
-	Stars     sql.NullInt32
-	CreatedAt sql.NullTime
+	Stars     int32     `json:"stars"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 type MovieGenre struct {
-	MovieID int32
-	GenreID int32
+	MovieID int32 `json:"movie_id"`
+	GenreID int32 `json:"genre_id"`
+}
+
+type MoviesSeries struct {
+	ID       int32 `json:"id"`
+	MovieID  int32 `json:"movie_id"`
+	SeriesID int32 `json:"series_id"`
 }
 
 type Room struct {
-	ID      int32
-	MovieID sql.NullInt32
-	// Current time of the movie in seconds
-	CurrentTime sql.NullFloat64
-	IsPlaying   sql.NullBool
-	CreatedAt   sql.NullTime
+	ID        int32     `json:"id"`
+	MovieID   int32     `json:"movie_id"`
+	CreatedBy string    `json:"created_by"`
+	CreatedAt time.Time `json:"created_at"`
 }
 
 type Series struct {
-	ID   int32
-	Name sql.NullString
+	ID   int32  `json:"id"`
+	Name string `json:"name"`
 	// Path to the thumbnail image
-	Thumbnail sql.NullString
+	Thumbnail string `json:"thumbnail"`
 }
 
 type User struct {
-	ID       int32
-	Username sql.NullString
+	ID       int32  `json:"id"`
+	Username string `json:"username"`
 }
 
 type UserRoom struct {
-	ID       int32
-	UserID   sql.NullInt32
-	RoomID   sql.NullInt32
-	JoinedAt sql.NullTime
-	LeftAt   sql.NullTime
+	ID       int32     `json:"id"`
+	UserID   int32     `json:"user_id"`
+	RoomID   int32     `json:"room_id"`
+	JoinedAt time.Time `json:"joined_at"`
+}
+
+type UserRoomsChat struct {
+	ID      int32     `json:"id"`
+	RoomID  int32     `json:"room_id"`
+	UserID  int32     `json:"user_id"`
+	Message string    `json:"message"`
+	SentAt  time.Time `json:"sent_at"`
 }
 
 type Vote struct {
-	ID      int32
-	UserID  sql.NullInt32
-	MovieID sql.NullInt32
+	ID      int32 `json:"id"`
+	UserID  int32 `json:"user_id"`
+	MovieID int32 `json:"movie_id"`
 	// Star vote of the user for the movie
-	Stars sql.NullInt32
+	Stars int32 `json:"stars"`
 }

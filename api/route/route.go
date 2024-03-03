@@ -11,10 +11,13 @@ func SetUpRouter(db *db.Store) *gin.Engine {
 	router := gin.Default()
 
 	movieService := service.NewMovieService(db)
+	genreService := service.NewGenreService(db)
 
-	movieHandler := handler.NewMovieHanlder(movieService)
+	movieHandler := handler.NewMovieHandler(movieService)
+	genreHandler := handler.NewGenreHandler(genreService)
 
 	router.GET("/movie/:id", movieHandler.GetMovie)
+	router.GET("/genres", genreHandler.GetListGenres)
 
 	return router
 }

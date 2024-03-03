@@ -9,20 +9,20 @@ import (
 	"context"
 )
 
-const listGenres = `-- name: ListGenres :many
+const getListGenres = `-- name: GetListGenres :many
 SELECT id, name FROM genres
 ORDER BY id
 LIMIT $1
 OFFSET $2
 `
 
-type ListGenresParams struct {
-	Limit  int64
-	Offset int64
+type GetListGenresParams struct {
+	Limit  int64 `json:"limit"`
+	Offset int64 `json:"offset"`
 }
 
-func (q *Queries) ListGenres(ctx context.Context, arg ListGenresParams) ([]Genre, error) {
-	rows, err := q.db.QueryContext(ctx, listGenres, arg.Limit, arg.Offset)
+func (q *Queries) GetListGenres(ctx context.Context, arg GetListGenresParams) ([]Genre, error) {
+	rows, err := q.query(ctx, q.getListGenresStmt, getListGenres, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}

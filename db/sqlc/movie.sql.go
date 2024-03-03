@@ -8,23 +8,75 @@ package database
 import (
 	"context"
 	"database/sql"
+	"time"
+
+	"github.com/lib/pq"
 )
 
+const getListMovies = `-- name: GetListMovies :many
+SELECT id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at FROM movies
+ORDER BY id
+LIMIT $1
+OFFSET $2
+`
+
+type GetListMoviesParams struct {
+	Limit  int64 `json:"limit"`
+	Offset int64 `json:"offset"`
+}
+
+func (q *Queries) GetListMovies(ctx context.Context, arg GetListMoviesParams) ([]Movie, error) {
+	rows, err := q.query(ctx, q.getListMoviesStmt, getListMovies, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []Movie{}
+	for rows.Next() {
+		var i Movie
+		if err := rows.Scan(
+			&i.ID,
+			&i.Title,
+			&i.Duration,
+			&i.Description,
+			pq.Array(&i.ActorAvatars),
+			&i.Trailer,
+			&i.FilePath,
+			&i.Thumbnail,
+			&i.Views,
+			&i.Stars,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const getMovie = `-- name: GetMovie :one
-SELECT id, title, description, file_path, thumbnail, series_id, views, stars, created_at FROM movies
+SELECT id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at FROM movies
 WHERE id = $1 LIMIT 1
 `
 
 func (q *Queries) GetMovie(ctx context.Context, id int32) (Movie, error) {
-	row := q.db.QueryRowContext(ctx, getMovie, id)
+	row := q.queryRow(ctx, q.getMovieStmt, getMovie, id)
 	var i Movie
 	err := row.Scan(
 		&i.ID,
 		&i.Title,
+		&i.Duration,
 		&i.Description,
+		pq.Array(&i.ActorAvatars),
+		&i.Trailer,
 		&i.FilePath,
 		&i.Thumbnail,
-		&i.SeriesID,
 		&i.Views,
 		&i.Stars,
 		&i.CreatedAt,
@@ -33,7 +85,7 @@ func (q *Queries) GetMovie(ctx context.Context, id int32) (Movie, error) {
 }
 
 const getMoviesByGenre = `-- name: GetMoviesByGenre :many
-SELECT id, title, description, file_path, thumbnail, series_id, views, stars, created_at, movie_id, genre_id FROM movies
+SELECT id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at, movie_id, genre_id FROM movies
 JOIN movie_genres ON movies.id = movie_genres.movie_id
 WHERE movie_genres.genre_id = $1
 ORDER BY movies.id
@@ -42,27 +94,29 @@ OFFSET $3
 `
 
 type GetMoviesByGenreParams struct {
-	GenreID int32
-	Limit   int64
-	Offset  int64
+	GenreID int32 `json:"genre_id"`
+	Limit   int64 `json:"limit"`
+	Offset  int64 `json:"offset"`
 }
 
 type GetMoviesByGenreRow struct {
-	ID          int32
-	Title       sql.NullString
-	Description sql.NullString
-	FilePath    sql.NullString
-	Thumbnail   sql.NullString
-	SeriesID    sql.NullInt32
-	Views       sql.NullInt32
-	Stars       sql.NullInt32
-	CreatedAt   sql.NullTime
-	MovieID     int32
-	GenreID     int32
+	ID           int32     `json:"id"`
+	Title        string    `json:"title"`
+	Duration     int32     `json:"duration"`
+	Description  string    `json:"description"`
+	ActorAvatars []string  `json:"actor_avatars"`
+	Trailer      string    `json:"trailer"`
+	FilePath     string    `json:"file_path"`
+	Thumbnail    string    `json:"thumbnail"`
+	Views        int32     `json:"views"`
+	Stars        int32     `json:"stars"`
+	CreatedAt    time.Time `json:"created_at"`
+	MovieID      int32     `json:"movie_id"`
+	GenreID      int32     `json:"genre_id"`
 }
 
 func (q *Queries) GetMoviesByGenre(ctx context.Context, arg GetMoviesByGenreParams) ([]GetMoviesByGenreRow, error) {
-	rows, err := q.db.QueryContext(ctx, getMoviesByGenre, arg.GenreID, arg.Limit, arg.Offset)
+	rows, err := q.query(ctx, q.getMoviesByGenreStmt, getMoviesByGenre, arg.GenreID, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
@@ -73,10 +127,12 @@ func (q *Queries) GetMoviesByGenre(ctx context.Context, arg GetMoviesByGenrePara
 		if err := rows.Scan(
 			&i.ID,
 			&i.Title,
+			&i.Duration,
 			&i.Description,
+			pq.Array(&i.ActorAvatars),
+			&i.Trailer,
 			&i.FilePath,
 			&i.Thumbnail,
-			&i.SeriesID,
 			&i.Views,
 			&i.Stars,
 			&i.CreatedAt,
@@ -97,21 +153,83 @@ func (q *Queries) GetMoviesByGenre(ctx context.Context, arg GetMoviesByGenrePara
 }
 
 const getMoviesBySeries = `-- name: GetMoviesBySeries :many
-SELECT id, title, description, file_path, thumbnail, series_id, views, stars, created_at FROM movies
-WHERE series_id = $1
-ORDER BY id
+SELECT movies.id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at, movies_series.id, movie_id, series_id FROM movies
+JOIN  movies_series ON movies.id = movies_series.movie_id
+WHERE movies_series.id = $1
+ORDER BY movies.id
 LIMIT $2
 OFFSET $3
 `
 
 type GetMoviesBySeriesParams struct {
-	SeriesID sql.NullInt32
-	Limit    int64
-	Offset   int64
+	ID     int32 `json:"id"`
+	Limit  int64 `json:"limit"`
+	Offset int64 `json:"offset"`
 }
 
-func (q *Queries) GetMoviesBySeries(ctx context.Context, arg GetMoviesBySeriesParams) ([]Movie, error) {
-	rows, err := q.db.QueryContext(ctx, getMoviesBySeries, arg.SeriesID, arg.Limit, arg.Offset)
+type GetMoviesBySeriesRow struct {
+	ID           int32     `json:"id"`
+	Title        string    `json:"title"`
+	Duration     int32     `json:"duration"`
+	Description  string    `json:"description"`
+	ActorAvatars []string  `json:"actor_avatars"`
+	Trailer      string    `json:"trailer"`
+	FilePath     string    `json:"file_path"`
+	Thumbnail    string    `json:"thumbnail"`
+	Views        int32     `json:"views"`
+	Stars        int32     `json:"stars"`
+	CreatedAt    time.Time `json:"created_at"`
+	ID_2         int32     `json:"id_2"`
+	MovieID      int32     `json:"movie_id"`
+	SeriesID     int32     `json:"series_id"`
+}
+
+func (q *Queries) GetMoviesBySeries(ctx context.Context, arg GetMoviesBySeriesParams) ([]GetMoviesBySeriesRow, error) {
+	rows, err := q.query(ctx, q.getMoviesBySeriesStmt, getMoviesBySeries, arg.ID, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []GetMoviesBySeriesRow{}
+	for rows.Next() {
+		var i GetMoviesBySeriesRow
+		if err := rows.Scan(
+			&i.ID,
+			&i.Title,
+			&i.Duration,
+			&i.Description,
+			pq.Array(&i.ActorAvatars),
+			&i.Trailer,
+			&i.FilePath,
+			&i.Thumbnail,
+			&i.Views,
+			&i.Stars,
+			&i.CreatedAt,
+			&i.ID_2,
+			&i.MovieID,
+			&i.SeriesID,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getRecentMovies = `-- name: GetRecentMovies :many
+SELECT id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at FROM movies
+ORDER BY movies.created_at DESC
+LIMIT $1
+`
+
+func (q *Queries) GetRecentMovies(ctx context.Context, limit int64) ([]Movie, error) {
+	rows, err := q.query(ctx, q.getRecentMoviesStmt, getRecentMovies, limit)
 	if err != nil {
 		return nil, err
 	}
@@ -122,10 +240,12 @@ func (q *Queries) GetMoviesBySeries(ctx context.Context, arg GetMoviesBySeriesPa
 		if err := rows.Scan(
 			&i.ID,
 			&i.Title,
+			&i.Duration,
 			&i.Description,
+			pq.Array(&i.ActorAvatars),
+			&i.Trailer,
 			&i.FilePath,
 			&i.Thumbnail,
-			&i.SeriesID,
 			&i.Views,
 			&i.Stars,
 			&i.CreatedAt,
@@ -143,20 +263,22 @@ func (q *Queries) GetMoviesBySeries(ctx context.Context, arg GetMoviesBySeriesPa
 	return items, nil
 }
 
-const listMovies = `-- name: ListMovies :many
-SELECT id, title, description, file_path, thumbnail, series_id, views, stars, created_at FROM movies
-ORDER BY id
-LIMIT $1
-OFFSET $2
+const searchMovies = `-- name: SearchMovies :many
+SELECT id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at FROM movies
+WHERE movies.title LIKE '%' || $1 || '%'
+ORDER BY movies.id
+LIMIT $2
+OFFSET $3
 `
 
-type ListMoviesParams struct {
-	Limit  int64
-	Offset int64
+type SearchMoviesParams struct {
+	Column1 sql.NullString `json:"column_1"`
+	Limit   int64          `json:"limit"`
+	Offset  int64          `json:"offset"`
 }
 
-func (q *Queries) ListMovies(ctx context.Context, arg ListMoviesParams) ([]Movie, error) {
-	rows, err := q.db.QueryContext(ctx, listMovies, arg.Limit, arg.Offset)
+func (q *Queries) SearchMovies(ctx context.Context, arg SearchMoviesParams) ([]Movie, error) {
+	rows, err := q.query(ctx, q.searchMoviesStmt, searchMovies, arg.Column1, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
@@ -167,10 +289,12 @@ func (q *Queries) ListMovies(ctx context.Context, arg ListMoviesParams) ([]Movie
 		if err := rows.Scan(
 			&i.ID,
 			&i.Title,
+			&i.Duration,
 			&i.Description,
+			pq.Array(&i.ActorAvatars),
+			&i.Trailer,
 			&i.FilePath,
 			&i.Thumbnail,
-			&i.SeriesID,
 			&i.Views,
 			&i.Stars,
 			&i.CreatedAt,

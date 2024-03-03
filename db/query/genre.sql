@@ -1,4 +1,4 @@
--- name: ListGenres :many
+-- name: GetListGenres :many
 SELECT * FROM genres
 ORDER BY id
 LIMIT $1

@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	db "github.com/lancer2672/DandelionServer_Go/db/sqlc"
 )
@@ -11,7 +12,7 @@ type GenreService struct {
 }
 
 type GenreServiceInterface interface {
-	ListGenres(ctx context.Context, limit int64, offset int64) ([]db.Genre, error)
+	GetListGenres(ctx context.Context, arg db.GetListGenresParams) ([]db.Genre, error)
 }
 
 func NewGenreService(store *db.Store) *GenreService {
@@ -20,11 +21,9 @@ func NewGenreService(store *db.Store) *GenreService {
 	}
 }
 
-func (s *GenreService) ListGenres(ctx context.Context, limit int64, offset int64) ([]db.Genre, error) {
-	genres, err := s.store.ListGenres(ctx, db.ListGenresParams{
-		Limit:  limit,
-		Offset: offset,
-	})
+func (s *GenreService) GetListGenres(ctx context.Context, arg db.GetListGenresParams) ([]db.Genre, error) {
+	fmt.Println(arg)
+	genres, err := s.store.GetListGenres(ctx, arg)
 	if err != nil {
 		return nil, err
 	}

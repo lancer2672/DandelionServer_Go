@@ -32,7 +32,7 @@ CREATE TABLE "movies" (
 CREATE TABLE "movie_genres" (
   "movie_id" integer,
   "genre_id" integer,
-  "primary" key(movie_id,genre_id)
+  primary key(movie_id,genre_id)
 );
 
 CREATE TABLE "rooms" (
@@ -88,14 +88,12 @@ ALTER TABLE "user_rooms" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "user_rooms" ADD FOREIGN KEY ("room_id") REFERENCES "rooms" ("id");
 
-ALTER TABLE "movie_genres" ADD FOREIGN KEY ("movie_id") REFERENCES "movies" ("id");
-
-ALTER TABLE "movie_genres" ADD FOREIGN KEY ("genre_id") REFERENCES "genres" ("id");
-
 ALTER TABLE "movies" ADD FOREIGN KEY ("series_id") REFERENCES "series" ("id");
 
 ALTER TABLE "votes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
 
 ALTER TABLE "votes" ADD FOREIGN KEY ("movie_id") REFERENCES "movies" ("id");
 
-ALTER TABLE "movies" ADD FOREIGN KEY ("id") REFERENCES "movies" ("stars");
+ALTER TABLE "movie_genres" ADD FOREIGN KEY ("genre_id") REFERENCES "genres" ("id");
+
+ALTER TABLE "movie_genres" ADD FOREIGN KEY ("movie_id") REFERENCES "movies" ("id");

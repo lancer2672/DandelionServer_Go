@@ -8,8 +8,9 @@ OFFSET $3;
 
 -- name: GetMoviesBySeries :many
 SELECT * FROM movies
-WHERE series_id = $1
-ORDER BY id
+JOIN  movies_series ON movies.id = movies_series.movie_id
+WHERE movies_series.id = $1
+ORDER BY movies.id
 LIMIT $2
 OFFSET $3;
 
@@ -17,17 +18,12 @@ OFFSET $3;
 SELECT * FROM movies
 WHERE id = $1 LIMIT 1;
 
--- name: ListMovies :many
+-- name: GetListMovies :many
 SELECT * FROM movies
 ORDER BY id
 LIMIT $1
 OFFSET $2;
 
--- name: GetMoviesByUser :many
-SELECT * FROM movies
-JOIN user_rooms ON movies.id = user_movies.movie_id
-WHERE user_rooms.user_id = $1
-ORDER BY movies.id;
 
 -- name: GetRecentMovies :many
 SELECT * FROM movies
