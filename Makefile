@@ -1,9 +1,9 @@
 postgres:
-	docker run --name udemy_postgres -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=JBdragonfire1135 -d postgres
+	docker run --name dandelion -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=JBdragonfire1135 -d postgres
 createdb:
-	docker exec -it udemy_postgres createdb --username=root --owner=root dandelion_go
+	docker exec -it dandelion createdb --username=root --owner=root dandelion_go
 dropdb:
-	docker exec -it udemy_postgres dropdb dandelion_go
+	docker exec -it dandelion dropdb dandelion_go
 migrateup:
 	 migrate -path db/migration -database "postgresql://root:JBdragonfire1135@localhost:5432/dandelion_go?sslmode=disable" -verbose up
 migrateup1:
