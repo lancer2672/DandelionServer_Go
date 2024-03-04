@@ -19,7 +19,7 @@ type MovieHandler struct {
 type MovieHandlerInterface interface {
 	GetMovie(ctx *gin.Context)
 	GetMoviesByGenre(ctx *gin.Context)
-	GetMoviesBySeries(ctx *gin.Context)
+	GetMoviesBySerie(ctx *gin.Context)
 }
 
 func NewMovieHandler(service service.MovieServiceInterface) MovieHandlerInterface {
@@ -46,6 +46,10 @@ func (handler *MovieHandler) GetMovie(ctx *gin.Context) {
 
 func (handler *MovieHandler) GetMoviesByGenre(ctx *gin.Context) {
 	var req req.MoviesByGenreRequest
+	if err := ctx.ShouldBindUri(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.FormatErrorRes(err))
+		return
+	}
 	if err := ctx.ShouldBindQuery(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, utils.FormatErrorRes(err))
 		return
@@ -60,7 +64,7 @@ func (handler *MovieHandler) GetMoviesByGenre(ctx *gin.Context) {
 	utils.RespondSuccess(ctx, movies)
 }
 
-func (handler *MovieHandler) GetMoviesBySeries(ctx *gin.Context) {
+func (handler *MovieHandler) GetMoviesBySerie(ctx *gin.Context) {
 	var req req.MoviesBySeriesRequest
 	if err := ctx.ShouldBindQuery(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, utils.FormatErrorRes(err))
@@ -68,7 +72,7 @@ func (handler *MovieHandler) GetMoviesBySeries(ctx *gin.Context) {
 	}
 	arg := db.GetMoviesBySeriesParams(req)
 
-	movies, err := handler.service.GetMoviesBySeries(ctx, arg)
+	movies, err := handler.service.GetMoviesBySerie(ctx, arg)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, utils.FormatErrorRes(err))
 		return

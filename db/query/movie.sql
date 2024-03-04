@@ -6,7 +6,7 @@ ORDER BY movies.id
 LIMIT $2
 OFFSET $3;
 
--- name: GetMoviesBySeries :many
+-- name: GetMoviesBySerie :many
 SELECT * FROM movies
 JOIN  movies_series ON movies.id = movies_series.movie_id
 WHERE movies_series.id = $1

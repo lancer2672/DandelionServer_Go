@@ -152,7 +152,7 @@ func (q *Queries) GetMoviesByGenre(ctx context.Context, arg GetMoviesByGenrePara
 	return items, nil
 }
 
-const getMoviesBySeries = `-- name: GetMoviesBySeries :many
+const getMoviesBySeries = `-- name: GetMoviesBySerie :many
 SELECT movies.id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at, movies_series.id, movie_id, series_id FROM movies
 JOIN  movies_series ON movies.id = movies_series.movie_id
 WHERE movies_series.id = $1
@@ -184,7 +184,7 @@ type GetMoviesBySeriesRow struct {
 	SeriesID     int32     `json:"series_id"`
 }
 
-func (q *Queries) GetMoviesBySeries(ctx context.Context, arg GetMoviesBySeriesParams) ([]GetMoviesBySeriesRow, error) {
+func (q *Queries) GetMoviesBySerie(ctx context.Context, arg GetMoviesBySeriesParams) ([]GetMoviesBySeriesRow, error) {
 	rows, err := q.query(ctx, q.getMoviesBySeriesStmt, getMoviesBySeries, arg.ID, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err

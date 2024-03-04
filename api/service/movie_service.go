@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	db "github.com/lancer2672/DandelionServer_Go/db/sqlc"
 )
@@ -13,7 +14,7 @@ type MovieService struct {
 type MovieServiceInterface interface {
 	GetMovie(ctx context.Context, id int32) (db.Movie, error)
 	GetMoviesByGenre(ctx context.Context, arg db.GetMoviesByGenreParams) ([]db.GetMoviesByGenreRow, error)
-	GetMoviesBySeries(ctx context.Context, arg db.GetMoviesBySeriesParams) ([]db.GetMoviesBySeriesRow, error)
+	GetMoviesBySerie(ctx context.Context, arg db.GetMoviesBySeriesParams) ([]db.GetMoviesBySeriesRow, error)
 }
 
 func NewMovieService(store *db.Store) *MovieService {
@@ -31,6 +32,7 @@ func (s *MovieService) GetMovie(ctx context.Context, id int32) (db.Movie, error)
 }
 
 func (s *MovieService) GetMoviesByGenre(ctx context.Context, arg db.GetMoviesByGenreParams) ([]db.GetMoviesByGenreRow, error) {
+	fmt.Println(arg)
 	movies, err := s.store.GetMoviesByGenre(ctx, arg)
 	if err != nil {
 		return nil, err
@@ -38,8 +40,8 @@ func (s *MovieService) GetMoviesByGenre(ctx context.Context, arg db.GetMoviesByG
 	return movies, nil
 }
 
-func (s *MovieService) GetMoviesBySeries(ctx context.Context, arg db.GetMoviesBySeriesParams) ([]db.GetMoviesBySeriesRow, error) {
-	movies, err := s.store.GetMoviesBySeries(ctx, arg)
+func (s *MovieService) GetMoviesBySerie(ctx context.Context, arg db.GetMoviesBySeriesParams) ([]db.GetMoviesBySeriesRow, error) {
+	movies, err := s.store.GetMoviesBySerie(ctx, arg)
 	if err != nil {
 		return nil, err
 	}

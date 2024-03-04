@@ -37,7 +37,7 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 		return nil, fmt.Errorf("error preparing query GetMoviesByGenre: %w", err)
 	}
 	if q.getMoviesBySeriesStmt, err = db.PrepareContext(ctx, getMoviesBySeries); err != nil {
-		return nil, fmt.Errorf("error preparing query GetMoviesBySeries: %w", err)
+		return nil, fmt.Errorf("error preparing query GetMoviesBySerie: %w", err)
 	}
 	if q.getRecentMoviesStmt, err = db.PrepareContext(ctx, getRecentMovies); err != nil {
 		return nil, fmt.Errorf("error preparing query GetRecentMovies: %w", err)
