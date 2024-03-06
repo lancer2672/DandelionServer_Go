@@ -11,9 +11,6 @@
 /bin
 /build
 
-# Ignore Go dependencies
-/go.sum
-/go.mod
 /vendor/
 
 # Ignore IDE and editor specific files
