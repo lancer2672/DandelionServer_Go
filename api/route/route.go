@@ -6,6 +6,9 @@ import (
 	"github.com/lancer2672/DandelionServer_Go/api/middleware"
 	"github.com/lancer2672/DandelionServer_Go/api/service"
 	db "github.com/lancer2672/DandelionServer_Go/db/sqlc"
+	_ "github.com/lancer2672/DandelionServer_Go/docs"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func SetUpRouter(db *db.Store) *gin.Engine {
@@ -18,7 +21,16 @@ func SetUpRouter(db *db.Store) *gin.Engine {
 	genreHandler := handler.NewGenreHandler(genreService)
 
 	router.Use(middleware.ErrorHandler())
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
+	// @Summary Add a new pet to the store
+	// @Description get string by ID
+	// @ID get-string-by-int
+	// @Accept  json
+	// @Produce  json
+	// @Param   some_id     path    int     true        "Some ID"
+	// @Success 200 {string} string  "ok"
+	// @Router /string/{some_id} [get]
 	router.GET("/movie/:id", movieHandler.GetMovie)
 	router.GET("/movies/seri/:id", movieHandler.GetMoviesBySerie)
 	router.GET("/movies/genre/:id", movieHandler.GetMoviesByGenre)
