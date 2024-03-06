@@ -80,3 +80,19 @@ func (handler *MovieHandler) GetMoviesBySerie(ctx *gin.Context) {
 	utils.RespondSuccess(ctx, movies)
 
 }
+
+func (handler *MovieHandler) SearchMovies(ctx *gin.Context) {
+	var req req.SearchMoviesRequest
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.FormatErrorRes(err))
+		return
+	}
+
+	arg := db.SearchMoviesParams(req)
+	movies, err := handler.service.SearchMovies(ctx, arg)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, utils.FormatErrorRes(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, movies)
+}
