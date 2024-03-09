@@ -5,32 +5,44 @@ name: Go
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: JBdragonfire1135
+          POSTGRES_DB: dandelion_go
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.21.6'    
-        cache: true
-        cache-dependency-path: |
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21.6"
+          cache: true
+          cache-dependency-path: |
             **/go.sum
             **/go.mod
-    - name: Build
-      run: go build -v ./...
-    - name: 'Create env file'
-      run: |
-        touch app.env
-        echo "${{ secrets.APP_ENV }}" > app.env
-    - name: Migration database
-      run:    
-    - name: Test
-      run: go test -v ./...
+
+      - name: Build
+        run: go build -v ./...
+      - name: "Create env file"
+        run: |
+          touch app.env
+          echo "${{ secrets.APP_ENV }}" > app.env
+      - name: Migration database
+        run: make migrateup
+      - name: Test
+        run: go test -v ./...
