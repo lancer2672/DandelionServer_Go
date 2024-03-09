@@ -13,8 +13,9 @@ type MovieService struct {
 
 type MovieServiceInterface interface {
 	GetMovie(ctx context.Context, id int32) (db.Movie, error)
+	CreateMovie(ctx context.Context,arg db.CreateMovieParams) (error)
 	GetMoviesByGenre(ctx context.Context, arg db.GetMoviesByGenreParams) ([]db.GetMoviesByGenreRow, error)
-	GetMoviesBySerie(ctx context.Context, arg db.GetMoviesBySeriesParams) ([]db.GetMoviesBySeriesRow, error)
+	GetMoviesBySerie(ctx context.Context, arg db.GetMoviesBySerieParams) ([]db.GetMoviesBySerieRow, error)
 	GetRecentMovies(ctx context.Context, limit int64) ([]db.Movie, error)
 	SearchMovies(ctx context.Context, arg db.SearchMoviesParams) ([]db.Movie, error)
 }
@@ -42,7 +43,7 @@ func (s *MovieService) GetMoviesByGenre(ctx context.Context, arg db.GetMoviesByG
 	return movies, nil
 }
 
-func (s *MovieService) GetMoviesBySerie(ctx context.Context, arg db.GetMoviesBySeriesParams) ([]db.GetMoviesBySeriesRow, error) {
+func (s *MovieService) GetMoviesBySerie(ctx context.Context, arg db.GetMoviesBySerieParams) ([]db.GetMoviesBySerieRow, error) {
 	movies, err := s.store.GetMoviesBySerie(ctx, arg)
 	if err != nil {
 		return nil, err
@@ -62,4 +63,11 @@ func (s *MovieService) SearchMovies(ctx context.Context, arg db.SearchMoviesPara
 		return nil, err
 	}
 	return movies, nil
+}
+func (s *MovieService) CreateMovie(ctx context.Context, arg db.CreateMovieParams) ( error) {
+	err := s.store.CreateMovie(ctx, arg)
+	if err != nil {
+		return  err
+	}
+	return  nil
 }

@@ -19,10 +19,12 @@ func SetUpRouter(db *db.Store) *gin.Engine {
 
 	movieHandler := handler.NewMovieHandler(movieService)
 	genreHandler := handler.NewGenreHandler(genreService)
+	uploadHandler := handler.NewUploadHandler()
 
 	router.Use(middleware.ErrorHandler())
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
+	router.MaxMultipartMemory = 8
 	// @Summary Add a new pet to the store
 	// @Description get string by ID
 	// @ID get-string-by-int
@@ -31,7 +33,9 @@ func SetUpRouter(db *db.Store) *gin.Engine {
 	// @Param   some_id     path    int     true        "Some ID"
 	// @Success 200 {string} string  "ok"
 	// @Router /string/{some_id} [get]
+	router.POST("/upload", uploadHandler.UploadFile)
 	router.GET("/movie/:id", movieHandler.GetMovie)
+	router.POST("/movie/:id", movieHandler.CreateMovie)
 	router.GET("/movies/seri/:id", movieHandler.GetMoviesBySerie)
 	router.GET("/movies/genre/:id", movieHandler.GetMoviesByGenre)
 

@@ -30,5 +30,7 @@ jobs:
       run: |
         touch app.env
         echo "${{ secrets.APP_ENV }}" > app.env
+    - name: Migration database
+      run:    
     - name: Test
       run: go test -v ./...

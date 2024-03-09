@@ -30,16 +30,21 @@ import (
 // @externalDocs.description  OpenAPI
 // @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
-	config, err := utils.LoadConfig(".")
+	serverConfig, err := utils.LoadConfig(".")
 	if err != nil {
 		log.Fatalf("Error loading config: %v", err)
 	}
-	conn, err := sql.Open(config.DBDriver, config.DBSource)
+	conn, err := sql.Open(serverConfig.DBDriver, serverConfig.DBSource)
 	if err != nil {
 		log.Fatal("Cannot connect to database", err)
 	}
-	server := server.NewServer(config, conn)
+	server := server.NewServer(serverConfig, conn)
+    if err != nil {
+        log.Fatal(err)
+    }
+
 	err = server.Start()
+
 	if err != nil {
 		log.Fatal("Cannot start server", err)
 	}

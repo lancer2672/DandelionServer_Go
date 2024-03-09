@@ -37,3 +37,7 @@ ORDER BY movies.id
 LIMIT $2
 OFFSET $3;
 
+-- name: CreateMovie :exec
+INSERT INTO movies
+ (title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);

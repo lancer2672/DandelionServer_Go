@@ -13,6 +13,39 @@ import (
 	"github.com/lib/pq"
 )
 
+const createMovie = `-- name: CreateMovie :exec
+INSERT INTO movies
+ (title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars)
+VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+`
+
+type CreateMovieParams struct {
+	Title        string   `json:"title"`
+	Duration     int32    `json:"duration"`
+	Description  string   `json:"description"`
+	ActorAvatars []string `json:"actor_avatars"`
+	Trailer      string   `json:"trailer"`
+	FilePath     string   `json:"file_path"`
+	Thumbnail    string   `json:"thumbnail"`
+	Views        int32    `json:"views"`
+	Stars        int32    `json:"stars"`
+}
+
+func (q *Queries) CreateMovie(ctx context.Context, arg CreateMovieParams) error {
+	_, err := q.exec(ctx, q.createMovieStmt, createMovie,
+		arg.Title,
+		arg.Duration,
+		arg.Description,
+		pq.Array(arg.ActorAvatars),
+		arg.Trailer,
+		arg.FilePath,
+		arg.Thumbnail,
+		arg.Views,
+		arg.Stars,
+	)
+	return err
+}
+
 const getListMovies = `-- name: GetListMovies :many
 SELECT id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at FROM movies
 ORDER BY id
@@ -152,7 +185,7 @@ func (q *Queries) GetMoviesByGenre(ctx context.Context, arg GetMoviesByGenrePara
 	return items, nil
 }
 
-const getMoviesBySeries = `-- name: GetMoviesBySerie :many
+const getMoviesBySerie = `-- name: GetMoviesBySerie :many
 SELECT movies.id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at, movies_series.id, movie_id, series_id FROM movies
 JOIN  movies_series ON movies.id = movies_series.movie_id
 WHERE movies_series.id = $1
@@ -161,13 +194,13 @@ LIMIT $2
 OFFSET $3
 `
 
-type GetMoviesBySeriesParams struct {
+type GetMoviesBySerieParams struct {
 	ID     int32 `json:"id"`
 	Limit  int64 `json:"limit"`
 	Offset int64 `json:"offset"`
 }
 
-type GetMoviesBySeriesRow struct {
+type GetMoviesBySerieRow struct {
 	ID           int32     `json:"id"`
 	Title        string    `json:"title"`
 	Duration     int32     `json:"duration"`
@@ -184,15 +217,15 @@ type GetMoviesBySeriesRow struct {
 	SeriesID     int32     `json:"series_id"`
 }
 
-func (q *Queries) GetMoviesBySerie(ctx context.Context, arg GetMoviesBySeriesParams) ([]GetMoviesBySeriesRow, error) {
-	rows, err := q.query(ctx, q.getMoviesBySeriesStmt, getMoviesBySeries, arg.ID, arg.Limit, arg.Offset)
+func (q *Queries) GetMoviesBySerie(ctx context.Context, arg GetMoviesBySerieParams) ([]GetMoviesBySerieRow, error) {
+	rows, err := q.query(ctx, q.getMoviesBySerieStmt, getMoviesBySerie, arg.ID, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []GetMoviesBySeriesRow{}
+	items := []GetMoviesBySerieRow{}
 	for rows.Next() {
-		var i GetMoviesBySeriesRow
+		var i GetMoviesBySerieRow
 		if err := rows.Scan(
 			&i.ID,
 			&i.Title,

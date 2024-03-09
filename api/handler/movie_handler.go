@@ -18,6 +18,7 @@ type MovieHandler struct {
 
 type MovieHandlerInterface interface {
 	GetMovie(ctx *gin.Context)
+	CreateMovie(ctx *gin.Context)
 	GetMoviesByGenre(ctx *gin.Context)
 	GetMoviesBySerie(ctx *gin.Context)
 }
@@ -70,7 +71,7 @@ func (handler *MovieHandler) GetMoviesBySerie(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, utils.FormatErrorRes(err))
 		return
 	}
-	arg := db.GetMoviesBySeriesParams(req)
+	arg := db.GetMoviesBySerieParams(req)
 
 	movies, err := handler.service.GetMoviesBySerie(ctx, arg)
 	if err != nil {
@@ -95,4 +96,21 @@ func (handler *MovieHandler) SearchMovies(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, movies)
+}
+func (handler *MovieHandler) CreateMovie(ctx *gin.Context) {
+	var req req.CreateMovieRequest
+	if err := ctx.ShouldBindQuery(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, utils.FormatErrorRes(err))
+		return
+	}
+
+	arg := db.CreateMovieParams(req)
+	err := handler.service.CreateMovie(ctx, arg)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, utils.FormatErrorRes(err))
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{
+		"Message":"Create successfully",
+	})
 }

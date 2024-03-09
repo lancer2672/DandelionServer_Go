@@ -24,6 +24,9 @@ func New(db DBTX) *Queries {
 func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	q := Queries{db: db}
 	var err error
+	if q.createMovieStmt, err = db.PrepareContext(ctx, createMovie); err != nil {
+		return nil, fmt.Errorf("error preparing query CreateMovie: %w", err)
+	}
 	if q.getListGenresStmt, err = db.PrepareContext(ctx, getListGenres); err != nil {
 		return nil, fmt.Errorf("error preparing query GetListGenres: %w", err)
 	}
@@ -36,7 +39,7 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.getMoviesByGenreStmt, err = db.PrepareContext(ctx, getMoviesByGenre); err != nil {
 		return nil, fmt.Errorf("error preparing query GetMoviesByGenre: %w", err)
 	}
-	if q.getMoviesBySeriesStmt, err = db.PrepareContext(ctx, getMoviesBySeries); err != nil {
+	if q.getMoviesBySerieStmt, err = db.PrepareContext(ctx, getMoviesBySerie); err != nil {
 		return nil, fmt.Errorf("error preparing query GetMoviesBySerie: %w", err)
 	}
 	if q.getRecentMoviesStmt, err = db.PrepareContext(ctx, getRecentMovies); err != nil {
@@ -59,6 +62,11 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 
 func (q *Queries) Close() error {
 	var err error
+	if q.createMovieStmt != nil {
+		if cerr := q.createMovieStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing createMovieStmt: %w", cerr)
+		}
+	}
 	if q.getListGenresStmt != nil {
 		if cerr := q.getListGenresStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing getListGenresStmt: %w", cerr)
@@ -79,9 +87,9 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing getMoviesByGenreStmt: %w", cerr)
 		}
 	}
-	if q.getMoviesBySeriesStmt != nil {
-		if cerr := q.getMoviesBySeriesStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing getMoviesBySeriesStmt: %w", cerr)
+	if q.getMoviesBySerieStmt != nil {
+		if cerr := q.getMoviesBySerieStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getMoviesBySerieStmt: %w", cerr)
 		}
 	}
 	if q.getRecentMoviesStmt != nil {
@@ -146,33 +154,35 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 }
 
 type Queries struct {
-	db                    DBTX
-	tx                    *sql.Tx
-	getListGenresStmt     *sql.Stmt
-	getListMoviesStmt     *sql.Stmt
-	getMovieStmt          *sql.Stmt
-	getMoviesByGenreStmt  *sql.Stmt
-	getMoviesBySeriesStmt *sql.Stmt
-	getRecentMoviesStmt   *sql.Stmt
-	getRoomStmt           *sql.Stmt
-	getRoomsByUserStmt    *sql.Stmt
-	getVotesByUserStmt    *sql.Stmt
-	searchMoviesStmt      *sql.Stmt
+	db                   DBTX
+	tx                   *sql.Tx
+	createMovieStmt      *sql.Stmt
+	getListGenresStmt    *sql.Stmt
+	getListMoviesStmt    *sql.Stmt
+	getMovieStmt         *sql.Stmt
+	getMoviesByGenreStmt *sql.Stmt
+	getMoviesBySerieStmt *sql.Stmt
+	getRecentMoviesStmt  *sql.Stmt
+	getRoomStmt          *sql.Stmt
+	getRoomsByUserStmt   *sql.Stmt
+	getVotesByUserStmt   *sql.Stmt
+	searchMoviesStmt     *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db:                    tx,
-		tx:                    tx,
-		getListGenresStmt:     q.getListGenresStmt,
-		getListMoviesStmt:     q.getListMoviesStmt,
-		getMovieStmt:          q.getMovieStmt,
-		getMoviesByGenreStmt:  q.getMoviesByGenreStmt,
-		getMoviesBySeriesStmt: q.getMoviesBySeriesStmt,
-		getRecentMoviesStmt:   q.getRecentMoviesStmt,
-		getRoomStmt:           q.getRoomStmt,
-		getRoomsByUserStmt:    q.getRoomsByUserStmt,
-		getVotesByUserStmt:    q.getVotesByUserStmt,
-		searchMoviesStmt:      q.searchMoviesStmt,
+		db:                   tx,
+		tx:                   tx,
+		createMovieStmt:      q.createMovieStmt,
+		getListGenresStmt:    q.getListGenresStmt,
+		getListMoviesStmt:    q.getListMoviesStmt,
+		getMovieStmt:         q.getMovieStmt,
+		getMoviesByGenreStmt: q.getMoviesByGenreStmt,
+		getMoviesBySerieStmt: q.getMoviesBySerieStmt,
+		getRecentMoviesStmt:  q.getRecentMoviesStmt,
+		getRoomStmt:          q.getRoomStmt,
+		getRoomsByUserStmt:   q.getRoomsByUserStmt,
+		getVotesByUserStmt:   q.getVotesByUserStmt,
+		searchMoviesStmt:     q.searchMoviesStmt,
 	}
 }
