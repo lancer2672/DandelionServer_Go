@@ -10,7 +10,7 @@
 # Ignore build files
 /bin
 /build
-
+Makefile
 /vendor/
 
 # Ignore IDE and editor specific files
