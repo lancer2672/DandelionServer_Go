@@ -44,4 +44,4 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-# access step output "steps.login-ecr.outputs "
+# access step output "steps.login-ecr.outputs"
