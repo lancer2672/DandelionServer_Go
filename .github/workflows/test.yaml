@@ -38,7 +38,6 @@ jobs:
           cache-dependency-path: |
             **/go.sum
             **/go.mod
-
       - name: Build
         run: go build -v ./...
       - name: "Create env file"
