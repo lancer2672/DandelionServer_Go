@@ -42,13 +42,6 @@ CREATE TABLE "rooms" (
   "created_at" timestamp DEFAULT 'now()'
 );
 
-CREATE TABLE "user_rooms" (
-  "id" integer PRIMARY KEY,
-  "user_id" integer,
-  "room_id" integer,
-  "joined_at" timestamp
-);
-
 CREATE TABLE "votes" (
   "id" integer PRIMARY KEY,
   "user_id" integer,
@@ -56,13 +49,17 @@ CREATE TABLE "votes" (
   "stars" integer
 );
 
-CREATE TABLE "user_rooms_chat" (
+CREATE TABLE "movie_history" (
   "id" integer PRIMARY KEY,
-  "room_id" integer,
   "user_id" integer,
-  "message" varchar,
-  "sent_at" timestamp DEFAULT 'now()'
+  "movie_id" integer,
+  "watched_duration" integer,
+  "last_watched" timestamp DEFAULT 'now()'
 );
+
+ALTER TABLE "movie_history" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+
+ALTER TABLE "movie_history" ADD FOREIGN KEY ("movie_id") REFERENCES "movies" ("id");
 
 COMMENT ON COLUMN "series"."thumbnail" IS 'Path to the thumbnail image';
 
@@ -78,15 +75,8 @@ COMMENT ON COLUMN "movies"."stars" IS 'Total star votes';
 
 COMMENT ON COLUMN "votes"."stars" IS 'Star vote of the user for the movie';
 
-ALTER TABLE "user_rooms_chat" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
-
-ALTER TABLE "user_rooms_chat" ADD FOREIGN KEY ("room_id") REFERENCES "rooms" ("id");
-
 ALTER TABLE "rooms" ADD FOREIGN KEY ("movie_id") REFERENCES "movies" ("id");
 
-ALTER TABLE "user_rooms" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
-
-ALTER TABLE "user_rooms" ADD FOREIGN KEY ("room_id") REFERENCES "rooms" ("id");
 
 ALTER TABLE "movies" ADD FOREIGN KEY ("series_id") REFERENCES "series" ("id");
 
