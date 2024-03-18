@@ -37,5 +37,7 @@ ALTER TABLE users ALTER COLUMN id DROP NOT NULL;
 -- Add the series_id column back to the movies table
 ALTER TABLE movies ADD COLUMN series_id INTEGER;
 
+ALTER TABLE "movies" DROP CONSTRAINT IF EXISTS "movies_series_id_fkey";
+
 -- Drop the movies_series table
 DROP TABLE movies_series;
