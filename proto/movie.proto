@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "github.com/lancer2672/DandelionServer_Go/pb"
+
+message  MovieHistory {
+        
+}
