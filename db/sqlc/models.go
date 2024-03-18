@@ -5,6 +5,7 @@
 package database
 
 import (
+	"database/sql"
 	"time"
 )
 
@@ -36,6 +37,14 @@ type MovieGenre struct {
 	GenreID int32 `json:"genre_id"`
 }
 
+type MovieHistory struct {
+	ID              int32         `json:"id"`
+	UserID          sql.NullInt32 `json:"user_id"`
+	MovieID         sql.NullInt32 `json:"movie_id"`
+	WatchedDuration sql.NullInt32 `json:"watched_duration"`
+	LastWatched     sql.NullTime  `json:"last_watched"`
+}
+
 type MoviesSeries struct {
 	ID       int32 `json:"id"`
 	MovieID  int32 `json:"movie_id"`
@@ -59,21 +68,6 @@ type Series struct {
 type User struct {
 	ID       int32  `json:"id"`
 	Username string `json:"username"`
-}
-
-type UserRoom struct {
-	ID       int32     `json:"id"`
-	UserID   int32     `json:"user_id"`
-	RoomID   int32     `json:"room_id"`
-	JoinedAt time.Time `json:"joined_at"`
-}
-
-type UserRoomsChat struct {
-	ID      int32     `json:"id"`
-	RoomID  int32     `json:"room_id"`
-	UserID  int32     `json:"user_id"`
-	Message string    `json:"message"`
-	SentAt  time.Time `json:"sent_at"`
 }
 
 type Vote struct {

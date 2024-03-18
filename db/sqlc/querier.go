@@ -10,16 +10,16 @@ import (
 
 type Querier interface {
 	CreateMovie(ctx context.Context, arg CreateMovieParams) error
+	CreateMovieHistory(ctx context.Context, arg CreateMovieHistoryParams) error
 	GetListGenres(ctx context.Context, arg GetListGenresParams) ([]Genre, error)
 	GetListMovies(ctx context.Context, arg GetListMoviesParams) ([]Movie, error)
 	GetMovie(ctx context.Context, id int32) (Movie, error)
 	GetMoviesByGenre(ctx context.Context, arg GetMoviesByGenreParams) ([]GetMoviesByGenreRow, error)
 	GetMoviesBySerie(ctx context.Context, arg GetMoviesBySerieParams) ([]GetMoviesBySerieRow, error)
 	GetRecentMovies(ctx context.Context, limit int64) ([]Movie, error)
-	GetRoom(ctx context.Context, id int32) (Room, error)
-	GetRoomsByUser(ctx context.Context, userID int32) ([]GetRoomsByUserRow, error)
 	GetVotesByUser(ctx context.Context, userID int32) ([]Vote, error)
 	SearchMovies(ctx context.Context, arg SearchMoviesParams) ([]Movie, error)
+	UpdateMovieHistory(ctx context.Context, arg UpdateMovieHistoryParams) error
 }
 
 var _ Querier = (*Queries)(nil)

@@ -27,6 +27,9 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.createMovieStmt, err = db.PrepareContext(ctx, createMovie); err != nil {
 		return nil, fmt.Errorf("error preparing query CreateMovie: %w", err)
 	}
+	if q.createMovieHistoryStmt, err = db.PrepareContext(ctx, createMovieHistory); err != nil {
+		return nil, fmt.Errorf("error preparing query CreateMovieHistory: %w", err)
+	}
 	if q.getListGenresStmt, err = db.PrepareContext(ctx, getListGenres); err != nil {
 		return nil, fmt.Errorf("error preparing query GetListGenres: %w", err)
 	}
@@ -45,17 +48,14 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.getRecentMoviesStmt, err = db.PrepareContext(ctx, getRecentMovies); err != nil {
 		return nil, fmt.Errorf("error preparing query GetRecentMovies: %w", err)
 	}
-	if q.getRoomStmt, err = db.PrepareContext(ctx, getRoom); err != nil {
-		return nil, fmt.Errorf("error preparing query GetRoom: %w", err)
-	}
-	if q.getRoomsByUserStmt, err = db.PrepareContext(ctx, getRoomsByUser); err != nil {
-		return nil, fmt.Errorf("error preparing query GetRoomsByUser: %w", err)
-	}
 	if q.getVotesByUserStmt, err = db.PrepareContext(ctx, getVotesByUser); err != nil {
 		return nil, fmt.Errorf("error preparing query GetVotesByUser: %w", err)
 	}
 	if q.searchMoviesStmt, err = db.PrepareContext(ctx, searchMovies); err != nil {
 		return nil, fmt.Errorf("error preparing query SearchMovies: %w", err)
+	}
+	if q.updateMovieHistoryStmt, err = db.PrepareContext(ctx, updateMovieHistory); err != nil {
+		return nil, fmt.Errorf("error preparing query UpdateMovieHistory: %w", err)
 	}
 	return &q, nil
 }
@@ -65,6 +65,11 @@ func (q *Queries) Close() error {
 	if q.createMovieStmt != nil {
 		if cerr := q.createMovieStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing createMovieStmt: %w", cerr)
+		}
+	}
+	if q.createMovieHistoryStmt != nil {
+		if cerr := q.createMovieHistoryStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing createMovieHistoryStmt: %w", cerr)
 		}
 	}
 	if q.getListGenresStmt != nil {
@@ -97,16 +102,6 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing getRecentMoviesStmt: %w", cerr)
 		}
 	}
-	if q.getRoomStmt != nil {
-		if cerr := q.getRoomStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing getRoomStmt: %w", cerr)
-		}
-	}
-	if q.getRoomsByUserStmt != nil {
-		if cerr := q.getRoomsByUserStmt.Close(); cerr != nil {
-			err = fmt.Errorf("error closing getRoomsByUserStmt: %w", cerr)
-		}
-	}
 	if q.getVotesByUserStmt != nil {
 		if cerr := q.getVotesByUserStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing getVotesByUserStmt: %w", cerr)
@@ -115,6 +110,11 @@ func (q *Queries) Close() error {
 	if q.searchMoviesStmt != nil {
 		if cerr := q.searchMoviesStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing searchMoviesStmt: %w", cerr)
+		}
+	}
+	if q.updateMovieHistoryStmt != nil {
+		if cerr := q.updateMovieHistoryStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing updateMovieHistoryStmt: %w", cerr)
 		}
 	}
 	return err
@@ -154,35 +154,35 @@ func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, ar
 }
 
 type Queries struct {
-	db                   DBTX
-	tx                   *sql.Tx
-	createMovieStmt      *sql.Stmt
-	getListGenresStmt    *sql.Stmt
-	getListMoviesStmt    *sql.Stmt
-	getMovieStmt         *sql.Stmt
-	getMoviesByGenreStmt *sql.Stmt
-	getMoviesBySerieStmt *sql.Stmt
-	getRecentMoviesStmt  *sql.Stmt
-	getRoomStmt          *sql.Stmt
-	getRoomsByUserStmt   *sql.Stmt
-	getVotesByUserStmt   *sql.Stmt
-	searchMoviesStmt     *sql.Stmt
+	db                     DBTX
+	tx                     *sql.Tx
+	createMovieStmt        *sql.Stmt
+	createMovieHistoryStmt *sql.Stmt
+	getListGenresStmt      *sql.Stmt
+	getListMoviesStmt      *sql.Stmt
+	getMovieStmt           *sql.Stmt
+	getMoviesByGenreStmt   *sql.Stmt
+	getMoviesBySerieStmt   *sql.Stmt
+	getRecentMoviesStmt    *sql.Stmt
+	getVotesByUserStmt     *sql.Stmt
+	searchMoviesStmt       *sql.Stmt
+	updateMovieHistoryStmt *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db:                   tx,
-		tx:                   tx,
-		createMovieStmt:      q.createMovieStmt,
-		getListGenresStmt:    q.getListGenresStmt,
-		getListMoviesStmt:    q.getListMoviesStmt,
-		getMovieStmt:         q.getMovieStmt,
-		getMoviesByGenreStmt: q.getMoviesByGenreStmt,
-		getMoviesBySerieStmt: q.getMoviesBySerieStmt,
-		getRecentMoviesStmt:  q.getRecentMoviesStmt,
-		getRoomStmt:          q.getRoomStmt,
-		getRoomsByUserStmt:   q.getRoomsByUserStmt,
-		getVotesByUserStmt:   q.getVotesByUserStmt,
-		searchMoviesStmt:     q.searchMoviesStmt,
+		db:                     tx,
+		tx:                     tx,
+		createMovieStmt:        q.createMovieStmt,
+		createMovieHistoryStmt: q.createMovieHistoryStmt,
+		getListGenresStmt:      q.getListGenresStmt,
+		getListMoviesStmt:      q.getListMoviesStmt,
+		getMovieStmt:           q.getMovieStmt,
+		getMoviesByGenreStmt:   q.getMoviesByGenreStmt,
+		getMoviesBySerieStmt:   q.getMoviesBySerieStmt,
+		getRecentMoviesStmt:    q.getRecentMoviesStmt,
+		getVotesByUserStmt:     q.getVotesByUserStmt,
+		searchMoviesStmt:       q.searchMoviesStmt,
+		updateMovieHistoryStmt: q.updateMovieHistoryStmt,
 	}
 }
