@@ -7,7 +7,7 @@ package database
 
 import (
 	"context"
-	"database/sql"
+	"time"
 )
 
 const createMovieHistory = `-- name: CreateMovieHistory :exec
@@ -17,10 +17,10 @@ VALUES ($1, $2, $3, $4)
 `
 
 type CreateMovieHistoryParams struct {
-	UserID          sql.NullInt32 `json:"user_id"`
-	MovieID         sql.NullInt32 `json:"movie_id"`
-	WatchedDuration sql.NullInt32 `json:"watched_duration"`
-	LastWatched     sql.NullTime  `json:"last_watched"`
+	UserID          int32     `json:"user_id"`
+	MovieID         int32     `json:"movie_id"`
+	WatchedDuration int32     `json:"watched_duration"`
+	LastWatched     time.Time `json:"last_watched"`
 }
 
 func (q *Queries) CreateMovieHistory(ctx context.Context, arg CreateMovieHistoryParams) error {
@@ -40,9 +40,9 @@ WHERE movie_id = $3
 `
 
 type UpdateMovieHistoryParams struct {
-	WatchedDuration sql.NullInt32 `json:"watched_duration"`
-	LastWatched     sql.NullTime  `json:"last_watched"`
-	MovieID         sql.NullInt32 `json:"movie_id"`
+	WatchedDuration int32     `json:"watched_duration"`
+	LastWatched     time.Time `json:"last_watched"`
+	MovieID         int32     `json:"movie_id"`
 }
 
 func (q *Queries) UpdateMovieHistory(ctx context.Context, arg UpdateMovieHistoryParams) error {

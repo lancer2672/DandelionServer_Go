@@ -3,7 +3,6 @@ syntax = "proto3";
 package pb;
 
 
-import "movie_history.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/lancer2672/DandelionServer_Go/pb";
@@ -16,5 +15,4 @@ message CreateMovieHistoryRequest {
     google.protobuf.Timestamp last_watched = 4;
 }
 message CreateMovieHistoryResponse {
-    MovieHistory movie_history = 1;
 }

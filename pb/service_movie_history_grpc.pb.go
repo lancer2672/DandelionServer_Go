@@ -8,6 +8,7 @@ package pb
 
 import (
 	context "context"
+	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -26,7 +27,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DandelionClient interface {
-	CreateMovieHistory(ctx context.Context, in *CreateMovieHistoryRequest, opts ...grpc.CallOption) (*CreateMovieHistoryResponse, error)
+	CreateMovieHistory(ctx context.Context, in *CreateMovieHistoryRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
 type dandelionClient struct {
@@ -37,8 +38,8 @@ func NewDandelionClient(cc grpc.ClientConnInterface) DandelionClient {
 	return &dandelionClient{cc}
 }
 
-func (c *dandelionClient) CreateMovieHistory(ctx context.Context, in *CreateMovieHistoryRequest, opts ...grpc.CallOption) (*CreateMovieHistoryResponse, error) {
-	out := new(CreateMovieHistoryResponse)
+func (c *dandelionClient) CreateMovieHistory(ctx context.Context, in *CreateMovieHistoryRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, Dandelion_CreateMovieHistory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -50,7 +51,7 @@ func (c *dandelionClient) CreateMovieHistory(ctx context.Context, in *CreateMovi
 // All implementations must embed UnimplementedDandelionServer
 // for forward compatibility
 type DandelionServer interface {
-	CreateMovieHistory(context.Context, *CreateMovieHistoryRequest) (*CreateMovieHistoryResponse, error)
+	CreateMovieHistory(context.Context, *CreateMovieHistoryRequest) (*empty.Empty, error)
 	mustEmbedUnimplementedDandelionServer()
 }
 
@@ -58,7 +59,7 @@ type DandelionServer interface {
 type UnimplementedDandelionServer struct {
 }
 
-func (UnimplementedDandelionServer) CreateMovieHistory(context.Context, *CreateMovieHistoryRequest) (*CreateMovieHistoryResponse, error) {
+func (UnimplementedDandelionServer) CreateMovieHistory(context.Context, *CreateMovieHistoryRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateMovieHistory not implemented")
 }
 func (UnimplementedDandelionServer) mustEmbedUnimplementedDandelionServer() {}

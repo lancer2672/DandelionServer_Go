@@ -3,10 +3,10 @@ syntax = "proto3";
 package pb;
 
 import "rpc_create_movie_history.proto";
-
+import "google/protobuf/empty.proto";
 option go_package = "github.com/lancer2672/DandelionServer_Go/pb";
 
 service Dandelion {
-    rpc CreateMovieHistory (CreateMovieHistoryRequest) returns (CreateMovieHistoryResponse){ }
+    rpc CreateMovieHistory(CreateMovieHistoryRequest) returns (google.protobuf.Empty) {}
     
 };

@@ -5,7 +5,6 @@
 package database
 
 import (
-	"database/sql"
 	"time"
 )
 
@@ -38,11 +37,11 @@ type MovieGenre struct {
 }
 
 type MovieHistory struct {
-	ID              int32         `json:"id"`
-	UserID          sql.NullInt32 `json:"user_id"`
-	MovieID         sql.NullInt32 `json:"movie_id"`
-	WatchedDuration sql.NullInt32 `json:"watched_duration"`
-	LastWatched     sql.NullTime  `json:"last_watched"`
+	ID              int32     `json:"id"`
+	UserID          int32     `json:"user_id"`
+	MovieID         int32     `json:"movie_id"`
+	WatchedDuration int32     `json:"watched_duration"`
+	LastWatched     time.Time `json:"last_watched"`
 }
 
 type MoviesSeries struct {
