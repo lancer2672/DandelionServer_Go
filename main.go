@@ -3,8 +3,13 @@ package main
 import (
 	"database/sql"
 	"log"
+	"net"
 
 	"github.com/lancer2672/DandelionServer_Go/api/server"
+	"github.com/lancer2672/DandelionServer_Go/pb"
+	"github.com/lancer2672/DandelionServer_Go/server/sgrpc"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 
 	"github.com/lancer2672/DandelionServer_Go/utils"
 	_ "github.com/lib/pq"
@@ -38,15 +43,33 @@ func main() {
 	if err != nil {
 		log.Fatal("Cannot connect to database", err)
 	}
-	server := server.NewServer(serverConfig, conn)
-    if err != nil {
-        log.Fatal(err)
-    }
+	runGrpcServer(serverConfig, conn)
+	// runGinServer(serverConfig, conn)
 
-	err = server.Start()
+}
 
+func runGrpcServer(config utils.Config, conn *sql.DB) {
+	server := sgrpc.NewServer(config, conn)
+	grpcServer := grpc.NewServer()
+	pb.RegisterDandelionServer(grpcServer, server)
+
+	//allow clients to see avaiable grpc server ~ self document
+	reflection.Register(grpcServer)
+	listener, err := net.Listen("tcp", config.GRPCServerAddress)
+	if err != nil {
+		log.Fatal("Cannot create listener GRPC")
+	}
+	log.Println("GRPC Server started")
+	err = grpcServer.Serve(listener)
+	if err != nil {
+		log.Fatal("Cannot start GRPC")
+	}
+
+}
+func runGinServer(config utils.Config, conn *sql.DB) {
+	server := server.NewServer(config, conn)
+	err := server.Start()
 	if err != nil {
 		log.Fatal("Cannot start server", err)
 	}
-
 }
