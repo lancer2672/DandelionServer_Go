@@ -17,7 +17,7 @@ func (server *Server) CreateMovieHistory(ctx context.Context, req *pb.CreateMovi
 		UserID:          req.GetUserId(),
 		MovieID:         req.GetMovieId(),
 		WatchedDuration: req.GetWatchedDuration(),
-		LastWatched:     req.GetLastWatched(),
+		LastWatched:     req.GetLastWatched().AsTime(),
 	}
 	err := server.store.CreateMovieHistory(ctx, args)
 	if err != nil {
