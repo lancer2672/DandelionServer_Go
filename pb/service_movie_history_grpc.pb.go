@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Dandelion_CreateMovieHistory_FullMethodName = "/pb.Dandelion/CreateMovieHistory"
+	Dandelion_GetMovieHistory_FullMethodName    = "/pb.Dandelion/GetMovieHistory"
 )
 
 // DandelionClient is the client API for Dandelion service.
@@ -28,6 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DandelionClient interface {
 	CreateMovieHistory(ctx context.Context, in *CreateMovieHistoryRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	GetMovieHistory(ctx context.Context, in *GetMovieHistoryRequest, opts ...grpc.CallOption) (*GetMovieHistoryResponse, error)
 }
 
 type dandelionClient struct {
@@ -47,11 +49,21 @@ func (c *dandelionClient) CreateMovieHistory(ctx context.Context, in *CreateMovi
 	return out, nil
 }
 
+func (c *dandelionClient) GetMovieHistory(ctx context.Context, in *GetMovieHistoryRequest, opts ...grpc.CallOption) (*GetMovieHistoryResponse, error) {
+	out := new(GetMovieHistoryResponse)
+	err := c.cc.Invoke(ctx, Dandelion_GetMovieHistory_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DandelionServer is the server API for Dandelion service.
 // All implementations must embed UnimplementedDandelionServer
 // for forward compatibility
 type DandelionServer interface {
 	CreateMovieHistory(context.Context, *CreateMovieHistoryRequest) (*empty.Empty, error)
+	GetMovieHistory(context.Context, *GetMovieHistoryRequest) (*GetMovieHistoryResponse, error)
 	mustEmbedUnimplementedDandelionServer()
 }
 
@@ -61,6 +73,9 @@ type UnimplementedDandelionServer struct {
 
 func (UnimplementedDandelionServer) CreateMovieHistory(context.Context, *CreateMovieHistoryRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateMovieHistory not implemented")
+}
+func (UnimplementedDandelionServer) GetMovieHistory(context.Context, *GetMovieHistoryRequest) (*GetMovieHistoryResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMovieHistory not implemented")
 }
 func (UnimplementedDandelionServer) mustEmbedUnimplementedDandelionServer() {}
 
@@ -93,6 +108,24 @@ func _Dandelion_CreateMovieHistory_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Dandelion_GetMovieHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMovieHistoryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DandelionServer).GetMovieHistory(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dandelion_GetMovieHistory_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DandelionServer).GetMovieHistory(ctx, req.(*GetMovieHistoryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Dandelion_ServiceDesc is the grpc.ServiceDesc for Dandelion service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -103,6 +136,10 @@ var Dandelion_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateMovieHistory",
 			Handler:    _Dandelion_CreateMovieHistory_Handler,
+		},
+		{
+			MethodName: "GetMovieHistory",
+			Handler:    _Dandelion_GetMovieHistory_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
