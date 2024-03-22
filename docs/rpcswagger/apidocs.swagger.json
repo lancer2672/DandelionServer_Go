@@ -1,8 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "movie_history.proto",
-    "version": "version not set"
+    "title": "Dandelion GRPC Server",
+    "version": "1.0",
+    "contact": {
+      "name": "Dandelion_Go project",
+      "url": "https://github.com/lancer2672/DandelionServer_Go"
+    }
   },
   "tags": [
     {
@@ -16,7 +20,43 @@
     "application/json"
   ],
   "paths": {
-    "/v1/create_movie_history": {
+    "/movie/history": {
+      "get": {
+        "operationId": "Dandelion_GetMovieHistory",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetMovieHistoryResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "watchedDuration",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Dandelion"
+        ]
+      },
       "post": {
         "operationId": "Dandelion_CreateMovieHistory",
         "responses": {
@@ -52,6 +92,40 @@
   },
   "definitions": {
     "pbCreateMovieHistoryRequest": {
+      "type": "object",
+      "properties": {
+        "movieId": {
+          "type": "integer",
+          "format": "int32",
+          "title": "small number'd be better"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "watchedDuration": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lastWatched": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "pbGetMovieHistoryResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbMovieHistory"
+          }
+        }
+      }
+    },
+    "pbMovieHistory": {
       "type": "object",
       "properties": {
         "movieId": {
