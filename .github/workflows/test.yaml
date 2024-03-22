@@ -44,12 +44,12 @@ jobs:
         run: |
           touch app.env
           echo "${{ secrets.APP_ENV }}" > app.env
-      - name: install golang migrate
-        run: |
-          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.0/migrate.linux-amd64.tar.gz | tar xvz
-          sudo mv migrate /usr/bin/
-          which migrate
-      - name: Migration database
-        run: make migrateup
+      # - name: install golang migrate
+      #   run: |
+      #     curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.0/migrate.linux-amd64.tar.gz | tar xvz
+      #     sudo mv migrate /usr/bin/
+      #     which migrate
+      # - name: Migration database
+      #   run: make migrateup
       - name: Test
         run: go test -v ./...
