@@ -33,6 +33,41 @@ func (q *Queries) CreateMovieHistory(ctx context.Context, arg CreateMovieHistory
 	return err
 }
 
+const getMovieHistoryByUserId = `-- name: GetMovieHistoryByUserId :many
+SELECT id, user_id, movie_id, watched_duration, last_watched FROM movie_history
+WHERE user_id = $1
+ORDER BY last_watched DESC
+`
+
+func (q *Queries) GetMovieHistoryByUserId(ctx context.Context, userID int32) ([]MovieHistory, error) {
+	rows, err := q.query(ctx, q.getMovieHistoryByUserIdStmt, getMovieHistoryByUserId, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []MovieHistory{}
+	for rows.Next() {
+		var i MovieHistory
+		if err := rows.Scan(
+			&i.ID,
+			&i.UserID,
+			&i.MovieID,
+			&i.WatchedDuration,
+			&i.LastWatched,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
 const updateMovieHistory = `-- name: UpdateMovieHistory :exec
 UPDATE movie_history
 SET watched_duration = $1, last_watched = $2
