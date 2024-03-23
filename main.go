@@ -12,7 +12,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/lancer2672/DandelionServer_Go/api/server"
-	"github.com/lancer2672/DandelionServer_Go/pb"
+	"github.com/lancer2672/DandelionServer_Go/pb/service"
 	"github.com/lancer2672/DandelionServer_Go/server/sgrpc"
 	"github.com/lancer2672/DandelionServer_Go/utils"
 	_ "github.com/lib/pq"
@@ -59,7 +59,7 @@ func main() {
 func runGrpcServer(config utils.Config, conn *sql.DB) {
 	server := sgrpc.NewServer(config, conn)
 	grpcServer := grpc.NewServer()
-	pb.RegisterDandelionServer(grpcServer, server)
+	service.RegisterDandelionServer(grpcServer, server)
 
 	//allow clients to see avaiable grpc server ~ self document
 	reflection.Register(grpcServer)

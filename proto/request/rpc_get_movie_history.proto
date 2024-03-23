@@ -4,7 +4,7 @@ package pb;
 
 import "model/movie_history.proto";
 
-option go_package = "github.com/lancer2672/DandelionServer_Go/pb";
+option go_package = "github.com/lancer2672/DandelionServer_Go/pb/request";
 
 message GetMovieHistoryRequest {
     int32  user_id      = 1;

@@ -2,11 +2,11 @@
 // source: service/service_movie_history.proto
 
 /*
-Package pb is a reverse proxy.
+Package service is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package pb
+package service
 
 import (
 	"context"
@@ -15,6 +15,7 @@ import (
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
+	"github.com/lancer2672/DandelionServer_Go/pb/request"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
@@ -32,7 +33,7 @@ var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
 func request_Dandelion_CreateMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateMovieHistoryRequest
+	var protoReq request.CreateMovieHistoryRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -45,7 +46,7 @@ func request_Dandelion_CreateMovieHistory_0(ctx context.Context, marshaler runti
 }
 
 func local_request_Dandelion_CreateMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq CreateMovieHistoryRequest
+	var protoReq request.CreateMovieHistoryRequest
 	var metadata runtime.ServerMetadata
 
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && err != io.EOF {
@@ -62,7 +63,7 @@ var (
 )
 
 func request_Dandelion_GetMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetMovieHistoryRequest
+	var protoReq request.GetMovieHistoryRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -78,7 +79,7 @@ func request_Dandelion_GetMovieHistory_0(ctx context.Context, marshaler runtime.
 }
 
 func local_request_Dandelion_GetMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetMovieHistoryRequest
+	var protoReq request.GetMovieHistoryRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {

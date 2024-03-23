@@ -4,11 +4,12 @@
 // - protoc             v3.12.4
 // source: service/service_movie_history.proto
 
-package pb
+package service
 
 import (
 	context "context"
 	empty "github.com/golang/protobuf/ptypes/empty"
+	request "github.com/lancer2672/DandelionServer_Go/pb/request"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -28,8 +29,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DandelionClient interface {
-	CreateMovieHistory(ctx context.Context, in *CreateMovieHistoryRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	GetMovieHistory(ctx context.Context, in *GetMovieHistoryRequest, opts ...grpc.CallOption) (*GetMovieHistoryResponse, error)
+	CreateMovieHistory(ctx context.Context, in *request.CreateMovieHistoryRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	GetMovieHistory(ctx context.Context, in *request.GetMovieHistoryRequest, opts ...grpc.CallOption) (*request.GetMovieHistoryResponse, error)
 }
 
 type dandelionClient struct {
@@ -40,7 +41,7 @@ func NewDandelionClient(cc grpc.ClientConnInterface) DandelionClient {
 	return &dandelionClient{cc}
 }
 
-func (c *dandelionClient) CreateMovieHistory(ctx context.Context, in *CreateMovieHistoryRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *dandelionClient) CreateMovieHistory(ctx context.Context, in *request.CreateMovieHistoryRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, Dandelion_CreateMovieHistory_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -49,8 +50,8 @@ func (c *dandelionClient) CreateMovieHistory(ctx context.Context, in *CreateMovi
 	return out, nil
 }
 
-func (c *dandelionClient) GetMovieHistory(ctx context.Context, in *GetMovieHistoryRequest, opts ...grpc.CallOption) (*GetMovieHistoryResponse, error) {
-	out := new(GetMovieHistoryResponse)
+func (c *dandelionClient) GetMovieHistory(ctx context.Context, in *request.GetMovieHistoryRequest, opts ...grpc.CallOption) (*request.GetMovieHistoryResponse, error) {
+	out := new(request.GetMovieHistoryResponse)
 	err := c.cc.Invoke(ctx, Dandelion_GetMovieHistory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -62,8 +63,8 @@ func (c *dandelionClient) GetMovieHistory(ctx context.Context, in *GetMovieHisto
 // All implementations must embed UnimplementedDandelionServer
 // for forward compatibility
 type DandelionServer interface {
-	CreateMovieHistory(context.Context, *CreateMovieHistoryRequest) (*empty.Empty, error)
-	GetMovieHistory(context.Context, *GetMovieHistoryRequest) (*GetMovieHistoryResponse, error)
+	CreateMovieHistory(context.Context, *request.CreateMovieHistoryRequest) (*empty.Empty, error)
+	GetMovieHistory(context.Context, *request.GetMovieHistoryRequest) (*request.GetMovieHistoryResponse, error)
 	mustEmbedUnimplementedDandelionServer()
 }
 
@@ -71,10 +72,10 @@ type DandelionServer interface {
 type UnimplementedDandelionServer struct {
 }
 
-func (UnimplementedDandelionServer) CreateMovieHistory(context.Context, *CreateMovieHistoryRequest) (*empty.Empty, error) {
+func (UnimplementedDandelionServer) CreateMovieHistory(context.Context, *request.CreateMovieHistoryRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateMovieHistory not implemented")
 }
-func (UnimplementedDandelionServer) GetMovieHistory(context.Context, *GetMovieHistoryRequest) (*GetMovieHistoryResponse, error) {
+func (UnimplementedDandelionServer) GetMovieHistory(context.Context, *request.GetMovieHistoryRequest) (*request.GetMovieHistoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMovieHistory not implemented")
 }
 func (UnimplementedDandelionServer) mustEmbedUnimplementedDandelionServer() {}
@@ -91,7 +92,7 @@ func RegisterDandelionServer(s grpc.ServiceRegistrar, srv DandelionServer) {
 }
 
 func _Dandelion_CreateMovieHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateMovieHistoryRequest)
+	in := new(request.CreateMovieHistoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -103,13 +104,13 @@ func _Dandelion_CreateMovieHistory_Handler(srv interface{}, ctx context.Context,
 		FullMethod: Dandelion_CreateMovieHistory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).CreateMovieHistory(ctx, req.(*CreateMovieHistoryRequest))
+		return srv.(DandelionServer).CreateMovieHistory(ctx, req.(*request.CreateMovieHistoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Dandelion_GetMovieHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetMovieHistoryRequest)
+	in := new(request.GetMovieHistoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -121,7 +122,7 @@ func _Dandelion_GetMovieHistory_Handler(srv interface{}, ctx context.Context, de
 		FullMethod: Dandelion_GetMovieHistory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).GetMovieHistory(ctx, req.(*GetMovieHistoryRequest))
+		return srv.(DandelionServer).GetMovieHistory(ctx, req.(*request.GetMovieHistoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

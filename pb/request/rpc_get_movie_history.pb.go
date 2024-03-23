@@ -4,9 +4,10 @@
 // 	protoc        v3.12.4
 // source: request/rpc_get_movie_history.proto
 
-package pb
+package request
 
 import (
+	model "github.com/lancer2672/DandelionServer_Go/pb/model"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -80,7 +81,7 @@ type GetMovieHistoryResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Data []*MovieHistory `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
+	Data []*model.MovieHistory `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
 }
 
 func (x *GetMovieHistoryResponse) Reset() {
@@ -115,7 +116,7 @@ func (*GetMovieHistoryResponse) Descriptor() ([]byte, []int) {
 	return file_request_rpc_get_movie_history_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetMovieHistoryResponse) GetData() []*MovieHistory {
+func (x *GetMovieHistoryResponse) GetData() []*model.MovieHistory {
 	if x != nil {
 		return x.Data
 	}
@@ -139,10 +140,11 @@ var file_request_rpc_get_movie_history_proto_rawDesc = []byte{
 	0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x24, 0x0a,
 	0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x10, 0x2e, 0x70, 0x62,
 	0x2e, 0x4d, 0x6f, 0x76, 0x69, 0x65, 0x48, 0x69, 0x73, 0x74, 0x6f, 0x72, 0x79, 0x52, 0x04, 0x64,
-	0x61, 0x74, 0x61, 0x42, 0x2d, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
+	0x61, 0x74, 0x61, 0x42, 0x35, 0x5a, 0x33, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f,
 	0x6d, 0x2f, 0x6c, 0x61, 0x6e, 0x63, 0x65, 0x72, 0x32, 0x36, 0x37, 0x32, 0x2f, 0x44, 0x61, 0x6e,
 	0x64, 0x65, 0x6c, 0x69, 0x6f, 0x6e, 0x53, 0x65, 0x72, 0x76, 0x65, 0x72, 0x5f, 0x47, 0x6f, 0x2f,
-	0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x70, 0x62, 0x2f, 0x72, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -161,7 +163,7 @@ var file_request_rpc_get_movie_history_proto_msgTypes = make([]protoimpl.Message
 var file_request_rpc_get_movie_history_proto_goTypes = []interface{}{
 	(*GetMovieHistoryRequest)(nil),  // 0: pb.GetMovieHistoryRequest
 	(*GetMovieHistoryResponse)(nil), // 1: pb.GetMovieHistoryResponse
-	(*MovieHistory)(nil),            // 2: pb.MovieHistory
+	(*model.MovieHistory)(nil),      // 2: pb.MovieHistory
 }
 var file_request_rpc_get_movie_history_proto_depIdxs = []int32{
 	2, // 0: pb.GetMovieHistoryResponse.data:type_name -> pb.MovieHistory
@@ -177,7 +179,6 @@ func file_request_rpc_get_movie_history_proto_init() {
 	if File_request_rpc_get_movie_history_proto != nil {
 		return
 	}
-	file_model_movie_history_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_request_rpc_get_movie_history_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetMovieHistoryRequest); i {
