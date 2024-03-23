@@ -5,14 +5,15 @@ import (
 
 	"github.com/golang/protobuf/ptypes/empty"
 	db "github.com/lancer2672/DandelionServer_Go/db/sqlc"
-	"github.com/lancer2672/DandelionServer_Go/pb"
+	"github.com/lancer2672/DandelionServer_Go/pb/model"
+	"github.com/lancer2672/DandelionServer_Go/pb/request"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func (server *Server) CreateMovieHistory(ctx context.Context, req *pb.CreateMovieHistoryRequest) (*empty.Empty, error) {
+func (server *Server) CreateMovieHistory(ctx context.Context, req *request.CreateMovieHistoryRequest) (*empty.Empty, error) {
 
 	args := db.CreateMovieHistoryParams{
 		UserID:          req.GetUserId(),
@@ -27,15 +28,15 @@ func (server *Server) CreateMovieHistory(ctx context.Context, req *pb.CreateMovi
 
 	return &empty.Empty{}, nil
 }
-func (server *Server) GetMovieHistory(ctx context.Context, req *pb.GetMovieHistoryRequest) (*pb.GetMovieHistoryResponse, error) {
+func (server *Server) GetMovieHistory(ctx context.Context, req *request.GetMovieHistoryRequest) (*request.GetMovieHistoryResponse, error) {
 
 	list, err := server.store.GetMovieHistoryByUserId(ctx, req.UserId)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Create movie histor failed")
 	}
-	var pbList []*pb.MovieHistory
+	var pbList []*model.MovieHistory
 	for _, movie := range list {
-		pbList = append(pbList, &pb.MovieHistory{
+		pbList = append(pbList, &model.MovieHistory{
 			MovieId:         movie.MovieID,
 			UserId:          movie.UserID,
 			WatchedDuration: movie.WatchedDuration,
@@ -44,6 +45,6 @@ func (server *Server) GetMovieHistory(ctx context.Context, req *pb.GetMovieHisto
 	}
 
 	// Create the response message with the converted list
-	response := &pb.GetMovieHistoryResponse{Data: pbList}
+	response := &request.GetMovieHistoryResponse{Data: pbList}
 	return response, nil
 }

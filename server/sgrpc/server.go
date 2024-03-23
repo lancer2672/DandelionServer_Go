@@ -4,12 +4,12 @@ import (
 	"database/sql"
 
 	db "github.com/lancer2672/DandelionServer_Go/db/sqlc"
-	"github.com/lancer2672/DandelionServer_Go/pb"
+	"github.com/lancer2672/DandelionServer_Go/pb/service"
 	"github.com/lancer2672/DandelionServer_Go/utils"
 )
 
 type Server struct {
-	pb.UnimplementedDandelionServer
+	service.UnimplementedDandelionServer
 	config utils.Config
 	store  *db.Store
 }

@@ -93,7 +93,7 @@ func runGatewayServer(config utils.Config, conn *sql.DB) {
 	ctx, cancel := context.WithCancel(context.Background())
 	//prevent system doing unnecessary works
 	defer cancel()
-	err := pb.RegisterDandelionHandlerServer(ctx, grpcMux, server)
+	err := service.RegisterDandelionHandlerServer(ctx, grpcMux, server)
 	if err != nil {
 		log.Fatal("Cannot create register server")
 	}

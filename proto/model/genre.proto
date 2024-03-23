@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package pb;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/lancer2672/DandelionServer_Go/pb/model";
+
+message Genre {
+    int32 id = 1;
+    string name = 2;
+}
