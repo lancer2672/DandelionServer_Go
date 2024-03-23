@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package pb;
+
+import "request/movie-history.proto";
+import "request/genre.proto";
+import "request/movie.proto";
+import "request/vote.proto";
+import "model/movie.proto";
+import "google/protobuf/empty.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/lancer2672/DandelionServer_Go/pb/service";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Dandelion GRPC Server";
+    version: "1.0";
+    contact: {
+      name: "Dandelion_Go project";
+      url: "https://github.com/lancer2672/DandelionServer_Go";
+      email: "";
+    };
+  };
+};
+
+service Dandelion {
+    //movie-history
+    rpc CreateMovieHistory(CreateMovieHistoryRequest) returns (google.protobuf.Empty) {
+            option (google.api.http) = {
+                  post: "/movie/history"
+                  body: "*"
+                };
+    }
+    rpc GetMovieHistory(GetMovieHistoryRequest) returns (GetMovieHistoryResponse) {
+      option (google.api.http) = {
+          get: "/movie/history"
+      };
+    }
+
+    //genre
+    rpc GetListGenres(GetListGenresRequest) returns (GetListGenresResponse) {
+      option (google.api.http) = {
+          get: "/movie/genres"
+      };
+    }
+    //movie
+    rpc CreateMovie(CreateMovieRequest) returns (Movie) {
+      option (google.api.http) = {
+          post: "/movies"
+          body: "*"
+      };
+    }
+    rpc GetListMovies(GetListMoviesRequest) returns (GetListMoviesResponse) {
+        option (google.api.http) = {
+            get: "/movies"
+        };
+    }
+    rpc GetMovie(GetMovieRequest) returns (Movie) {
+        option (google.api.http) = {
+            get: "/movies/{id}"
+        };
+    } 
+    rpc GetMoviesByGenre(GetMoviesByGenreRequest) returns (GetMoviesByGenreResponse) {
+      option (google.api.http) = {
+          get: "/movies/genre/{genre_id}"
+      };
+    }
+    rpc GetMoviesBySerie(GetMoviesBySerieRequest) returns (GetMoviesBySerieResponse) {
+        option (google.api.http) = {
+            get: "/movies/serie/{id}"
+        };
+    }
+    rpc GetRecentMovies(GetRecentMoviesRequest) returns (GetRecentMoviesResponse) {
+      option (google.api.http) = {
+          get: "/movies/recent"
+      };
+    }
+    rpc SearchMovies(SearchMoviesRequest) returns (SearchMoviesResponse) {
+        option (google.api.http) = {
+            get: "/movies/search"
+        };
+    }
+
+    //Vote
+    rpc GetVotesByUser(GetVotesByUserRequest) returns (GetVotesByUserResponse) {
+      option (google.api.http) = {
+          get: "/movie/votes/user/{user_id}"
+      };
+  }
+};

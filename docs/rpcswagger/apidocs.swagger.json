@@ -20,6 +20,45 @@
     "application/json"
   ],
   "paths": {
+    "/movie/genres": {
+      "get": {
+        "summary": "genre",
+        "operationId": "Dandelion_GetListGenres",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetListGenresResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Dandelion"
+        ]
+      }
+    },
     "/movie/history": {
       "get": {
         "operationId": "Dandelion_GetMovieHistory",
@@ -58,6 +97,7 @@
         ]
       },
       "post": {
+        "summary": "movie-history",
         "operationId": "Dandelion_CreateMovieHistory",
         "responses": {
           "200": {
@@ -88,6 +128,303 @@
           "Dandelion"
         ]
       }
+    },
+    "/movie/votes/user/{userId}": {
+      "get": {
+        "summary": "Vote",
+        "operationId": "Dandelion_GetVotesByUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetVotesByUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Dandelion"
+        ]
+      }
+    },
+    "/movies": {
+      "get": {
+        "operationId": "Dandelion_GetListMovies",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetListMoviesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Dandelion"
+        ]
+      },
+      "post": {
+        "summary": "movie",
+        "operationId": "Dandelion_CreateMovie",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbMovie"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbCreateMovieRequest"
+            }
+          }
+        ],
+        "tags": [
+          "Dandelion"
+        ]
+      }
+    },
+    "/movies/genre/{genreId}": {
+      "get": {
+        "operationId": "Dandelion_GetMoviesByGenre",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetMoviesByGenreResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "genreId",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Dandelion"
+        ]
+      }
+    },
+    "/movies/recent": {
+      "get": {
+        "operationId": "Dandelion_GetRecentMovies",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetRecentMoviesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Dandelion"
+        ]
+      }
+    },
+    "/movies/search": {
+      "get": {
+        "operationId": "Dandelion_SearchMovies",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbSearchMoviesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "column1",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Dandelion"
+        ]
+      }
+    },
+    "/movies/serie/{id}": {
+      "get": {
+        "operationId": "Dandelion_GetMoviesBySerie",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetMoviesBySerieResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "Dandelion"
+        ]
+      }
+    },
+    "/movies/{id}": {
+      "get": {
+        "operationId": "Dandelion_GetMovie",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbMovie"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "tags": [
+          "Dandelion"
+        ]
+      }
     }
   },
   "definitions": {
@@ -111,6 +448,81 @@
           "type": "string",
           "format": "date-time"
         }
+      },
+      "title": "Create"
+    },
+    "pbCreateMovieRequest": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "description": {
+          "type": "string"
+        },
+        "actorAvatars": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "trailer": {
+          "type": "string"
+        },
+        "filePath": {
+          "type": "string"
+        },
+        "thumbnail": {
+          "type": "string"
+        },
+        "views": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "stars": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "pbGenre": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "pbGetListGenresResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbGenre"
+          }
+        }
+      }
+    },
+    "pbGetListMoviesResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbMovie"
+          }
+        }
       }
     },
     "pbGetMovieHistoryResponse": {
@@ -122,6 +534,100 @@
             "type": "object",
             "$ref": "#/definitions/pbMovieHistory"
           }
+        }
+      }
+    },
+    "pbGetMoviesByGenreResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbMovie"
+          }
+        }
+      }
+    },
+    "pbGetMoviesBySerieResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbMovie"
+          }
+        }
+      }
+    },
+    "pbGetRecentMoviesResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbMovie"
+          }
+        }
+      }
+    },
+    "pbGetVotesByUserResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbVote"
+          }
+        }
+      }
+    },
+    "pbMovie": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "title": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "description": {
+          "type": "string"
+        },
+        "actorAvatars": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "trailer": {
+          "type": "string"
+        },
+        "filePath": {
+          "type": "string"
+        },
+        "thumbnail": {
+          "type": "string"
+        },
+        "views": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "stars": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -144,6 +650,39 @@
         "lastWatched": {
           "type": "string",
           "format": "date-time"
+        }
+      }
+    },
+    "pbSearchMoviesResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbMovie"
+          }
+        }
+      }
+    },
+    "pbVote": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "userId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "movieId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "stars": {
+          "type": "integer",
+          "format": "int32"
         }
       }
     },

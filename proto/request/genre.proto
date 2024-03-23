@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pb;
+import "model/genre.proto";
+
+option go_package = "github.com/lancer2672/DandelionServer_Go/pb/request";
+
+message GetListGenresRequest {
+    int64 limit = 1;
+    int64 offset = 2;
+}
+
+message GetListGenresResponse {
+    repeated Genre data = 1;
+}

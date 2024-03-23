@@ -2,11 +2,13 @@ syntax = "proto3";
 
 package pb;
 
+import "model/movie_history.proto";
 
 import "google/protobuf/timestamp.proto";
-
 option go_package = "github.com/lancer2672/DandelionServer_Go/pb/request";
 
+
+//Create
 message CreateMovieHistoryRequest {
     //small number'd be better
     int32  movie_id      = 1;
@@ -15,4 +17,14 @@ message CreateMovieHistoryRequest {
     google.protobuf.Timestamp last_watched = 4;
 }
 message CreateMovieHistoryResponse {
+}
+
+
+//GET
+message GetMovieHistoryRequest {
+    int32  user_id      = 1;
+    int32 watched_duration = 3 ;
+}
+message GetMovieHistoryResponse {
+    repeated MovieHistory  data = 1;
 }

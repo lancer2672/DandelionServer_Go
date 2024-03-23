@@ -6,14 +6,6 @@ import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/lancer2672/DandelionServer_Go/pb/model";
 
-syntax = "proto3";
-
-package pb;
-
-import "google/protobuf/timestamp.proto";
-
-option go_package = "github.com/lancer2672/DandelionServer_Go/pb/model";
-
 message Movie {
     int32 id = 1;
     string title = 2;
