@@ -7,16 +7,18 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/lancer2672/DandelionServer_Go/api/server"
 	"github.com/lancer2672/DandelionServer_Go/pb"
 	"github.com/lancer2672/DandelionServer_Go/server/sgrpc"
+	"github.com/lancer2672/DandelionServer_Go/utils"
+	_ "github.com/lib/pq"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/protobuf/encoding/protojson"
-
-	"github.com/lancer2672/DandelionServer_Go/utils"
-	_ "github.com/lib/pq"
 )
 
 // @title           Swagger Example API
@@ -47,6 +49,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Cannot connect to database", err)
 	}
+	runDatabaseMigration(serverConfig.MigrationUrl, serverConfig.DBSource)
 	go runGatewayServer(serverConfig, conn)
 	runGrpcServer(serverConfig, conn)
 	// runGinServer(serverConfig, conn)
@@ -86,6 +89,7 @@ func runGatewayServer(config utils.Config, conn *sql.DB) {
 			},
 		}),
 	)
+
 	ctx, cancel := context.WithCancel(context.Background())
 	//prevent system doing unnecessary works
 	defer cancel()
@@ -95,9 +99,6 @@ func runGatewayServer(config utils.Config, conn *sql.DB) {
 	}
 	mux := http.NewServeMux()
 	mux.Handle("/", grpcMux)
-
-	//allow clients to see avaiable grpc server ~ self document
-
 	listener, err := net.Listen("tcp", config.ServerAddress)
 	if err != nil {
 		log.Fatal("Cannot create listener GRPC")
@@ -109,10 +110,25 @@ func runGatewayServer(config utils.Config, conn *sql.DB) {
 	}
 
 }
+
 func runGinServer(config utils.Config, conn *sql.DB) {
 	server := server.NewServer(config, conn)
 	err := server.Start()
 	if err != nil {
 		log.Fatal("Cannot start server", err)
 	}
+}
+
+func runDatabaseMigration(url string, dbSource string) {
+	m, err := migrate.New(
+		url,
+		dbSource)
+	if err != nil {
+		log.Fatal("cannot create migrate instance ", err)
+	}
+	if err = m.Up(); err != nil && err != migrate.ErrNoChange {
+		log.Fatal("failed to migrate up", err)
+	}
+	log.Println("run db migration successfully")
+
 }

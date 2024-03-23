@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package pb;
 
-import "movie_history.proto";
+import "model/movie_history.proto";
 
 option go_package = "github.com/lancer2672/DandelionServer_Go/pb";
 

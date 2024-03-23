@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.12.4
-// source: service_movie_history.proto
+// source: service/service_movie_history.proto
 
 package pb
 
@@ -143,5 +143,5 @@ var Dandelion_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "service_movie_history.proto",
+	Metadata: "service/service_movie_history.proto",
 }
