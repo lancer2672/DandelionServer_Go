@@ -28,3 +28,8 @@ message MoviesSeries {
     int32 movie_id = 2;
     int32 series_id = 3;
 }
+message WatchingMovie {
+    Movie movie = 1;
+    float watched_duration = 2;
+    google.protobuf.Timestamp last_watched = 3;
+}

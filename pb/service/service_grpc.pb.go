@@ -32,6 +32,7 @@ const (
 	Dandelion_GetMoviesBySerie_FullMethodName   = "/pb.Dandelion/GetMoviesBySerie"
 	Dandelion_GetRecentMovies_FullMethodName    = "/pb.Dandelion/GetRecentMovies"
 	Dandelion_SearchMovies_FullMethodName       = "/pb.Dandelion/SearchMovies"
+	Dandelion_GetWatchingMovies_FullMethodName  = "/pb.Dandelion/GetWatchingMovies"
 	Dandelion_GetVotesByUser_FullMethodName     = "/pb.Dandelion/GetVotesByUser"
 )
 
@@ -52,6 +53,7 @@ type DandelionClient interface {
 	GetMoviesBySerie(ctx context.Context, in *request.GetMoviesBySerieRequest, opts ...grpc.CallOption) (*request.GetMoviesBySerieResponse, error)
 	GetRecentMovies(ctx context.Context, in *request.GetRecentMoviesRequest, opts ...grpc.CallOption) (*request.GetRecentMoviesResponse, error)
 	SearchMovies(ctx context.Context, in *request.SearchMoviesRequest, opts ...grpc.CallOption) (*request.SearchMoviesResponse, error)
+	GetWatchingMovies(ctx context.Context, in *request.GetWatchingMoviesRequest, opts ...grpc.CallOption) (*request.GetWatchingMoviesResponse, error)
 	// Vote
 	GetVotesByUser(ctx context.Context, in *request.GetVotesByUserRequest, opts ...grpc.CallOption) (*request.GetVotesByUserResponse, error)
 }
@@ -154,6 +156,15 @@ func (c *dandelionClient) SearchMovies(ctx context.Context, in *request.SearchMo
 	return out, nil
 }
 
+func (c *dandelionClient) GetWatchingMovies(ctx context.Context, in *request.GetWatchingMoviesRequest, opts ...grpc.CallOption) (*request.GetWatchingMoviesResponse, error) {
+	out := new(request.GetWatchingMoviesResponse)
+	err := c.cc.Invoke(ctx, Dandelion_GetWatchingMovies_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *dandelionClient) GetVotesByUser(ctx context.Context, in *request.GetVotesByUserRequest, opts ...grpc.CallOption) (*request.GetVotesByUserResponse, error) {
 	out := new(request.GetVotesByUserResponse)
 	err := c.cc.Invoke(ctx, Dandelion_GetVotesByUser_FullMethodName, in, out, opts...)
@@ -180,6 +191,7 @@ type DandelionServer interface {
 	GetMoviesBySerie(context.Context, *request.GetMoviesBySerieRequest) (*request.GetMoviesBySerieResponse, error)
 	GetRecentMovies(context.Context, *request.GetRecentMoviesRequest) (*request.GetRecentMoviesResponse, error)
 	SearchMovies(context.Context, *request.SearchMoviesRequest) (*request.SearchMoviesResponse, error)
+	GetWatchingMovies(context.Context, *request.GetWatchingMoviesRequest) (*request.GetWatchingMoviesResponse, error)
 	// Vote
 	GetVotesByUser(context.Context, *request.GetVotesByUserRequest) (*request.GetVotesByUserResponse, error)
 	mustEmbedUnimplementedDandelionServer()
@@ -218,6 +230,9 @@ func (UnimplementedDandelionServer) GetRecentMovies(context.Context, *request.Ge
 }
 func (UnimplementedDandelionServer) SearchMovies(context.Context, *request.SearchMoviesRequest) (*request.SearchMoviesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchMovies not implemented")
+}
+func (UnimplementedDandelionServer) GetWatchingMovies(context.Context, *request.GetWatchingMoviesRequest) (*request.GetWatchingMoviesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWatchingMovies not implemented")
 }
 func (UnimplementedDandelionServer) GetVotesByUser(context.Context, *request.GetVotesByUserRequest) (*request.GetVotesByUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVotesByUser not implemented")
@@ -415,6 +430,24 @@ func _Dandelion_SearchMovies_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Dandelion_GetWatchingMovies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(request.GetWatchingMoviesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DandelionServer).GetWatchingMovies(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Dandelion_GetWatchingMovies_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DandelionServer).GetWatchingMovies(ctx, req.(*request.GetWatchingMoviesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Dandelion_GetVotesByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.GetVotesByUserRequest)
 	if err := dec(in); err != nil {
@@ -479,6 +512,10 @@ var Dandelion_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchMovies",
 			Handler:    _Dandelion_SearchMovies_Handler,
+		},
+		{
+			MethodName: "GetWatchingMovies",
+			Handler:    _Dandelion_GetWatchingMovies_Handler,
 		},
 		{
 			MethodName: "GetVotesByUser",

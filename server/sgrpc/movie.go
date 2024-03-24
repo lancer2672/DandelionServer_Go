@@ -3,6 +3,7 @@ package sgrpc
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	db "github.com/lancer2672/DandelionServer_Go/db/sqlc"
 	"github.com/lancer2672/DandelionServer_Go/pb/model"
@@ -14,7 +15,11 @@ import (
 )
 
 func (server *Server) GetRecentMovies(ctx context.Context, req *request.GetRecentMoviesRequest) (*request.GetRecentMoviesResponse, error) {
-	list, err := server.store.GetRecentMovies(ctx, req.GetLimit())
+	args := db.GetRecentMoviesParams{
+		Limit:  req.GetLimit(),
+		Offset: req.GetOffset(),
+	}
+	list, err := server.store.GetRecentMovies(ctx, args)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to get recent movies")
 	}
@@ -40,7 +45,7 @@ func (server *Server) GetRecentMovies(ctx context.Context, req *request.GetRecen
 
 func (server *Server) SearchMovies(ctx context.Context, req *request.SearchMoviesRequest) (*request.SearchMoviesResponse, error) {
 	args := db.SearchMoviesParams{
-		Column1: sql.NullString{String: req.GetColumn1(), Valid: true},
+		Column1: sql.NullString{String: req.GetColumn_1(), Valid: true},
 		Limit:   req.GetLimit(),
 		Offset:  req.GetOffset(),
 	}
@@ -83,8 +88,6 @@ func (server *Server) CreateMovie(ctx context.Context, req *request.CreateMovieR
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to create movie")
 	}
-
-	// Assuming the store returns the created movie
 	movie := &model.Movie{
 		Title:        args.Title,
 		Duration:     args.Duration,
@@ -208,5 +211,39 @@ func (server *Server) GetMoviesBySerie(ctx context.Context, req *request.GetMovi
 		})
 	}
 	response := &request.GetMoviesBySerieResponse{Data: pbList}
+	return response, nil
+}
+func (server *Server) GetWatchingMovies(ctx context.Context, req *request.GetWatchingMoviesRequest) (*request.GetWatchingMoviesResponse, error) {
+	args := db.GetWatchingMoviesParams{
+		UserID: req.GetUserId(),
+		Limit:  req.GetLimit(),
+		Offset: req.GetOffset(),
+	}
+	fmt.Println("AGRS", args)
+	list, err := server.store.GetWatchingMovies(ctx, args)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Failed to get watching movies")
+	}
+	var pbList []*model.WatchingMovie
+	for _, movie := range list {
+		pbList = append(pbList, &model.WatchingMovie{
+			Movie: &model.Movie{
+				Id:           movie.ID,
+				Title:        movie.Title,
+				Duration:     movie.Duration,
+				Description:  movie.Description,
+				ActorAvatars: movie.ActorAvatars,
+				Trailer:      movie.Trailer,
+				FilePath:     movie.FilePath,
+				Thumbnail:    movie.Thumbnail,
+				Views:        movie.Views,
+				Stars:        movie.Stars,
+				CreatedAt:    timestamppb.New(movie.CreatedAt),
+			},
+			WatchedDuration: float32(movie.WatchedDuration),
+			LastWatched:     timestamppb.New(movie.LastWatched),
+		})
+	}
+	response := &request.GetWatchingMoviesResponse{Data: pbList}
 	return response, nil
 }

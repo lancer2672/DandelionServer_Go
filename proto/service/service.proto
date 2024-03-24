@@ -82,7 +82,11 @@ service Dandelion {
             get: "/movies/search"
         };
     }
-
+    rpc GetWatchingMovies(GetWatchingMoviesRequest) returns (GetWatchingMoviesResponse) {
+      option (google.api.http) = {
+          get: "/movies/watching/{user_id}"
+      };
+    }
     //Vote
     rpc GetVotesByUser(GetVotesByUserRequest) returns (GetVotesByUserResponse) {
       option (google.api.http) = {

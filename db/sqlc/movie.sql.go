@@ -303,7 +303,7 @@ func (q *Queries) GetRecentMovies(ctx context.Context, arg GetRecentMoviesParams
 }
 
 const getWatchingMovies = `-- name: GetWatchingMovies :many
-SELECT movies.id, movies.title, movies.duration, movies.description, movies.actor_avatars, movies.trailer, movies.file_path, movies.thumbnail, movies.views, movies.stars, movies.created_at FROM movies
+SELECT movies.id, movies.title, movies.duration, movies.description, movies.actor_avatars, movies.trailer, movies.file_path, movies.thumbnail, movies.views, movies.stars, movies.created_at , movie_history.watched_duration, movie_history.last_watched FROM movies
 JOIN movie_history ON movies.id = movie_history.movie_id
 WHERE movie_history.user_id = $1 AND (movie_history.watched_duration / movies.duration) > 0.9
 ORDER BY movie_history.last_watched DESC
@@ -317,15 +317,31 @@ type GetWatchingMoviesParams struct {
 	Offset int64 `json:"offset"`
 }
 
-func (q *Queries) GetWatchingMovies(ctx context.Context, arg GetWatchingMoviesParams) ([]Movie, error) {
+type GetWatchingMoviesRow struct {
+	ID              int32     `json:"id"`
+	Title           string    `json:"title"`
+	Duration        int32     `json:"duration"`
+	Description     string    `json:"description"`
+	ActorAvatars    []string  `json:"actor_avatars"`
+	Trailer         string    `json:"trailer"`
+	FilePath        string    `json:"file_path"`
+	Thumbnail       string    `json:"thumbnail"`
+	Views           int32     `json:"views"`
+	Stars           int32     `json:"stars"`
+	CreatedAt       time.Time `json:"created_at"`
+	WatchedDuration int32     `json:"watched_duration"`
+	LastWatched     time.Time `json:"last_watched"`
+}
+
+func (q *Queries) GetWatchingMovies(ctx context.Context, arg GetWatchingMoviesParams) ([]GetWatchingMoviesRow, error) {
 	rows, err := q.query(ctx, q.getWatchingMoviesStmt, getWatchingMovies, arg.UserID, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	items := []Movie{}
+	items := []GetWatchingMoviesRow{}
 	for rows.Next() {
-		var i Movie
+		var i GetWatchingMoviesRow
 		if err := rows.Scan(
 			&i.ID,
 			&i.Title,
@@ -338,6 +354,8 @@ func (q *Queries) GetWatchingMovies(ctx context.Context, arg GetWatchingMoviesPa
 			&i.Views,
 			&i.Stars,
 			&i.CreatedAt,
+			&i.WatchedDuration,
+			&i.LastWatched,
 		); err != nil {
 			return nil, err
 		}

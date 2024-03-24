@@ -19,7 +19,7 @@ type Querier interface {
 	GetMoviesBySerie(ctx context.Context, arg GetMoviesBySerieParams) ([]GetMoviesBySerieRow, error)
 	GetRecentMovies(ctx context.Context, arg GetRecentMoviesParams) ([]Movie, error)
 	GetVotesByUser(ctx context.Context, userID int32) ([]Vote, error)
-	GetWatchingMovies(ctx context.Context, arg GetWatchingMoviesParams) ([]Movie, error)
+	GetWatchingMovies(ctx context.Context, arg GetWatchingMoviesParams) ([]GetWatchingMoviesRow, error)
 	SearchMovies(ctx context.Context, arg SearchMoviesParams) ([]Movie, error)
 	UpdateMovieHistory(ctx context.Context, arg UpdateMovieHistoryParams) error
 }

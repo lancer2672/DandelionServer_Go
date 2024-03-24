@@ -65,12 +65,12 @@ func runGrpcServer(config utils.Config, conn *sql.DB) {
 	reflection.Register(grpcServer)
 	listener, err := net.Listen("tcp", config.GRPCServerAddress)
 	if err != nil {
-		log.Fatal("Cannot create listener GRPC")
+		log.Fatal("Cannot create listener GRPC", err)
 	}
-	log.Println("GRPC Server started")
+	log.Println("GRPC Server started", config.GRPCServerAddress)
 	err = grpcServer.Serve(listener)
 	if err != nil {
-		log.Fatal("Cannot start GRPC")
+		log.Fatal("Cannot start GRPC", err)
 	}
 
 }
@@ -101,12 +101,12 @@ func runGatewayServer(config utils.Config, conn *sql.DB) {
 	mux.Handle("/", grpcMux)
 	listener, err := net.Listen("tcp", config.ServerAddress)
 	if err != nil {
-		log.Fatal("Cannot create listener GRPC")
+		log.Fatal("Cannot create listener HTTP Gateway", err)
 	}
-	log.Println("HTTP gateway Server started")
+	log.Println("HTTP gateway Server started", config.ServerAddress)
 	err = http.Serve(listener, mux)
 	if err != nil {
-		log.Fatal("Cannot start GRPC")
+		log.Fatal("Cannot start HTTP Gateway", err)
 	}
 
 }

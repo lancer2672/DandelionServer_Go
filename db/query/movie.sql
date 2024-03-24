@@ -44,7 +44,7 @@ INSERT INTO movies
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
 
 -- name: GetWatchingMovies :many
-SELECT movies.* FROM movies
+SELECT movies.* , movie_history.watched_duration, movie_history.last_watched FROM movies
 JOIN movie_history ON movies.id = movie_history.movie_id
 WHERE movie_history.user_id = $1 AND (movie_history.watched_duration / movies.duration) > 0.9
 ORDER BY movie_history.last_watched DESC

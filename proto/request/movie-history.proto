@@ -28,3 +28,4 @@ message GetMovieHistoryRequest {
 message GetMovieHistoryResponse {
     repeated MovieHistory  data = 1;
 }
+

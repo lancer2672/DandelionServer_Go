@@ -13,7 +13,7 @@ type MovieService struct {
 
 type MovieServiceInterface interface {
 	GetMovie(ctx context.Context, id int32) (db.Movie, error)
-	CreateMovie(ctx context.Context,arg db.CreateMovieParams) (error)
+	CreateMovie(ctx context.Context, arg db.CreateMovieParams) error
 	GetMoviesByGenre(ctx context.Context, arg db.GetMoviesByGenreParams) ([]db.GetMoviesByGenreRow, error)
 	GetMoviesBySerie(ctx context.Context, arg db.GetMoviesBySerieParams) ([]db.GetMoviesBySerieRow, error)
 	GetRecentMovies(ctx context.Context, limit int64) ([]db.Movie, error)
@@ -51,7 +51,11 @@ func (s *MovieService) GetMoviesBySerie(ctx context.Context, arg db.GetMoviesByS
 	return movies, nil
 }
 func (s *MovieService) GetRecentMovies(ctx context.Context, limit int64) ([]db.Movie, error) {
-	movies, err := s.store.GetRecentMovies(ctx, limit)
+	args := db.GetRecentMoviesParams{
+		Limit:  limit,
+		Offset: 0,
+	}
+	movies, err := s.store.GetRecentMovies(ctx, args)
 	if err != nil {
 		return nil, err
 	}
@@ -64,10 +68,10 @@ func (s *MovieService) SearchMovies(ctx context.Context, arg db.SearchMoviesPara
 	}
 	return movies, nil
 }
-func (s *MovieService) CreateMovie(ctx context.Context, arg db.CreateMovieParams) ( error) {
+func (s *MovieService) CreateMovie(ctx context.Context, arg db.CreateMovieParams) error {
 	err := s.store.CreateMovie(ctx, arg)
 	if err != nil {
-		return  err
+		return err
 	}
-	return  nil
+	return nil
 }
