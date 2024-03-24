@@ -28,25 +28,24 @@ INSERT INTO "movie_genres" ("movie_id", "genre_id") VALUES
 (2, 2),
 (2, 3);
 
--- Thêm dữ liệu cho bảng "rooms"
-INSERT INTO "rooms" ("id", "movie_id", "created_by", "created_at") VALUES
-(1, 1, 'user1', NOW()),
-(2, 2, 'user2', NOW());
+-- Thêm dữ liệu cho bảng "movie_history"
+INSERT INTO "movie_history" ("id", "user_id", "movie_id", "watched_duration", "last_watched") VALUES
+(1, 1, 1, 60, '2022-01-01 00:00:00'),
+(2, 1, 2, 45, '2022-01-02 00:00:00'),
+(3, 2, 1, 120, '2022-01-03 00:00:00'),
+(4, 3, 2, 90, '2022-01-04 00:00:00');
 
--- Thêm dữ liệu cho bảng "user_rooms"
-INSERT INTO "user_rooms" ("id", "user_id", "room_id", "joined_at") VALUES
-(1, 1, 1, NOW()),
-(2, 2, 1, NOW()),
-(3, 3, 2, NOW());
+-- Thêm dữ liệu cho bảng "movies_series"
+INSERT INTO "movies_series" ("id", "movie_id", "series_id") VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 1, 2),
+(4, 2, 2);
 
 -- Thêm dữ liệu cho bảng "votes"
 INSERT INTO "votes" ("id", "user_id", "movie_id", "stars") VALUES
 (1, 1, 1, 5),
-(2, 2, 1, 4),
-(3, 3, 2, 3);
+(2, 1, 2, 4),
+(3, 2, 1, 5),
+(4, 3, 2, 4);
 
--- Thêm dữ liệu cho bảng "user_rooms_chat"
-INSERT INTO "user_rooms_chat" ("id", "room_id", "user_id", "message", "sent_at") VALUES
-(1, 1, 1, 'Message 1 in Room 1', NOW()),
-(2, 1, 2, 'Message 2 in Room 1', NOW()),
-(3, 2, 3, 'Message 1 in Room 2', NOW());

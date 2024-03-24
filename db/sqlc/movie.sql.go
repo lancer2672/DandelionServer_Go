@@ -259,10 +259,66 @@ const getRecentMovies = `-- name: GetRecentMovies :many
 SELECT id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at FROM movies
 ORDER BY movies.created_at DESC
 LIMIT $1
+OFFSET $2
 `
 
-func (q *Queries) GetRecentMovies(ctx context.Context, limit int64) ([]Movie, error) {
-	rows, err := q.query(ctx, q.getRecentMoviesStmt, getRecentMovies, limit)
+type GetRecentMoviesParams struct {
+	Limit  int64 `json:"limit"`
+	Offset int64 `json:"offset"`
+}
+
+func (q *Queries) GetRecentMovies(ctx context.Context, arg GetRecentMoviesParams) ([]Movie, error) {
+	rows, err := q.query(ctx, q.getRecentMoviesStmt, getRecentMovies, arg.Limit, arg.Offset)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	items := []Movie{}
+	for rows.Next() {
+		var i Movie
+		if err := rows.Scan(
+			&i.ID,
+			&i.Title,
+			&i.Duration,
+			&i.Description,
+			pq.Array(&i.ActorAvatars),
+			&i.Trailer,
+			&i.FilePath,
+			&i.Thumbnail,
+			&i.Views,
+			&i.Stars,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getWatchingMovies = `-- name: GetWatchingMovies :many
+SELECT movies.id, movies.title, movies.duration, movies.description, movies.actor_avatars, movies.trailer, movies.file_path, movies.thumbnail, movies.views, movies.stars, movies.created_at FROM movies
+JOIN movie_history ON movies.id = movie_history.movie_id
+WHERE movie_history.user_id = $1 AND (movie_history.watched_duration / movies.duration) > 0.9
+ORDER BY movie_history.last_watched DESC
+LIMIT $2
+OFFSET $3
+`
+
+type GetWatchingMoviesParams struct {
+	UserID int32 `json:"user_id"`
+	Limit  int64 `json:"limit"`
+	Offset int64 `json:"offset"`
+}
+
+func (q *Queries) GetWatchingMovies(ctx context.Context, arg GetWatchingMoviesParams) ([]Movie, error) {
+	rows, err := q.query(ctx, q.getWatchingMoviesStmt, getWatchingMovies, arg.UserID, arg.Limit, arg.Offset)
 	if err != nil {
 		return nil, err
 	}

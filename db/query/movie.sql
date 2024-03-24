@@ -28,7 +28,8 @@ OFFSET $2;
 -- name: GetRecentMovies :many
 SELECT * FROM movies
 ORDER BY movies.created_at DESC
-LIMIT $1;
+LIMIT $1
+OFFSET $2;
 
 -- name: SearchMovies :many
 SELECT * FROM movies
@@ -41,3 +42,13 @@ OFFSET $3;
 INSERT INTO movies
  (title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
+
+-- name: GetWatchingMovies :many
+SELECT movies.* FROM movies
+JOIN movie_history ON movies.id = movie_history.movie_id
+WHERE movie_history.user_id = $1 AND (movie_history.watched_duration / movies.duration) > 0.9
+ORDER BY movie_history.last_watched DESC
+LIMIT $2
+OFFSET $3;
+
+

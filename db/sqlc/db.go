@@ -54,6 +54,9 @@ func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
 	if q.getVotesByUserStmt, err = db.PrepareContext(ctx, getVotesByUser); err != nil {
 		return nil, fmt.Errorf("error preparing query GetVotesByUser: %w", err)
 	}
+	if q.getWatchingMoviesStmt, err = db.PrepareContext(ctx, getWatchingMovies); err != nil {
+		return nil, fmt.Errorf("error preparing query GetWatchingMovies: %w", err)
+	}
 	if q.searchMoviesStmt, err = db.PrepareContext(ctx, searchMovies); err != nil {
 		return nil, fmt.Errorf("error preparing query SearchMovies: %w", err)
 	}
@@ -115,6 +118,11 @@ func (q *Queries) Close() error {
 			err = fmt.Errorf("error closing getVotesByUserStmt: %w", cerr)
 		}
 	}
+	if q.getWatchingMoviesStmt != nil {
+		if cerr := q.getWatchingMoviesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing getWatchingMoviesStmt: %w", cerr)
+		}
+	}
 	if q.searchMoviesStmt != nil {
 		if cerr := q.searchMoviesStmt.Close(); cerr != nil {
 			err = fmt.Errorf("error closing searchMoviesStmt: %w", cerr)
@@ -174,6 +182,7 @@ type Queries struct {
 	getMoviesBySerieStmt        *sql.Stmt
 	getRecentMoviesStmt         *sql.Stmt
 	getVotesByUserStmt          *sql.Stmt
+	getWatchingMoviesStmt       *sql.Stmt
 	searchMoviesStmt            *sql.Stmt
 	updateMovieHistoryStmt      *sql.Stmt
 }
@@ -192,6 +201,7 @@ func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 		getMoviesBySerieStmt:        q.getMoviesBySerieStmt,
 		getRecentMoviesStmt:         q.getRecentMoviesStmt,
 		getVotesByUserStmt:          q.getVotesByUserStmt,
+		getWatchingMoviesStmt:       q.getWatchingMoviesStmt,
 		searchMoviesStmt:            q.searchMoviesStmt,
 		updateMovieHistoryStmt:      q.updateMovieHistoryStmt,
 	}

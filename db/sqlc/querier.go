@@ -17,8 +17,9 @@ type Querier interface {
 	GetMovieHistoryByUserId(ctx context.Context, userID int32) ([]MovieHistory, error)
 	GetMoviesByGenre(ctx context.Context, arg GetMoviesByGenreParams) ([]GetMoviesByGenreRow, error)
 	GetMoviesBySerie(ctx context.Context, arg GetMoviesBySerieParams) ([]GetMoviesBySerieRow, error)
-	GetRecentMovies(ctx context.Context, limit int64) ([]Movie, error)
+	GetRecentMovies(ctx context.Context, arg GetRecentMoviesParams) ([]Movie, error)
 	GetVotesByUser(ctx context.Context, userID int32) ([]Vote, error)
+	GetWatchingMovies(ctx context.Context, arg GetWatchingMoviesParams) ([]Movie, error)
 	SearchMovies(ctx context.Context, arg SearchMoviesParams) ([]Movie, error)
 	UpdateMovieHistory(ctx context.Context, arg UpdateMovieHistoryParams) error
 }

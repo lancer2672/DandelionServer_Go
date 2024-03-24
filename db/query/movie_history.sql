@@ -12,3 +12,4 @@ WHERE movie_id = $3;
 SELECT * FROM movie_history
 WHERE user_id = $1
 ORDER BY last_watched DESC;
+
