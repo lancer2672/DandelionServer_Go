@@ -10,6 +10,7 @@ import (
 	"github.com/lancer2672/DandelionServer_Go/pb/request"
 
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -73,6 +74,11 @@ func (server *Server) SearchMovies(ctx context.Context, req *request.SearchMovie
 	return response, nil
 }
 func (server *Server) CreateMovie(ctx context.Context, req *request.CreateMovieRequest) (*model.Movie, error) {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return nil, status.Errorf(codes.Internal, "Failed to get metadata")
+	}
+	fmt.Println("Metadata", md)
 	args := db.CreateMovieParams{
 		Title:        req.GetTitle(),
 		Duration:     req.GetDuration(),

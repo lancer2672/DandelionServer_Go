@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	apicalls "github.com/lancer2672/DandelionServer_Go/api_calls"
+	"github.com/lancer2672/DandelionServer_Go/utils"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
@@ -31,13 +33,28 @@ func AuthInterceptor(ctx context.Context, req interface{}, info *grpc.UnaryServe
 
 func CheckApiKey(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		apiKey := r.Header.Get("x-api-key")
-		fmt.Println("APIHEADER", apiKey)
-		// if apiKey != "admin_api_key" && apiKey != "editor_api_key" && apiKey != "user_api_key" {
-		// 	http.Error(w, "Invalid API Key", http.StatusUnauthorized)
-		// 	return
-		// } else {
-		// }
+		//check permission to add movie
+		if r.Method == "POST" && r.URL.Path == "/movies" {
+			apiKey := r.Header.Get("x-api-key")
+			fmt.Println("APIHEADER", apiKey)
+			role, permission, err := apicalls.GetInstance().CheckApiKey(apiKey)
+			if err != nil {
+				http.Error(w, "Invalid API Key", http.StatusUnauthorized)
+				return
+			}
+			// 			editor_api_key
+			// admin_api_key
+			// user_api_key
+			if role.Name == "admin_api_key" && utils.StringInSlice("movie", permission.Write) {
+				fmt.Println("Permission granted")
+			} else {
+				http.Error(w, "Permission denied", http.StatusUnauthorized)
+				return
+			}
+			fmt.Println("ROLE", role)
+			fmt.Println("PERMISSION", permission)
+		}
+
 		next.ServeHTTP(w, r)
 	})
 }

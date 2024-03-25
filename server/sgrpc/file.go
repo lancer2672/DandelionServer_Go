@@ -5,9 +5,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/lancer2672/DandelionServer_Go/pb/service"
-
 	"github.com/lancer2672/DandelionServer_Go/pb/request"
+	"github.com/lancer2672/DandelionServer_Go/pb/service"
 )
 
 func (server *Server) SendFile(r *request.SendFileRequest, stream service.MovieService_SendFileServer) error {
@@ -29,7 +28,6 @@ func (server *Server) SendFile(r *request.SendFileRequest, stream service.MovieS
 			}
 			return err
 		}
-
 		feature := &request.SendFileResponse{
 			Chunk: buffer[:n],
 		}
