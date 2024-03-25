@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pb;
+import "model/genre.proto";
+
+option go_package = "github.com/lancer2672/DandelionServer_Go/pb/request";
+
+  
+message SendFileRequest {
+  string filename = 1;
+}
+
+message SendFileResponse {
+  bytes chunk = 1;
+}

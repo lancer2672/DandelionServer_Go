@@ -22,24 +22,25 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Dandelion_CreateMovieHistory_FullMethodName = "/pb.Dandelion/CreateMovieHistory"
-	Dandelion_GetMovieHistory_FullMethodName    = "/pb.Dandelion/GetMovieHistory"
-	Dandelion_GetListGenres_FullMethodName      = "/pb.Dandelion/GetListGenres"
-	Dandelion_CreateMovie_FullMethodName        = "/pb.Dandelion/CreateMovie"
-	Dandelion_GetListMovies_FullMethodName      = "/pb.Dandelion/GetListMovies"
-	Dandelion_GetMovie_FullMethodName           = "/pb.Dandelion/GetMovie"
-	Dandelion_GetMoviesByGenre_FullMethodName   = "/pb.Dandelion/GetMoviesByGenre"
-	Dandelion_GetMoviesBySerie_FullMethodName   = "/pb.Dandelion/GetMoviesBySerie"
-	Dandelion_GetRecentMovies_FullMethodName    = "/pb.Dandelion/GetRecentMovies"
-	Dandelion_SearchMovies_FullMethodName       = "/pb.Dandelion/SearchMovies"
-	Dandelion_GetWatchingMovies_FullMethodName  = "/pb.Dandelion/GetWatchingMovies"
-	Dandelion_GetVotesByUser_FullMethodName     = "/pb.Dandelion/GetVotesByUser"
+	MovieService_CreateMovieHistory_FullMethodName = "/pb.MovieService/CreateMovieHistory"
+	MovieService_GetMovieHistory_FullMethodName    = "/pb.MovieService/GetMovieHistory"
+	MovieService_GetListGenres_FullMethodName      = "/pb.MovieService/GetListGenres"
+	MovieService_CreateMovie_FullMethodName        = "/pb.MovieService/CreateMovie"
+	MovieService_GetListMovies_FullMethodName      = "/pb.MovieService/GetListMovies"
+	MovieService_GetMovie_FullMethodName           = "/pb.MovieService/GetMovie"
+	MovieService_GetMoviesByGenre_FullMethodName   = "/pb.MovieService/GetMoviesByGenre"
+	MovieService_GetMoviesBySerie_FullMethodName   = "/pb.MovieService/GetMoviesBySerie"
+	MovieService_GetRecentMovies_FullMethodName    = "/pb.MovieService/GetRecentMovies"
+	MovieService_SearchMovies_FullMethodName       = "/pb.MovieService/SearchMovies"
+	MovieService_GetWatchingMovies_FullMethodName  = "/pb.MovieService/GetWatchingMovies"
+	MovieService_GetVotesByUser_FullMethodName     = "/pb.MovieService/GetVotesByUser"
+	MovieService_SendFile_FullMethodName           = "/pb.MovieService/SendFile"
 )
 
-// DandelionClient is the client API for Dandelion service.
+// MovieServiceClient is the client API for MovieService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type DandelionClient interface {
+type MovieServiceClient interface {
 	// movie-history
 	CreateMovieHistory(ctx context.Context, in *request.CreateMovieHistoryRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 	GetMovieHistory(ctx context.Context, in *request.GetMovieHistoryRequest, opts ...grpc.CallOption) (*request.GetMovieHistoryResponse, error)
@@ -56,128 +57,161 @@ type DandelionClient interface {
 	GetWatchingMovies(ctx context.Context, in *request.GetWatchingMoviesRequest, opts ...grpc.CallOption) (*request.GetWatchingMoviesResponse, error)
 	// Vote
 	GetVotesByUser(ctx context.Context, in *request.GetVotesByUserRequest, opts ...grpc.CallOption) (*request.GetVotesByUserResponse, error)
+	SendFile(ctx context.Context, in *request.SendFileRequest, opts ...grpc.CallOption) (MovieService_SendFileClient, error)
 }
 
-type dandelionClient struct {
+type movieServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewDandelionClient(cc grpc.ClientConnInterface) DandelionClient {
-	return &dandelionClient{cc}
+func NewMovieServiceClient(cc grpc.ClientConnInterface) MovieServiceClient {
+	return &movieServiceClient{cc}
 }
 
-func (c *dandelionClient) CreateMovieHistory(ctx context.Context, in *request.CreateMovieHistoryRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *movieServiceClient) CreateMovieHistory(ctx context.Context, in *request.CreateMovieHistoryRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, Dandelion_CreateMovieHistory_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_CreateMovieHistory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) GetMovieHistory(ctx context.Context, in *request.GetMovieHistoryRequest, opts ...grpc.CallOption) (*request.GetMovieHistoryResponse, error) {
+func (c *movieServiceClient) GetMovieHistory(ctx context.Context, in *request.GetMovieHistoryRequest, opts ...grpc.CallOption) (*request.GetMovieHistoryResponse, error) {
 	out := new(request.GetMovieHistoryResponse)
-	err := c.cc.Invoke(ctx, Dandelion_GetMovieHistory_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_GetMovieHistory_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) GetListGenres(ctx context.Context, in *request.GetListGenresRequest, opts ...grpc.CallOption) (*request.GetListGenresResponse, error) {
+func (c *movieServiceClient) GetListGenres(ctx context.Context, in *request.GetListGenresRequest, opts ...grpc.CallOption) (*request.GetListGenresResponse, error) {
 	out := new(request.GetListGenresResponse)
-	err := c.cc.Invoke(ctx, Dandelion_GetListGenres_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_GetListGenres_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) CreateMovie(ctx context.Context, in *request.CreateMovieRequest, opts ...grpc.CallOption) (*model.Movie, error) {
+func (c *movieServiceClient) CreateMovie(ctx context.Context, in *request.CreateMovieRequest, opts ...grpc.CallOption) (*model.Movie, error) {
 	out := new(model.Movie)
-	err := c.cc.Invoke(ctx, Dandelion_CreateMovie_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_CreateMovie_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) GetListMovies(ctx context.Context, in *request.GetListMoviesRequest, opts ...grpc.CallOption) (*request.GetListMoviesResponse, error) {
+func (c *movieServiceClient) GetListMovies(ctx context.Context, in *request.GetListMoviesRequest, opts ...grpc.CallOption) (*request.GetListMoviesResponse, error) {
 	out := new(request.GetListMoviesResponse)
-	err := c.cc.Invoke(ctx, Dandelion_GetListMovies_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_GetListMovies_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) GetMovie(ctx context.Context, in *request.GetMovieRequest, opts ...grpc.CallOption) (*model.Movie, error) {
+func (c *movieServiceClient) GetMovie(ctx context.Context, in *request.GetMovieRequest, opts ...grpc.CallOption) (*model.Movie, error) {
 	out := new(model.Movie)
-	err := c.cc.Invoke(ctx, Dandelion_GetMovie_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_GetMovie_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) GetMoviesByGenre(ctx context.Context, in *request.GetMoviesByGenreRequest, opts ...grpc.CallOption) (*request.GetMoviesByGenreResponse, error) {
+func (c *movieServiceClient) GetMoviesByGenre(ctx context.Context, in *request.GetMoviesByGenreRequest, opts ...grpc.CallOption) (*request.GetMoviesByGenreResponse, error) {
 	out := new(request.GetMoviesByGenreResponse)
-	err := c.cc.Invoke(ctx, Dandelion_GetMoviesByGenre_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_GetMoviesByGenre_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) GetMoviesBySerie(ctx context.Context, in *request.GetMoviesBySerieRequest, opts ...grpc.CallOption) (*request.GetMoviesBySerieResponse, error) {
+func (c *movieServiceClient) GetMoviesBySerie(ctx context.Context, in *request.GetMoviesBySerieRequest, opts ...grpc.CallOption) (*request.GetMoviesBySerieResponse, error) {
 	out := new(request.GetMoviesBySerieResponse)
-	err := c.cc.Invoke(ctx, Dandelion_GetMoviesBySerie_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_GetMoviesBySerie_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) GetRecentMovies(ctx context.Context, in *request.GetRecentMoviesRequest, opts ...grpc.CallOption) (*request.GetRecentMoviesResponse, error) {
+func (c *movieServiceClient) GetRecentMovies(ctx context.Context, in *request.GetRecentMoviesRequest, opts ...grpc.CallOption) (*request.GetRecentMoviesResponse, error) {
 	out := new(request.GetRecentMoviesResponse)
-	err := c.cc.Invoke(ctx, Dandelion_GetRecentMovies_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_GetRecentMovies_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) SearchMovies(ctx context.Context, in *request.SearchMoviesRequest, opts ...grpc.CallOption) (*request.SearchMoviesResponse, error) {
+func (c *movieServiceClient) SearchMovies(ctx context.Context, in *request.SearchMoviesRequest, opts ...grpc.CallOption) (*request.SearchMoviesResponse, error) {
 	out := new(request.SearchMoviesResponse)
-	err := c.cc.Invoke(ctx, Dandelion_SearchMovies_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_SearchMovies_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) GetWatchingMovies(ctx context.Context, in *request.GetWatchingMoviesRequest, opts ...grpc.CallOption) (*request.GetWatchingMoviesResponse, error) {
+func (c *movieServiceClient) GetWatchingMovies(ctx context.Context, in *request.GetWatchingMoviesRequest, opts ...grpc.CallOption) (*request.GetWatchingMoviesResponse, error) {
 	out := new(request.GetWatchingMoviesResponse)
-	err := c.cc.Invoke(ctx, Dandelion_GetWatchingMovies_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_GetWatchingMovies_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *dandelionClient) GetVotesByUser(ctx context.Context, in *request.GetVotesByUserRequest, opts ...grpc.CallOption) (*request.GetVotesByUserResponse, error) {
+func (c *movieServiceClient) GetVotesByUser(ctx context.Context, in *request.GetVotesByUserRequest, opts ...grpc.CallOption) (*request.GetVotesByUserResponse, error) {
 	out := new(request.GetVotesByUserResponse)
-	err := c.cc.Invoke(ctx, Dandelion_GetVotesByUser_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, MovieService_GetVotesByUser_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// DandelionServer is the server API for Dandelion service.
-// All implementations must embed UnimplementedDandelionServer
+func (c *movieServiceClient) SendFile(ctx context.Context, in *request.SendFileRequest, opts ...grpc.CallOption) (MovieService_SendFileClient, error) {
+	stream, err := c.cc.NewStream(ctx, &MovieService_ServiceDesc.Streams[0], MovieService_SendFile_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &movieServiceSendFileClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type MovieService_SendFileClient interface {
+	Recv() (*request.SendFileResponse, error)
+	grpc.ClientStream
+}
+
+type movieServiceSendFileClient struct {
+	grpc.ClientStream
+}
+
+func (x *movieServiceSendFileClient) Recv() (*request.SendFileResponse, error) {
+	m := new(request.SendFileResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
+// MovieServiceServer is the server API for MovieService service.
+// All implementations must embed UnimplementedMovieServiceServer
 // for forward compatibility
-type DandelionServer interface {
+type MovieServiceServer interface {
 	// movie-history
 	CreateMovieHistory(context.Context, *request.CreateMovieHistoryRequest) (*empty.Empty, error)
 	GetMovieHistory(context.Context, *request.GetMovieHistoryRequest) (*request.GetMovieHistoryResponse, error)
@@ -194,334 +228,365 @@ type DandelionServer interface {
 	GetWatchingMovies(context.Context, *request.GetWatchingMoviesRequest) (*request.GetWatchingMoviesResponse, error)
 	// Vote
 	GetVotesByUser(context.Context, *request.GetVotesByUserRequest) (*request.GetVotesByUserResponse, error)
-	mustEmbedUnimplementedDandelionServer()
+	SendFile(*request.SendFileRequest, MovieService_SendFileServer) error
+	mustEmbedUnimplementedMovieServiceServer()
 }
 
-// UnimplementedDandelionServer must be embedded to have forward compatible implementations.
-type UnimplementedDandelionServer struct {
+// UnimplementedMovieServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedMovieServiceServer struct {
 }
 
-func (UnimplementedDandelionServer) CreateMovieHistory(context.Context, *request.CreateMovieHistoryRequest) (*empty.Empty, error) {
+func (UnimplementedMovieServiceServer) CreateMovieHistory(context.Context, *request.CreateMovieHistoryRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateMovieHistory not implemented")
 }
-func (UnimplementedDandelionServer) GetMovieHistory(context.Context, *request.GetMovieHistoryRequest) (*request.GetMovieHistoryResponse, error) {
+func (UnimplementedMovieServiceServer) GetMovieHistory(context.Context, *request.GetMovieHistoryRequest) (*request.GetMovieHistoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMovieHistory not implemented")
 }
-func (UnimplementedDandelionServer) GetListGenres(context.Context, *request.GetListGenresRequest) (*request.GetListGenresResponse, error) {
+func (UnimplementedMovieServiceServer) GetListGenres(context.Context, *request.GetListGenresRequest) (*request.GetListGenresResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetListGenres not implemented")
 }
-func (UnimplementedDandelionServer) CreateMovie(context.Context, *request.CreateMovieRequest) (*model.Movie, error) {
+func (UnimplementedMovieServiceServer) CreateMovie(context.Context, *request.CreateMovieRequest) (*model.Movie, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateMovie not implemented")
 }
-func (UnimplementedDandelionServer) GetListMovies(context.Context, *request.GetListMoviesRequest) (*request.GetListMoviesResponse, error) {
+func (UnimplementedMovieServiceServer) GetListMovies(context.Context, *request.GetListMoviesRequest) (*request.GetListMoviesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetListMovies not implemented")
 }
-func (UnimplementedDandelionServer) GetMovie(context.Context, *request.GetMovieRequest) (*model.Movie, error) {
+func (UnimplementedMovieServiceServer) GetMovie(context.Context, *request.GetMovieRequest) (*model.Movie, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMovie not implemented")
 }
-func (UnimplementedDandelionServer) GetMoviesByGenre(context.Context, *request.GetMoviesByGenreRequest) (*request.GetMoviesByGenreResponse, error) {
+func (UnimplementedMovieServiceServer) GetMoviesByGenre(context.Context, *request.GetMoviesByGenreRequest) (*request.GetMoviesByGenreResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMoviesByGenre not implemented")
 }
-func (UnimplementedDandelionServer) GetMoviesBySerie(context.Context, *request.GetMoviesBySerieRequest) (*request.GetMoviesBySerieResponse, error) {
+func (UnimplementedMovieServiceServer) GetMoviesBySerie(context.Context, *request.GetMoviesBySerieRequest) (*request.GetMoviesBySerieResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMoviesBySerie not implemented")
 }
-func (UnimplementedDandelionServer) GetRecentMovies(context.Context, *request.GetRecentMoviesRequest) (*request.GetRecentMoviesResponse, error) {
+func (UnimplementedMovieServiceServer) GetRecentMovies(context.Context, *request.GetRecentMoviesRequest) (*request.GetRecentMoviesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetRecentMovies not implemented")
 }
-func (UnimplementedDandelionServer) SearchMovies(context.Context, *request.SearchMoviesRequest) (*request.SearchMoviesResponse, error) {
+func (UnimplementedMovieServiceServer) SearchMovies(context.Context, *request.SearchMoviesRequest) (*request.SearchMoviesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchMovies not implemented")
 }
-func (UnimplementedDandelionServer) GetWatchingMovies(context.Context, *request.GetWatchingMoviesRequest) (*request.GetWatchingMoviesResponse, error) {
+func (UnimplementedMovieServiceServer) GetWatchingMovies(context.Context, *request.GetWatchingMoviesRequest) (*request.GetWatchingMoviesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWatchingMovies not implemented")
 }
-func (UnimplementedDandelionServer) GetVotesByUser(context.Context, *request.GetVotesByUserRequest) (*request.GetVotesByUserResponse, error) {
+func (UnimplementedMovieServiceServer) GetVotesByUser(context.Context, *request.GetVotesByUserRequest) (*request.GetVotesByUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVotesByUser not implemented")
 }
-func (UnimplementedDandelionServer) mustEmbedUnimplementedDandelionServer() {}
+func (UnimplementedMovieServiceServer) SendFile(*request.SendFileRequest, MovieService_SendFileServer) error {
+	return status.Errorf(codes.Unimplemented, "method SendFile not implemented")
+}
+func (UnimplementedMovieServiceServer) mustEmbedUnimplementedMovieServiceServer() {}
 
-// UnsafeDandelionServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to DandelionServer will
+// UnsafeMovieServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to MovieServiceServer will
 // result in compilation errors.
-type UnsafeDandelionServer interface {
-	mustEmbedUnimplementedDandelionServer()
+type UnsafeMovieServiceServer interface {
+	mustEmbedUnimplementedMovieServiceServer()
 }
 
-func RegisterDandelionServer(s grpc.ServiceRegistrar, srv DandelionServer) {
-	s.RegisterService(&Dandelion_ServiceDesc, srv)
+func RegisterMovieServiceServer(s grpc.ServiceRegistrar, srv MovieServiceServer) {
+	s.RegisterService(&MovieService_ServiceDesc, srv)
 }
 
-func _Dandelion_CreateMovieHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_CreateMovieHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.CreateMovieHistoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).CreateMovieHistory(ctx, in)
+		return srv.(MovieServiceServer).CreateMovieHistory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_CreateMovieHistory_FullMethodName,
+		FullMethod: MovieService_CreateMovieHistory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).CreateMovieHistory(ctx, req.(*request.CreateMovieHistoryRequest))
+		return srv.(MovieServiceServer).CreateMovieHistory(ctx, req.(*request.CreateMovieHistoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_GetMovieHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_GetMovieHistory_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.GetMovieHistoryRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).GetMovieHistory(ctx, in)
+		return srv.(MovieServiceServer).GetMovieHistory(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_GetMovieHistory_FullMethodName,
+		FullMethod: MovieService_GetMovieHistory_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).GetMovieHistory(ctx, req.(*request.GetMovieHistoryRequest))
+		return srv.(MovieServiceServer).GetMovieHistory(ctx, req.(*request.GetMovieHistoryRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_GetListGenres_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_GetListGenres_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.GetListGenresRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).GetListGenres(ctx, in)
+		return srv.(MovieServiceServer).GetListGenres(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_GetListGenres_FullMethodName,
+		FullMethod: MovieService_GetListGenres_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).GetListGenres(ctx, req.(*request.GetListGenresRequest))
+		return srv.(MovieServiceServer).GetListGenres(ctx, req.(*request.GetListGenresRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_CreateMovie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_CreateMovie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.CreateMovieRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).CreateMovie(ctx, in)
+		return srv.(MovieServiceServer).CreateMovie(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_CreateMovie_FullMethodName,
+		FullMethod: MovieService_CreateMovie_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).CreateMovie(ctx, req.(*request.CreateMovieRequest))
+		return srv.(MovieServiceServer).CreateMovie(ctx, req.(*request.CreateMovieRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_GetListMovies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_GetListMovies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.GetListMoviesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).GetListMovies(ctx, in)
+		return srv.(MovieServiceServer).GetListMovies(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_GetListMovies_FullMethodName,
+		FullMethod: MovieService_GetListMovies_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).GetListMovies(ctx, req.(*request.GetListMoviesRequest))
+		return srv.(MovieServiceServer).GetListMovies(ctx, req.(*request.GetListMoviesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_GetMovie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_GetMovie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.GetMovieRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).GetMovie(ctx, in)
+		return srv.(MovieServiceServer).GetMovie(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_GetMovie_FullMethodName,
+		FullMethod: MovieService_GetMovie_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).GetMovie(ctx, req.(*request.GetMovieRequest))
+		return srv.(MovieServiceServer).GetMovie(ctx, req.(*request.GetMovieRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_GetMoviesByGenre_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_GetMoviesByGenre_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.GetMoviesByGenreRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).GetMoviesByGenre(ctx, in)
+		return srv.(MovieServiceServer).GetMoviesByGenre(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_GetMoviesByGenre_FullMethodName,
+		FullMethod: MovieService_GetMoviesByGenre_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).GetMoviesByGenre(ctx, req.(*request.GetMoviesByGenreRequest))
+		return srv.(MovieServiceServer).GetMoviesByGenre(ctx, req.(*request.GetMoviesByGenreRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_GetMoviesBySerie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_GetMoviesBySerie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.GetMoviesBySerieRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).GetMoviesBySerie(ctx, in)
+		return srv.(MovieServiceServer).GetMoviesBySerie(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_GetMoviesBySerie_FullMethodName,
+		FullMethod: MovieService_GetMoviesBySerie_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).GetMoviesBySerie(ctx, req.(*request.GetMoviesBySerieRequest))
+		return srv.(MovieServiceServer).GetMoviesBySerie(ctx, req.(*request.GetMoviesBySerieRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_GetRecentMovies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_GetRecentMovies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.GetRecentMoviesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).GetRecentMovies(ctx, in)
+		return srv.(MovieServiceServer).GetRecentMovies(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_GetRecentMovies_FullMethodName,
+		FullMethod: MovieService_GetRecentMovies_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).GetRecentMovies(ctx, req.(*request.GetRecentMoviesRequest))
+		return srv.(MovieServiceServer).GetRecentMovies(ctx, req.(*request.GetRecentMoviesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_SearchMovies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_SearchMovies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.SearchMoviesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).SearchMovies(ctx, in)
+		return srv.(MovieServiceServer).SearchMovies(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_SearchMovies_FullMethodName,
+		FullMethod: MovieService_SearchMovies_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).SearchMovies(ctx, req.(*request.SearchMoviesRequest))
+		return srv.(MovieServiceServer).SearchMovies(ctx, req.(*request.SearchMoviesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_GetWatchingMovies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_GetWatchingMovies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.GetWatchingMoviesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).GetWatchingMovies(ctx, in)
+		return srv.(MovieServiceServer).GetWatchingMovies(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_GetWatchingMovies_FullMethodName,
+		FullMethod: MovieService_GetWatchingMovies_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).GetWatchingMovies(ctx, req.(*request.GetWatchingMoviesRequest))
+		return srv.(MovieServiceServer).GetWatchingMovies(ctx, req.(*request.GetWatchingMoviesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Dandelion_GetVotesByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _MovieService_GetVotesByUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(request.GetVotesByUserRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DandelionServer).GetVotesByUser(ctx, in)
+		return srv.(MovieServiceServer).GetVotesByUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Dandelion_GetVotesByUser_FullMethodName,
+		FullMethod: MovieService_GetVotesByUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DandelionServer).GetVotesByUser(ctx, req.(*request.GetVotesByUserRequest))
+		return srv.(MovieServiceServer).GetVotesByUser(ctx, req.(*request.GetVotesByUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Dandelion_ServiceDesc is the grpc.ServiceDesc for Dandelion service.
+func _MovieService_SendFile_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(request.SendFileRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(MovieServiceServer).SendFile(m, &movieServiceSendFileServer{stream})
+}
+
+type MovieService_SendFileServer interface {
+	Send(*request.SendFileResponse) error
+	grpc.ServerStream
+}
+
+type movieServiceSendFileServer struct {
+	grpc.ServerStream
+}
+
+func (x *movieServiceSendFileServer) Send(m *request.SendFileResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+// MovieService_ServiceDesc is the grpc.ServiceDesc for MovieService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Dandelion_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pb.Dandelion",
-	HandlerType: (*DandelionServer)(nil),
+var MovieService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "pb.MovieService",
+	HandlerType: (*MovieServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "CreateMovieHistory",
-			Handler:    _Dandelion_CreateMovieHistory_Handler,
+			Handler:    _MovieService_CreateMovieHistory_Handler,
 		},
 		{
 			MethodName: "GetMovieHistory",
-			Handler:    _Dandelion_GetMovieHistory_Handler,
+			Handler:    _MovieService_GetMovieHistory_Handler,
 		},
 		{
 			MethodName: "GetListGenres",
-			Handler:    _Dandelion_GetListGenres_Handler,
+			Handler:    _MovieService_GetListGenres_Handler,
 		},
 		{
 			MethodName: "CreateMovie",
-			Handler:    _Dandelion_CreateMovie_Handler,
+			Handler:    _MovieService_CreateMovie_Handler,
 		},
 		{
 			MethodName: "GetListMovies",
-			Handler:    _Dandelion_GetListMovies_Handler,
+			Handler:    _MovieService_GetListMovies_Handler,
 		},
 		{
 			MethodName: "GetMovie",
-			Handler:    _Dandelion_GetMovie_Handler,
+			Handler:    _MovieService_GetMovie_Handler,
 		},
 		{
 			MethodName: "GetMoviesByGenre",
-			Handler:    _Dandelion_GetMoviesByGenre_Handler,
+			Handler:    _MovieService_GetMoviesByGenre_Handler,
 		},
 		{
 			MethodName: "GetMoviesBySerie",
-			Handler:    _Dandelion_GetMoviesBySerie_Handler,
+			Handler:    _MovieService_GetMoviesBySerie_Handler,
 		},
 		{
 			MethodName: "GetRecentMovies",
-			Handler:    _Dandelion_GetRecentMovies_Handler,
+			Handler:    _MovieService_GetRecentMovies_Handler,
 		},
 		{
 			MethodName: "SearchMovies",
-			Handler:    _Dandelion_SearchMovies_Handler,
+			Handler:    _MovieService_SearchMovies_Handler,
 		},
 		{
 			MethodName: "GetWatchingMovies",
-			Handler:    _Dandelion_GetWatchingMovies_Handler,
+			Handler:    _MovieService_GetWatchingMovies_Handler,
 		},
 		{
 			MethodName: "GetVotesByUser",
-			Handler:    _Dandelion_GetVotesByUser_Handler,
+			Handler:    _MovieService_GetVotesByUser_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "SendFile",
+			Handler:       _MovieService_SendFile_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "service/service.proto",
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type Server struct {
-	service.UnimplementedDandelionServer
+	service.UnimplementedMovieServiceServer
 	config utils.Config
 	store  *db.Store
 }
@@ -20,4 +20,5 @@ func NewServer(config utils.Config, conn *sql.DB) *Server {
 		config: config,
 		store:  store,
 	}
+
 }

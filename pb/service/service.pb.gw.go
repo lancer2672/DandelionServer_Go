@@ -32,7 +32,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_Dandelion_CreateMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_CreateMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.CreateMovieHistoryRequest
 	var metadata runtime.ServerMetadata
 
@@ -45,7 +45,7 @@ func request_Dandelion_CreateMovieHistory_0(ctx context.Context, marshaler runti
 
 }
 
-func local_request_Dandelion_CreateMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_CreateMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.CreateMovieHistoryRequest
 	var metadata runtime.ServerMetadata
 
@@ -59,17 +59,17 @@ func local_request_Dandelion_CreateMovieHistory_0(ctx context.Context, marshaler
 }
 
 var (
-	filter_Dandelion_GetMovieHistory_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_MovieService_GetMovieHistory_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_Dandelion_GetMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_GetMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetMovieHistoryRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetMovieHistory_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetMovieHistory_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -78,14 +78,14 @@ func request_Dandelion_GetMovieHistory_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_Dandelion_GetMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_GetMovieHistory_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetMovieHistoryRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetMovieHistory_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetMovieHistory_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -95,17 +95,17 @@ func local_request_Dandelion_GetMovieHistory_0(ctx context.Context, marshaler ru
 }
 
 var (
-	filter_Dandelion_GetListGenres_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_MovieService_GetListGenres_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_Dandelion_GetListGenres_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_GetListGenres_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetListGenresRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetListGenres_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetListGenres_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -114,14 +114,14 @@ func request_Dandelion_GetListGenres_0(ctx context.Context, marshaler runtime.Ma
 
 }
 
-func local_request_Dandelion_GetListGenres_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_GetListGenres_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetListGenresRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetListGenres_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetListGenres_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -130,7 +130,7 @@ func local_request_Dandelion_GetListGenres_0(ctx context.Context, marshaler runt
 
 }
 
-func request_Dandelion_CreateMovie_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_CreateMovie_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.CreateMovieRequest
 	var metadata runtime.ServerMetadata
 
@@ -143,7 +143,7 @@ func request_Dandelion_CreateMovie_0(ctx context.Context, marshaler runtime.Mars
 
 }
 
-func local_request_Dandelion_CreateMovie_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_CreateMovie_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.CreateMovieRequest
 	var metadata runtime.ServerMetadata
 
@@ -157,17 +157,17 @@ func local_request_Dandelion_CreateMovie_0(ctx context.Context, marshaler runtim
 }
 
 var (
-	filter_Dandelion_GetListMovies_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_MovieService_GetListMovies_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_Dandelion_GetListMovies_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_GetListMovies_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetListMoviesRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetListMovies_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetListMovies_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -176,14 +176,14 @@ func request_Dandelion_GetListMovies_0(ctx context.Context, marshaler runtime.Ma
 
 }
 
-func local_request_Dandelion_GetListMovies_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_GetListMovies_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetListMoviesRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetListMovies_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetListMovies_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -192,7 +192,7 @@ func local_request_Dandelion_GetListMovies_0(ctx context.Context, marshaler runt
 
 }
 
-func request_Dandelion_GetMovie_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_GetMovie_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetMovieRequest
 	var metadata runtime.ServerMetadata
 
@@ -218,7 +218,7 @@ func request_Dandelion_GetMovie_0(ctx context.Context, marshaler runtime.Marshal
 
 }
 
-func local_request_Dandelion_GetMovie_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_GetMovie_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetMovieRequest
 	var metadata runtime.ServerMetadata
 
@@ -245,10 +245,10 @@ func local_request_Dandelion_GetMovie_0(ctx context.Context, marshaler runtime.M
 }
 
 var (
-	filter_Dandelion_GetMoviesByGenre_0 = &utilities.DoubleArray{Encoding: map[string]int{"genre_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_MovieService_GetMoviesByGenre_0 = &utilities.DoubleArray{Encoding: map[string]int{"genre_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
-func request_Dandelion_GetMoviesByGenre_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_GetMoviesByGenre_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetMoviesByGenreRequest
 	var metadata runtime.ServerMetadata
 
@@ -272,7 +272,7 @@ func request_Dandelion_GetMoviesByGenre_0(ctx context.Context, marshaler runtime
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetMoviesByGenre_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetMoviesByGenre_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -281,7 +281,7 @@ func request_Dandelion_GetMoviesByGenre_0(ctx context.Context, marshaler runtime
 
 }
 
-func local_request_Dandelion_GetMoviesByGenre_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_GetMoviesByGenre_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetMoviesByGenreRequest
 	var metadata runtime.ServerMetadata
 
@@ -305,7 +305,7 @@ func local_request_Dandelion_GetMoviesByGenre_0(ctx context.Context, marshaler r
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetMoviesByGenre_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetMoviesByGenre_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -315,10 +315,10 @@ func local_request_Dandelion_GetMoviesByGenre_0(ctx context.Context, marshaler r
 }
 
 var (
-	filter_Dandelion_GetMoviesBySerie_0 = &utilities.DoubleArray{Encoding: map[string]int{"id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_MovieService_GetMoviesBySerie_0 = &utilities.DoubleArray{Encoding: map[string]int{"id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
-func request_Dandelion_GetMoviesBySerie_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_GetMoviesBySerie_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetMoviesBySerieRequest
 	var metadata runtime.ServerMetadata
 
@@ -342,7 +342,7 @@ func request_Dandelion_GetMoviesBySerie_0(ctx context.Context, marshaler runtime
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetMoviesBySerie_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetMoviesBySerie_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -351,7 +351,7 @@ func request_Dandelion_GetMoviesBySerie_0(ctx context.Context, marshaler runtime
 
 }
 
-func local_request_Dandelion_GetMoviesBySerie_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_GetMoviesBySerie_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetMoviesBySerieRequest
 	var metadata runtime.ServerMetadata
 
@@ -375,7 +375,7 @@ func local_request_Dandelion_GetMoviesBySerie_0(ctx context.Context, marshaler r
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetMoviesBySerie_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetMoviesBySerie_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -385,17 +385,17 @@ func local_request_Dandelion_GetMoviesBySerie_0(ctx context.Context, marshaler r
 }
 
 var (
-	filter_Dandelion_GetRecentMovies_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_MovieService_GetRecentMovies_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_Dandelion_GetRecentMovies_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_GetRecentMovies_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetRecentMoviesRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetRecentMovies_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetRecentMovies_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -404,14 +404,14 @@ func request_Dandelion_GetRecentMovies_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_Dandelion_GetRecentMovies_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_GetRecentMovies_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetRecentMoviesRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetRecentMovies_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetRecentMovies_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -421,17 +421,17 @@ func local_request_Dandelion_GetRecentMovies_0(ctx context.Context, marshaler ru
 }
 
 var (
-	filter_Dandelion_SearchMovies_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_MovieService_SearchMovies_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_Dandelion_SearchMovies_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_SearchMovies_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.SearchMoviesRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_SearchMovies_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_SearchMovies_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -440,14 +440,14 @@ func request_Dandelion_SearchMovies_0(ctx context.Context, marshaler runtime.Mar
 
 }
 
-func local_request_Dandelion_SearchMovies_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_SearchMovies_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.SearchMoviesRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_SearchMovies_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_SearchMovies_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -457,10 +457,10 @@ func local_request_Dandelion_SearchMovies_0(ctx context.Context, marshaler runti
 }
 
 var (
-	filter_Dandelion_GetWatchingMovies_0 = &utilities.DoubleArray{Encoding: map[string]int{"user_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+	filter_MovieService_GetWatchingMovies_0 = &utilities.DoubleArray{Encoding: map[string]int{"user_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
-func request_Dandelion_GetWatchingMovies_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_GetWatchingMovies_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetWatchingMoviesRequest
 	var metadata runtime.ServerMetadata
 
@@ -484,7 +484,7 @@ func request_Dandelion_GetWatchingMovies_0(ctx context.Context, marshaler runtim
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetWatchingMovies_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetWatchingMovies_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -493,7 +493,7 @@ func request_Dandelion_GetWatchingMovies_0(ctx context.Context, marshaler runtim
 
 }
 
-func local_request_Dandelion_GetWatchingMovies_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_GetWatchingMovies_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetWatchingMoviesRequest
 	var metadata runtime.ServerMetadata
 
@@ -517,7 +517,7 @@ func local_request_Dandelion_GetWatchingMovies_0(ctx context.Context, marshaler 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_Dandelion_GetWatchingMovies_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_MovieService_GetWatchingMovies_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -526,7 +526,7 @@ func local_request_Dandelion_GetWatchingMovies_0(ctx context.Context, marshaler 
 
 }
 
-func request_Dandelion_GetVotesByUser_0(ctx context.Context, marshaler runtime.Marshaler, client DandelionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_MovieService_GetVotesByUser_0(ctx context.Context, marshaler runtime.Marshaler, client MovieServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetVotesByUserRequest
 	var metadata runtime.ServerMetadata
 
@@ -552,7 +552,7 @@ func request_Dandelion_GetVotesByUser_0(ctx context.Context, marshaler runtime.M
 
 }
 
-func local_request_Dandelion_GetVotesByUser_0(ctx context.Context, marshaler runtime.Marshaler, server DandelionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_MovieService_GetVotesByUser_0(ctx context.Context, marshaler runtime.Marshaler, server MovieServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq request.GetVotesByUserRequest
 	var metadata runtime.ServerMetadata
 
@@ -578,13 +578,13 @@ func local_request_Dandelion_GetVotesByUser_0(ctx context.Context, marshaler run
 
 }
 
-// RegisterDandelionHandlerServer registers the http handlers for service Dandelion to "mux".
-// UnaryRPC     :call DandelionServer directly.
+// RegisterMovieServiceHandlerServer registers the http handlers for service MovieService to "mux".
+// UnaryRPC     :call MovieServiceServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterDandelionHandlerFromEndpoint instead.
-func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, server DandelionServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterMovieServiceHandlerFromEndpoint instead.
+func RegisterMovieServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server MovieServiceServer) error {
 
-	mux.Handle("POST", pattern_Dandelion_CreateMovieHistory_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_MovieService_CreateMovieHistory_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -592,12 +592,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/CreateMovieHistory", runtime.WithHTTPPathPattern("/movie/history"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/CreateMovieHistory", runtime.WithHTTPPathPattern("/movie/history"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_CreateMovieHistory_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_CreateMovieHistory_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -605,11 +605,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_CreateMovieHistory_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_CreateMovieHistory_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetMovieHistory_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetMovieHistory_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -617,12 +617,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/GetMovieHistory", runtime.WithHTTPPathPattern("/movie/history"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/GetMovieHistory", runtime.WithHTTPPathPattern("/movie/history"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_GetMovieHistory_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_GetMovieHistory_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -630,11 +630,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_GetMovieHistory_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetMovieHistory_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetListGenres_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetListGenres_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -642,12 +642,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/GetListGenres", runtime.WithHTTPPathPattern("/movie/genres"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/GetListGenres", runtime.WithHTTPPathPattern("/movie/genres"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_GetListGenres_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_GetListGenres_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -655,11 +655,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_GetListGenres_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetListGenres_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_Dandelion_CreateMovie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_MovieService_CreateMovie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -667,12 +667,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/CreateMovie", runtime.WithHTTPPathPattern("/movies"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/CreateMovie", runtime.WithHTTPPathPattern("/movies"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_CreateMovie_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_CreateMovie_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -680,11 +680,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_CreateMovie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_CreateMovie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetListMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetListMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -692,12 +692,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/GetListMovies", runtime.WithHTTPPathPattern("/movies"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/GetListMovies", runtime.WithHTTPPathPattern("/movies"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_GetListMovies_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_GetListMovies_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -705,11 +705,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_GetListMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetListMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetMovie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetMovie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -717,12 +717,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/GetMovie", runtime.WithHTTPPathPattern("/movies/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/GetMovie", runtime.WithHTTPPathPattern("/movies/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_GetMovie_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_GetMovie_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -730,11 +730,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_GetMovie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetMovie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetMoviesByGenre_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetMoviesByGenre_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -742,12 +742,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/GetMoviesByGenre", runtime.WithHTTPPathPattern("/movies/genre/{genre_id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/GetMoviesByGenre", runtime.WithHTTPPathPattern("/movies/genre/{genre_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_GetMoviesByGenre_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_GetMoviesByGenre_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -755,11 +755,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_GetMoviesByGenre_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetMoviesByGenre_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetMoviesBySerie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetMoviesBySerie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -767,12 +767,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/GetMoviesBySerie", runtime.WithHTTPPathPattern("/movies/serie/{id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/GetMoviesBySerie", runtime.WithHTTPPathPattern("/movies/serie/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_GetMoviesBySerie_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_GetMoviesBySerie_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -780,11 +780,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_GetMoviesBySerie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetMoviesBySerie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetRecentMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetRecentMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -792,12 +792,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/GetRecentMovies", runtime.WithHTTPPathPattern("/movies/recent"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/GetRecentMovies", runtime.WithHTTPPathPattern("/movies/recent"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_GetRecentMovies_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_GetRecentMovies_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -805,11 +805,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_GetRecentMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetRecentMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_SearchMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_SearchMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -817,12 +817,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/SearchMovies", runtime.WithHTTPPathPattern("/movies/search"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/SearchMovies", runtime.WithHTTPPathPattern("/movies/search"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_SearchMovies_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_SearchMovies_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -830,11 +830,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_SearchMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_SearchMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetWatchingMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetWatchingMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -842,12 +842,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/GetWatchingMovies", runtime.WithHTTPPathPattern("/movies/watching/{user_id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/GetWatchingMovies", runtime.WithHTTPPathPattern("/movies/watching/{user_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_GetWatchingMovies_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_GetWatchingMovies_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -855,11 +855,11 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_GetWatchingMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetWatchingMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetVotesByUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetVotesByUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
@@ -867,12 +867,12 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.Dandelion/GetVotesByUser", runtime.WithHTTPPathPattern("/movie/votes/user/{user_id}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.MovieService/GetVotesByUser", runtime.WithHTTPPathPattern("/movie/votes/user/{user_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_Dandelion_GetVotesByUser_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_MovieService_GetVotesByUser_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
@@ -880,16 +880,16 @@ func RegisterDandelionHandlerServer(ctx context.Context, mux *runtime.ServeMux, 
 			return
 		}
 
-		forward_Dandelion_GetVotesByUser_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetVotesByUser_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterDandelionHandlerFromEndpoint is same as RegisterDandelionHandler but
+// RegisterMovieServiceHandlerFromEndpoint is same as RegisterMovieServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterDandelionHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterMovieServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.DialContext(ctx, endpoint, opts...)
 	if err != nil {
 		return err
@@ -909,283 +909,283 @@ func RegisterDandelionHandlerFromEndpoint(ctx context.Context, mux *runtime.Serv
 		}()
 	}()
 
-	return RegisterDandelionHandler(ctx, mux, conn)
+	return RegisterMovieServiceHandler(ctx, mux, conn)
 }
 
-// RegisterDandelionHandler registers the http handlers for service Dandelion to "mux".
+// RegisterMovieServiceHandler registers the http handlers for service MovieService to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterDandelionHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterDandelionHandlerClient(ctx, mux, NewDandelionClient(conn))
+func RegisterMovieServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterMovieServiceHandlerClient(ctx, mux, NewMovieServiceClient(conn))
 }
 
-// RegisterDandelionHandlerClient registers the http handlers for service Dandelion
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "DandelionClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "DandelionClient"
+// RegisterMovieServiceHandlerClient registers the http handlers for service MovieService
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "MovieServiceClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "MovieServiceClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "DandelionClient" to call the correct interceptors.
-func RegisterDandelionHandlerClient(ctx context.Context, mux *runtime.ServeMux, client DandelionClient) error {
+// "MovieServiceClient" to call the correct interceptors.
+func RegisterMovieServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client MovieServiceClient) error {
 
-	mux.Handle("POST", pattern_Dandelion_CreateMovieHistory_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_MovieService_CreateMovieHistory_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/CreateMovieHistory", runtime.WithHTTPPathPattern("/movie/history"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/CreateMovieHistory", runtime.WithHTTPPathPattern("/movie/history"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_CreateMovieHistory_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_CreateMovieHistory_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_CreateMovieHistory_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_CreateMovieHistory_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetMovieHistory_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetMovieHistory_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/GetMovieHistory", runtime.WithHTTPPathPattern("/movie/history"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/GetMovieHistory", runtime.WithHTTPPathPattern("/movie/history"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_GetMovieHistory_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_GetMovieHistory_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_GetMovieHistory_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetMovieHistory_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetListGenres_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetListGenres_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/GetListGenres", runtime.WithHTTPPathPattern("/movie/genres"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/GetListGenres", runtime.WithHTTPPathPattern("/movie/genres"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_GetListGenres_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_GetListGenres_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_GetListGenres_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetListGenres_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_Dandelion_CreateMovie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_MovieService_CreateMovie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/CreateMovie", runtime.WithHTTPPathPattern("/movies"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/CreateMovie", runtime.WithHTTPPathPattern("/movies"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_CreateMovie_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_CreateMovie_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_CreateMovie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_CreateMovie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetListMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetListMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/GetListMovies", runtime.WithHTTPPathPattern("/movies"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/GetListMovies", runtime.WithHTTPPathPattern("/movies"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_GetListMovies_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_GetListMovies_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_GetListMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetListMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetMovie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetMovie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/GetMovie", runtime.WithHTTPPathPattern("/movies/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/GetMovie", runtime.WithHTTPPathPattern("/movies/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_GetMovie_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_GetMovie_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_GetMovie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetMovie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetMoviesByGenre_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetMoviesByGenre_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/GetMoviesByGenre", runtime.WithHTTPPathPattern("/movies/genre/{genre_id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/GetMoviesByGenre", runtime.WithHTTPPathPattern("/movies/genre/{genre_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_GetMoviesByGenre_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_GetMoviesByGenre_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_GetMoviesByGenre_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetMoviesByGenre_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetMoviesBySerie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetMoviesBySerie_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/GetMoviesBySerie", runtime.WithHTTPPathPattern("/movies/serie/{id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/GetMoviesBySerie", runtime.WithHTTPPathPattern("/movies/serie/{id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_GetMoviesBySerie_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_GetMoviesBySerie_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_GetMoviesBySerie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetMoviesBySerie_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetRecentMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetRecentMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/GetRecentMovies", runtime.WithHTTPPathPattern("/movies/recent"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/GetRecentMovies", runtime.WithHTTPPathPattern("/movies/recent"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_GetRecentMovies_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_GetRecentMovies_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_GetRecentMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetRecentMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_SearchMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_SearchMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/SearchMovies", runtime.WithHTTPPathPattern("/movies/search"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/SearchMovies", runtime.WithHTTPPathPattern("/movies/search"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_SearchMovies_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_SearchMovies_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_SearchMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_SearchMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetWatchingMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetWatchingMovies_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/GetWatchingMovies", runtime.WithHTTPPathPattern("/movies/watching/{user_id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/GetWatchingMovies", runtime.WithHTTPPathPattern("/movies/watching/{user_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_GetWatchingMovies_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_GetWatchingMovies_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_GetWatchingMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetWatchingMovies_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_Dandelion_GetVotesByUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_MovieService_GetVotesByUser_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.Dandelion/GetVotesByUser", runtime.WithHTTPPathPattern("/movie/votes/user/{user_id}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.MovieService/GetVotesByUser", runtime.WithHTTPPathPattern("/movie/votes/user/{user_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_Dandelion_GetVotesByUser_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_MovieService_GetVotesByUser_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_Dandelion_GetVotesByUser_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_MovieService_GetVotesByUser_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1193,53 +1193,53 @@ func RegisterDandelionHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 }
 
 var (
-	pattern_Dandelion_CreateMovieHistory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"movie", "history"}, ""))
+	pattern_MovieService_CreateMovieHistory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"movie", "history"}, ""))
 
-	pattern_Dandelion_GetMovieHistory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"movie", "history"}, ""))
+	pattern_MovieService_GetMovieHistory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"movie", "history"}, ""))
 
-	pattern_Dandelion_GetListGenres_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"movie", "genres"}, ""))
+	pattern_MovieService_GetListGenres_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"movie", "genres"}, ""))
 
-	pattern_Dandelion_CreateMovie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"movies"}, ""))
+	pattern_MovieService_CreateMovie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"movies"}, ""))
 
-	pattern_Dandelion_GetListMovies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"movies"}, ""))
+	pattern_MovieService_GetListMovies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"movies"}, ""))
 
-	pattern_Dandelion_GetMovie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"movies", "id"}, ""))
+	pattern_MovieService_GetMovie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"movies", "id"}, ""))
 
-	pattern_Dandelion_GetMoviesByGenre_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"movies", "genre", "genre_id"}, ""))
+	pattern_MovieService_GetMoviesByGenre_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"movies", "genre", "genre_id"}, ""))
 
-	pattern_Dandelion_GetMoviesBySerie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"movies", "serie", "id"}, ""))
+	pattern_MovieService_GetMoviesBySerie_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"movies", "serie", "id"}, ""))
 
-	pattern_Dandelion_GetRecentMovies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"movies", "recent"}, ""))
+	pattern_MovieService_GetRecentMovies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"movies", "recent"}, ""))
 
-	pattern_Dandelion_SearchMovies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"movies", "search"}, ""))
+	pattern_MovieService_SearchMovies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"movies", "search"}, ""))
 
-	pattern_Dandelion_GetWatchingMovies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"movies", "watching", "user_id"}, ""))
+	pattern_MovieService_GetWatchingMovies_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"movies", "watching", "user_id"}, ""))
 
-	pattern_Dandelion_GetVotesByUser_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"movie", "votes", "user", "user_id"}, ""))
+	pattern_MovieService_GetVotesByUser_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"movie", "votes", "user", "user_id"}, ""))
 )
 
 var (
-	forward_Dandelion_CreateMovieHistory_0 = runtime.ForwardResponseMessage
+	forward_MovieService_CreateMovieHistory_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_GetMovieHistory_0 = runtime.ForwardResponseMessage
+	forward_MovieService_GetMovieHistory_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_GetListGenres_0 = runtime.ForwardResponseMessage
+	forward_MovieService_GetListGenres_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_CreateMovie_0 = runtime.ForwardResponseMessage
+	forward_MovieService_CreateMovie_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_GetListMovies_0 = runtime.ForwardResponseMessage
+	forward_MovieService_GetListMovies_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_GetMovie_0 = runtime.ForwardResponseMessage
+	forward_MovieService_GetMovie_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_GetMoviesByGenre_0 = runtime.ForwardResponseMessage
+	forward_MovieService_GetMoviesByGenre_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_GetMoviesBySerie_0 = runtime.ForwardResponseMessage
+	forward_MovieService_GetMoviesBySerie_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_GetRecentMovies_0 = runtime.ForwardResponseMessage
+	forward_MovieService_GetRecentMovies_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_SearchMovies_0 = runtime.ForwardResponseMessage
+	forward_MovieService_SearchMovies_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_GetWatchingMovies_0 = runtime.ForwardResponseMessage
+	forward_MovieService_GetWatchingMovies_0 = runtime.ForwardResponseMessage
 
-	forward_Dandelion_GetVotesByUser_0 = runtime.ForwardResponseMessage
+	forward_MovieService_GetVotesByUser_0 = runtime.ForwardResponseMessage
 )

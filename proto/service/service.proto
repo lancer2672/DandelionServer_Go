@@ -6,6 +6,7 @@ import "request/movie-history.proto";
 import "request/genre.proto";
 import "request/movie.proto";
 import "request/vote.proto";
+import "request/file.proto";
 import "model/movie.proto";
 import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
@@ -25,7 +26,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   };
 };
 
-service Dandelion {
+service MovieService {
     //movie-history
     rpc CreateMovieHistory(CreateMovieHistoryRequest) returns (google.protobuf.Empty) {
             option (google.api.http) = {
@@ -92,5 +93,7 @@ service Dandelion {
       option (google.api.http) = {
           get: "/movie/votes/user/{user_id}"
       };
-  }
+    }
+
+    rpc SendFile(SendFileRequest) returns (stream SendFileResponse) {}
 };
