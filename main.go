@@ -3,20 +3,21 @@ package main
 import (
 	"context"
 	"database/sql"
-	"log"
+
 	"net"
 	"net/http"
+	"os"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/lancer2672/DandelionServer_Go/api/server"
 	"github.com/lancer2672/DandelionServer_Go/middleware"
 	"github.com/lancer2672/DandelionServer_Go/pb/service"
 	"github.com/lancer2672/DandelionServer_Go/server/sgrpc"
 	"github.com/lancer2672/DandelionServer_Go/utils"
 	_ "github.com/lib/pq"
+	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/protobuf/encoding/protojson"
@@ -44,11 +45,12 @@ import (
 func main() {
 	serverConfig, err := utils.LoadConfig(".")
 	if err != nil {
-		log.Fatalf("Error loading config: %v", err)
+		log.Error().Err(err).Msg("Error loading config")
 	}
 	conn, err := sql.Open(serverConfig.DBDriver, serverConfig.DBSource)
 	if err != nil {
-		log.Fatal("Cannot connect to database", err)
+		log.Error().Err(err).Msg("Cannot connect to database")
+		os.Exit(1)
 	}
 	// runDatabaseMigration(serverConfig.MigrationUrl, serverConfig.DBSource)
 	// go runGinServer(serverConfig, conn)
@@ -60,19 +62,20 @@ func main() {
 
 func runGrpcServer(config utils.Config, conn *sql.DB) {
 	server := sgrpc.NewServer(config, conn)
-	grpcServer := grpc.NewServer()
-	service.RegisterMovieServiceServer(grpcServer, server)
-
+	loggerInterceptor := grpc.UnaryInterceptor(middleware.LoggerInterceptor)
 	//allow clients to see avaiable grpc server ~ self document
+	grpcServer := grpc.NewServer(loggerInterceptor)
+	service.RegisterMovieServiceServer(grpcServer, server)
 	reflection.Register(grpcServer)
 	listener, err := net.Listen("tcp", config.GRPCServerAddress)
 	if err != nil {
-		log.Fatal("Cannot create listener GRPC", err)
+		log.Error().Err(err).Msg("Cannot create listener GRPC")
+		os.Exit(1)
 	}
-	log.Println("GRPC Server started", config.GRPCServerAddress)
-	err = grpcServer.Serve(listener)
-	if err != nil {
-		log.Fatal("Cannot start GRPC", err)
+	log.Info().Str("address", config.GRPCServerAddress).Msg("GRPC Server started")
+	if err = grpcServer.Serve(listener); err != nil {
+		log.Error().Err(err).Msg("Cannot start GRPC")
+		os.Exit(1)
 	}
 
 }
@@ -97,29 +100,24 @@ func runGatewayServer(config utils.Config, conn *sql.DB) {
 	defer cancel()
 	err := service.RegisterMovieServiceHandlerServer(ctx, grpcMux, server)
 	if err != nil {
-		log.Fatal("Cannot create register server")
+		log.Error().Err(err).Msg("Cannot create listener HTTP Gateway")
+		os.Exit(1)
 	}
+
 	mux := http.NewServeMux()
 
-	mux.Handle("/", middleware.CheckApiKey(grpcMux))
+	mux.Handle("/", middleware.Logger(middleware.CheckApiKey(grpcMux)))
 	listener, err := net.Listen("tcp", config.ServerAddress)
 	if err != nil {
-		log.Fatal("Cannot create listener HTTP Gateway", err)
+		log.Error().Err(err).Msg("Cannot create listener HTTP Gateway")
 	}
-	log.Println("HTTP gateway Server started", config.ServerAddress)
-	err = http.Serve(listener, mux)
-	if err != nil {
-		log.Fatal("Cannot start HTTP Gateway", err)
+	// err = http.Serve(listener, mux)
+	log.Info().Str("address", config.ServerAddress).Msg("HTTP gateway Server started")
+	if err = http.Serve(listener, mux); err != nil {
+		log.Error().Err(err).Msg("Cannot start HTTP Gateway")
+		os.Exit(1)
 	}
 
-}
-
-func runGinServer(config utils.Config, conn *sql.DB) {
-	server := server.NewServer(config, conn)
-	err := server.Start()
-	if err != nil {
-		log.Fatal("Cannot start server", err)
-	}
 }
 
 func runDatabaseMigration(url string, dbSource string) {
@@ -127,12 +125,14 @@ func runDatabaseMigration(url string, dbSource string) {
 		url,
 		dbSource)
 	if err != nil {
-		log.Fatal("cannot create migrate instance ", err)
+		log.Error().Err(err).Msg("Cannot create migrate instance")
+		os.Exit(1)
 	}
 	if err = m.Up(); err != nil && err != migrate.ErrNoChange {
-		log.Fatal("failed to migrate up", err)
+		log.Error().Err(err).Msg("Failed to migrate up")
+		os.Exit(1)
 	}
-	log.Println("run db migration successfully")
+	log.Info().Msg("Run db migration successfully")
 
 }
 
