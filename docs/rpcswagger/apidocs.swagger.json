@@ -10,7 +10,7 @@
   },
   "tags": [
     {
-      "name": "Dandelion"
+      "name": "MovieService"
     }
   ],
   "consumes": [
@@ -23,7 +23,7 @@
     "/movie/genres": {
       "get": {
         "summary": "genre",
-        "operationId": "Dandelion_GetListGenres",
+        "operationId": "MovieService_GetListGenres",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -55,13 +55,13 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       }
     },
     "/movie/history": {
       "get": {
-        "operationId": "Dandelion_GetMovieHistory",
+        "operationId": "MovieService_GetMovieHistory",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -93,12 +93,12 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       },
       "post": {
         "summary": "movie-history",
-        "operationId": "Dandelion_CreateMovieHistory",
+        "operationId": "MovieService_CreateMovieHistory",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -125,14 +125,14 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       }
     },
     "/movie/votes/user/{userId}": {
       "get": {
         "summary": "Vote",
-        "operationId": "Dandelion_GetVotesByUser",
+        "operationId": "MovieService_GetVotesByUser",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -157,13 +157,13 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       }
     },
     "/movies": {
       "get": {
-        "operationId": "Dandelion_GetListMovies",
+        "operationId": "MovieService_GetListMovies",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -195,12 +195,12 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       },
       "post": {
         "summary": "movie",
-        "operationId": "Dandelion_CreateMovie",
+        "operationId": "MovieService_CreateMovie",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -226,13 +226,13 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       }
     },
     "/movies/genre/{genreId}": {
       "get": {
-        "operationId": "Dandelion_GetMoviesByGenre",
+        "operationId": "MovieService_GetMoviesByGenre",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -271,13 +271,13 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       }
     },
     "/movies/recent": {
       "get": {
-        "operationId": "Dandelion_GetRecentMovies",
+        "operationId": "MovieService_GetRecentMovies",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -309,13 +309,13 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       }
     },
     "/movies/search": {
       "get": {
-        "operationId": "Dandelion_SearchMovies",
+        "operationId": "MovieService_SearchMovies",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -353,13 +353,13 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       }
     },
     "/movies/serie/{id}": {
       "get": {
-        "operationId": "Dandelion_GetMoviesBySerie",
+        "operationId": "MovieService_GetMoviesBySerie",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -398,13 +398,13 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       }
     },
     "/movies/watching/{userId}": {
       "get": {
-        "operationId": "Dandelion_GetWatchingMovies",
+        "operationId": "MovieService_GetWatchingMovies",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -443,13 +443,13 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       }
     },
     "/movies/{id}": {
       "get": {
-        "operationId": "Dandelion_GetMovie",
+        "operationId": "MovieService_GetMovie",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -474,7 +474,7 @@
           }
         ],
         "tags": [
-          "Dandelion"
+          "MovieService"
         ]
       }
     }
@@ -726,6 +726,15 @@
             "type": "object",
             "$ref": "#/definitions/pbMovie"
           }
+        }
+      }
+    },
+    "pbSendFileResponse": {
+      "type": "object",
+      "properties": {
+        "chunk": {
+          "type": "string",
+          "format": "byte"
         }
       }
     },
