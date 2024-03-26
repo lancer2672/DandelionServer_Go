@@ -3,7 +3,6 @@ package apicalls
 import (
 	"encoding/json"
 	"net/http"
-	"sync"
 
 	"github.com/lancer2672/DandelionServer_Go/constants"
 )
@@ -22,30 +21,7 @@ type Permission struct {
 	Delete []string `json:"delete"`
 }
 
-type AuthApiInterface interface {
-	CheckApiKey(apikey string) (*Role, *Permission, error)
-}
-
-var (
-	authApiInstance *AuthApi
-	once            sync.Once
-)
-
-func NewAuthApi() AuthApiInterface {
-	once.Do(func() {
-		authApiInstance = &AuthApi{}
-	})
-	return authApiInstance
-}
-func GetInstance() *AuthApi {
-	if authApiInstance == nil {
-		NewAuthApi()
-	}
-
-	return authApiInstance
-}
-
-func (api *AuthApi) CheckApiKey(apikey string) (*Role, *Permission, error) {
+func CheckApiKey(apikey string) (*Role, *Permission, error) {
 	resp, err := http.Get(constants.AUTH_PATH + "checkapikey?apikey=" + apikey)
 	if err != nil {
 		return nil, nil, err
