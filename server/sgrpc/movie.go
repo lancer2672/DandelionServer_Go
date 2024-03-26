@@ -8,6 +8,7 @@ import (
 	db "github.com/lancer2672/DandelionServer_Go/db/sqlc"
 	"github.com/lancer2672/DandelionServer_Go/pb/model"
 	"github.com/lancer2672/DandelionServer_Go/pb/request"
+	"github.com/rs/zerolog/log"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
@@ -159,6 +160,49 @@ func (server *Server) GetMovie(ctx context.Context, req *request.GetMovieRequest
 	}
 	return pbMovie, nil
 }
+func (server *Server) UpdateMovie(ctx context.Context, req *request.UpdateMovieRequest) (*request.UpdateMovieResponse, error) {
+	args := db.UpdateMovieParams{
+		Title: sql.NullString{
+			String: req.GetTitle(),
+			Valid:  req.GetTitle() != "",
+		},
+		Description: sql.NullString{
+			String: req.GetDescription(),
+			Valid:  req.GetDescription() != "",
+		},
+		FilePath: sql.NullString{
+			String: req.GetFilePath(),
+			Valid:  req.GetFilePath() != "",
+		},
+		Thumbnail: sql.NullString{
+			String: req.GetThumbnail(),
+			Valid:  req.GetThumbnail() != "",
+		},
+		ID: req.GetId(),
+	}
+	fmt.Println(args)
+	movie, err := server.store.UpdateMovie(ctx, args)
+	if err != nil {
+		log.Error().Err(err).Msg("Failed to update movie")
+		return nil, status.Errorf(codes.Internal, "Failed to update movie")
+	}
+	pbMovie := &model.Movie{
+		Id:           movie.ID,
+		Title:        movie.Title,
+		Duration:     movie.Duration,
+		Description:  movie.Description,
+		ActorAvatars: movie.ActorAvatars,
+		Trailer:      movie.Trailer,
+		FilePath:     movie.FilePath,
+		Thumbnail:    movie.Thumbnail,
+		Views:        movie.Views,
+		Stars:        movie.Stars,
+		CreatedAt:    timestamppb.New(movie.CreatedAt),
+	}
+	return &request.UpdateMovieResponse{
+		Movie: pbMovie,
+	}, nil
+}
 
 func (server *Server) GetMoviesByGenre(ctx context.Context, req *request.GetMoviesByGenreRequest) (*request.GetMoviesByGenreResponse, error) {
 	args := db.GetMoviesByGenreParams{
@@ -225,7 +269,6 @@ func (server *Server) GetWatchingMovies(ctx context.Context, req *request.GetWat
 		Limit:  req.GetLimit(),
 		Offset: req.GetOffset(),
 	}
-	fmt.Println("AGRS", args)
 	list, err := server.store.GetWatchingMovies(ctx, args)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to get watching movies")

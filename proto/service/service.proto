@@ -4,7 +4,7 @@ package pb;
 
 import "request/movie-history.proto";
 import "request/genre.proto";
-import "request/movie.proto";
+import "request/movie.test_proto3_optional.proto";
 import "request/vote.proto";
 import "request/file.proto";
 import "model/movie.proto";
@@ -63,6 +63,12 @@ service MovieService {
             get: "/movies/{id}"
         };
     } 
+    rpc UpdateMovie(UpdateMovieRequest) returns (UpdateMovieResponse) {
+      option (google.api.http) = {
+          patch: "/movies/{id}"
+          body: "*"
+      };
+    }
     rpc GetMoviesByGenre(GetMoviesByGenreRequest) returns (GetMoviesByGenreResponse) {
       option (google.api.http) = {
           get: "/movies/genre/{genre_id}"

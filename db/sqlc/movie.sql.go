@@ -418,3 +418,48 @@ func (q *Queries) SearchMovies(ctx context.Context, arg SearchMoviesParams) ([]M
 	}
 	return items, nil
 }
+
+const updateMovie = `-- name: UpdateMovie :one
+UPDATE movies 
+SET 
+    title = COALESCE($1, title),
+    description = COALESCE($2, description),
+    file_path = COALESCE($3, file_path),
+    thumbnail = COALESCE($4, thumbnail)
+WHERE 
+    id = $5
+RETURNING id, title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars, created_at
+`
+
+type UpdateMovieParams struct {
+	Title       sql.NullString `json:"title"`
+	Description sql.NullString `json:"description"`
+	FilePath    sql.NullString `json:"file_path"`
+	Thumbnail   sql.NullString `json:"thumbnail"`
+	ID          int32          `json:"id"`
+}
+
+func (q *Queries) UpdateMovie(ctx context.Context, arg UpdateMovieParams) (Movie, error) {
+	row := q.queryRow(ctx, q.updateMovieStmt, updateMovie,
+		arg.Title,
+		arg.Description,
+		arg.FilePath,
+		arg.Thumbnail,
+		arg.ID,
+	)
+	var i Movie
+	err := row.Scan(
+		&i.ID,
+		&i.Title,
+		&i.Duration,
+		&i.Description,
+		pq.Array(&i.ActorAvatars),
+		&i.Trailer,
+		&i.FilePath,
+		&i.Thumbnail,
+		&i.Views,
+		&i.Stars,
+		&i.CreatedAt,
+	)
+	return i, err
+}

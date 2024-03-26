@@ -21,6 +21,7 @@ type Querier interface {
 	GetVotesByUser(ctx context.Context, userID int32) ([]Vote, error)
 	GetWatchingMovies(ctx context.Context, arg GetWatchingMoviesParams) ([]GetWatchingMoviesRow, error)
 	SearchMovies(ctx context.Context, arg SearchMoviesParams) ([]Movie, error)
+	UpdateMovie(ctx context.Context, arg UpdateMovieParams) (Movie, error)
 	UpdateMovieHistory(ctx context.Context, arg UpdateMovieHistoryParams) error
 }
 

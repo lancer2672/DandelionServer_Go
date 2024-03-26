@@ -28,6 +28,7 @@ const (
 	MovieService_CreateMovie_FullMethodName        = "/pb.MovieService/CreateMovie"
 	MovieService_GetListMovies_FullMethodName      = "/pb.MovieService/GetListMovies"
 	MovieService_GetMovie_FullMethodName           = "/pb.MovieService/GetMovie"
+	MovieService_UpdateMovie_FullMethodName        = "/pb.MovieService/UpdateMovie"
 	MovieService_GetMoviesByGenre_FullMethodName   = "/pb.MovieService/GetMoviesByGenre"
 	MovieService_GetMoviesBySerie_FullMethodName   = "/pb.MovieService/GetMoviesBySerie"
 	MovieService_GetRecentMovies_FullMethodName    = "/pb.MovieService/GetRecentMovies"
@@ -50,6 +51,7 @@ type MovieServiceClient interface {
 	CreateMovie(ctx context.Context, in *request.CreateMovieRequest, opts ...grpc.CallOption) (*model.Movie, error)
 	GetListMovies(ctx context.Context, in *request.GetListMoviesRequest, opts ...grpc.CallOption) (*request.GetListMoviesResponse, error)
 	GetMovie(ctx context.Context, in *request.GetMovieRequest, opts ...grpc.CallOption) (*model.Movie, error)
+	UpdateMovie(ctx context.Context, in *request.UpdateMovieRequest, opts ...grpc.CallOption) (*request.UpdateMovieResponse, error)
 	GetMoviesByGenre(ctx context.Context, in *request.GetMoviesByGenreRequest, opts ...grpc.CallOption) (*request.GetMoviesByGenreResponse, error)
 	GetMoviesBySerie(ctx context.Context, in *request.GetMoviesBySerieRequest, opts ...grpc.CallOption) (*request.GetMoviesBySerieResponse, error)
 	GetRecentMovies(ctx context.Context, in *request.GetRecentMoviesRequest, opts ...grpc.CallOption) (*request.GetRecentMoviesResponse, error)
@@ -116,6 +118,15 @@ func (c *movieServiceClient) GetListMovies(ctx context.Context, in *request.GetL
 func (c *movieServiceClient) GetMovie(ctx context.Context, in *request.GetMovieRequest, opts ...grpc.CallOption) (*model.Movie, error) {
 	out := new(model.Movie)
 	err := c.cc.Invoke(ctx, MovieService_GetMovie_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *movieServiceClient) UpdateMovie(ctx context.Context, in *request.UpdateMovieRequest, opts ...grpc.CallOption) (*request.UpdateMovieResponse, error) {
+	out := new(request.UpdateMovieResponse)
+	err := c.cc.Invoke(ctx, MovieService_UpdateMovie_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -221,6 +232,7 @@ type MovieServiceServer interface {
 	CreateMovie(context.Context, *request.CreateMovieRequest) (*model.Movie, error)
 	GetListMovies(context.Context, *request.GetListMoviesRequest) (*request.GetListMoviesResponse, error)
 	GetMovie(context.Context, *request.GetMovieRequest) (*model.Movie, error)
+	UpdateMovie(context.Context, *request.UpdateMovieRequest) (*request.UpdateMovieResponse, error)
 	GetMoviesByGenre(context.Context, *request.GetMoviesByGenreRequest) (*request.GetMoviesByGenreResponse, error)
 	GetMoviesBySerie(context.Context, *request.GetMoviesBySerieRequest) (*request.GetMoviesBySerieResponse, error)
 	GetRecentMovies(context.Context, *request.GetRecentMoviesRequest) (*request.GetRecentMoviesResponse, error)
@@ -253,6 +265,9 @@ func (UnimplementedMovieServiceServer) GetListMovies(context.Context, *request.G
 }
 func (UnimplementedMovieServiceServer) GetMovie(context.Context, *request.GetMovieRequest) (*model.Movie, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMovie not implemented")
+}
+func (UnimplementedMovieServiceServer) UpdateMovie(context.Context, *request.UpdateMovieRequest) (*request.UpdateMovieResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateMovie not implemented")
 }
 func (UnimplementedMovieServiceServer) GetMoviesByGenre(context.Context, *request.GetMoviesByGenreRequest) (*request.GetMoviesByGenreResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMoviesByGenre not implemented")
@@ -392,6 +407,24 @@ func _MovieService_GetMovie_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MovieServiceServer).GetMovie(ctx, req.(*request.GetMovieRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MovieService_UpdateMovie_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(request.UpdateMovieRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MovieServiceServer).UpdateMovie(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MovieService_UpdateMovie_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MovieServiceServer).UpdateMovie(ctx, req.(*request.UpdateMovieRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -555,6 +588,10 @@ var MovieService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMovie",
 			Handler:    _MovieService_GetMovie_Handler,
+		},
+		{
+			MethodName: "UpdateMovie",
+			Handler:    _MovieService_UpdateMovie_Handler,
 		},
 		{
 			MethodName: "GetMoviesByGenre",

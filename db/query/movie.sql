@@ -43,6 +43,17 @@ INSERT INTO movies
  (title, duration, description, actor_avatars, trailer, file_path, thumbnail, views, stars)
 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
 
+-- name: UpdateMovie :one
+UPDATE movies 
+SET 
+    title = COALESCE(sqlc.narg('title'), title),
+    description = COALESCE(sqlc.narg('description'), description),
+    file_path = COALESCE(sqlc.narg(file_path), file_path),
+    thumbnail = COALESCE(sqlc.narg(thumbnail), thumbnail)
+WHERE 
+    id = sqlc.arg(id)
+RETURNING *;
+
 -- name: GetWatchingMovies :many
 SELECT movies.* , movie_history.watched_duration, movie_history.last_watched FROM movies
 JOIN movie_history ON movies.id = movie_history.movie_id

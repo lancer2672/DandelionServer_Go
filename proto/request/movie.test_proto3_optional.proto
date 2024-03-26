@@ -74,3 +74,14 @@ message GetWatchingMoviesRequest {
 message GetWatchingMoviesResponse {
     repeated WatchingMovie data = 1;
 }
+message UpdateMovieRequest {
+    string title = 1;
+    string description = 2;
+    string file_path = 3;
+    string thumbnail = 4;
+    int32 id = 5;
+}
+
+message UpdateMovieResponse {
+    Movie movie = 1;
+}
