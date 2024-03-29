@@ -1,6 +1,7 @@
 package sgrpc
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -18,7 +19,7 @@ func (server *Server) SendFile(r *request.SendFileRequest, stream service.MovieS
 	if err != nil {
 		log.Fatal("Cannot get file info", err)
 	}
-
+	fmt.Print("Goin")
 	buffer := make([]byte, 1024)
 	for {
 		n, err := file.Read(buffer)

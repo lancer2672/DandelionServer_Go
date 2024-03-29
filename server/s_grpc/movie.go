@@ -77,6 +77,7 @@ func (server *Server) SearchMovies(ctx context.Context, req *request.SearchMovie
 func (server *Server) CreateMovie(ctx context.Context, req *request.CreateMovieRequest) (*model.Movie, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
+
 		return nil, status.Errorf(codes.Internal, "Failed to get metadata")
 	}
 	fmt.Println("Metadata", md)
