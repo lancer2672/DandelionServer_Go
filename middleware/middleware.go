@@ -21,7 +21,7 @@ func CheckApiKey(next http.Handler) http.Handler {
 		apiKey := r.Header.Get("x-api-key")
 		fmt.Println("Http Api Header:", apiKey)
 		if r.Method == "POST" && r.URL.Path == "/movies" {
-			role, permission, err := apicalls.CheckApiKey(apiKey)
+			role, permission, err := apicalls.ExternalServiceIns.CheckApiKey(apiKey)
 			if err != nil {
 				http.Error(w, "Invalid API Key", http.StatusUnauthorized)
 				return

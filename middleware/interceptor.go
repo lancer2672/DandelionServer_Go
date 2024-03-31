@@ -25,7 +25,7 @@ func CheckApiKeyInterceptor(ctx context.Context, req interface{}, info *grpc.Una
 	apiKey := md["x-api-key"][0]
 	fmt.Println("GRPC Api Header", apiKey)
 	fmt.Println("GRPC md", md)
-	_, permission, err := apicalls.CheckApiKey(apiKey)
+	_, permission, err := apicalls.ExternalServiceIns.CheckApiKey(apiKey)
 	if err != nil {
 		return nil, status.Errorf(codes.Unauthenticated, "Invalid API Key")
 	}

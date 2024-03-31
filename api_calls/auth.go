@@ -8,8 +8,10 @@ import (
 	"github.com/lancer2672/DandelionServer_Go/helper"
 )
 
-type AuthApi struct {
+type AuthApier interface {
+	CheckApiKey(apikey string) (*Role, *Permission, error)
 }
+
 type Role struct {
 	Name        string `json:"name"`
 	Permissions string `json:"permissions"`
@@ -22,7 +24,7 @@ type Permission struct {
 	Delete []string `json:"delete"`
 }
 
-func CheckApiKey(apikey string) (role *Role, permission *Permission, err error) {
+func (s *ExternalService) CheckApiKey(apikey string) (role *Role, permission *Permission, err error) {
 	err = helper.RetryHandler(func() error {
 		resp, err := http.Get(constants.AUTH_PATH + "checkapikey?apikey=" + apikey)
 		if err != nil {
