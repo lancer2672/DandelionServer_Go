@@ -1,7 +1,7 @@
 package apicalls
 
 type ExternalServiceApier interface {
-	AuthApier
+	// AuthApier
 }
 type ExternalService struct {
 }

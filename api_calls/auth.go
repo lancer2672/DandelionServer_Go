@@ -24,7 +24,7 @@ type Permission struct {
 	Delete []string `json:"delete"`
 }
 
-func (s *ExternalService) CheckApiKey(apikey string) (role *Role, permission *Permission, err error) {
+func CheckApiKey(apikey string) (role *Role, permission *Permission, err error) {
 	err = helper.RetryHandler(func() error {
 		resp, err := http.Get(constants.AUTH_PATH + "checkapikey?apikey=" + apikey)
 		if err != nil {
