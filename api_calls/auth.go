@@ -2,7 +2,6 @@ package apicalls
 
 import (
 	"encoding/json"
-	"net/http"
 
 	"github.com/lancer2672/DandelionServer_Go/constants"
 	"github.com/lancer2672/DandelionServer_Go/helper"
@@ -26,7 +25,8 @@ type Permission struct {
 
 func CheckApiKey(apikey string) (role *Role, permission *Permission, err error) {
 	err = helper.RetryHandler(func() error {
-		resp, err := http.Get(constants.AUTH_PATH + "checkapikey?apikey=" + apikey)
+
+		resp, err := helper.HttpClient.Get(constants.AUTH_PATH + "checkapikey?apikey=" + apikey)
 		if err != nil {
 			return err
 		}

@@ -12,6 +12,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/lancer2672/DandelionServer_Go/helper"
 	"github.com/lancer2672/DandelionServer_Go/middleware"
 	"github.com/lancer2672/DandelionServer_Go/pb/service"
 	sgrpc "github.com/lancer2672/DandelionServer_Go/server/s_grpc"
@@ -29,6 +30,7 @@ func main() {
 	if err != nil {
 		log.Error().Err(err).Msg("Error loading config")
 	}
+	helper.ConfigHttpClient(serverConfig)
 	conn, err := sql.Open(serverConfig.DBDriver, serverConfig.DBSource)
 	if err != nil {
 		log.Error().Err(err).Msg("Cannot connect to database")
@@ -87,7 +89,7 @@ func runGatewayServer(config utils.Config, conn *sql.DB) {
 	mux := http.NewServeMux()
 
 	mux.Handle("/", middleware.Logger(middleware.CheckApiKey(grpcMux)))
-	mux.HandleFunc("/movie/stream", shttp.StreamFile)
+	mux.HandleFunc("/movies/stream", shttp.StreamFile)
 	listener, err := net.Listen("tcp", config.ServerAddress)
 	if err != nil {
 		log.Error().Err(err).Msg("Cannot create listener HTTP Gateway")
