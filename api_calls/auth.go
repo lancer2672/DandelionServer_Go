@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/lancer2672/DandelionServer_Go/constants"
+	"github.com/lancer2672/DandelionServer_Go/helper"
 )
 
 type AuthApi struct {
@@ -21,21 +22,24 @@ type Permission struct {
 	Delete []string `json:"delete"`
 }
 
-func CheckApiKey(apikey string) (*Role, *Permission, error) {
-	resp, err := http.Get(constants.AUTH_PATH + "checkapikey?apikey=" + apikey)
-	if err != nil {
-		return nil, nil, err
-	}
-	defer resp.Body.Close()
-
-	var result struct {
-		Role       Role
-		Permission Permission
-	}
-	err = json.NewDecoder(resp.Body).Decode(&result)
-	if err != nil {
-		return nil, nil, err
-	}
-
-	return &result.Role, &result.Permission, nil
+func CheckApiKey(apikey string) (role *Role, permission *Permission, err error) {
+	err = helper.RetryHandler(func() error {
+		resp, err := http.Get(constants.AUTH_PATH + "checkapikey?apikey=" + apikey)
+		if err != nil {
+			return err
+		}
+		defer resp.Body.Close()
+		var result struct {
+			Role       Role
+			Permission Permission
+		}
+		err = json.NewDecoder(resp.Body).Decode(&result)
+		if err != nil {
+			return nil
+		}
+		role = &result.Role
+		permission = &result.Permission
+		return nil
+	})
+	return
 }
