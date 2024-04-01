@@ -1,6 +1,6 @@
 package helper
 
-import "github.com/lancer2672/DandelionServer_Go/constants"
+import "github.com/lancer2672/DandelionServer_Go/internal/constants"
 
 func RetryHandler(realService func() error) error {
 	var err error

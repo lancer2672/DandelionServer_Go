@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	apicalls "github.com/lancer2672/DandelionServer_Go/api_calls"
-	"github.com/lancer2672/DandelionServer_Go/utils"
+	apicalls "github.com/lancer2672/DandelionServer_Go/internal/api_calls"
+	"github.com/lancer2672/DandelionServer_Go/internal/utils"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"

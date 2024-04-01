@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/lancer2672/DandelionServer_Go/utils"
+	"github.com/lancer2672/DandelionServer_Go/internal/utils"
 )
 
 var testStore Store

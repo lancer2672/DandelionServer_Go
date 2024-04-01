@@ -3,7 +3,9 @@ package shttp
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
+	"os"
 )
 
 func StreamFile(w http.ResponseWriter, r *http.Request) {
@@ -11,21 +13,27 @@ func StreamFile(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-
-	// Lấy movieUrl từ tham số truy vấn
 	movieUrl := r.URL.Query().Get("movieUrl")
 	if movieUrl == "" {
 		http.Error(w, "Movie URL is required", http.StatusBadRequest)
 		return
 	}
 	fmt.Println("MovieUrl", movieUrl)
-	resp, err := http.Get(movieUrl)
+	// resp, err := http.Get(movieUrl)
+	// if err != nil {
+	// 	http.Error(w, "Cannot open URL", http.StatusInternalServerError)
+	// 	return
+	// }
+	// defer resp.Body.Close()
+
+	file, err := os.OpenFile("ex.mp4", os.O_RDONLY, 0666)
 	if err != nil {
-		http.Error(w, "Cannot open URL", http.StatusInternalServerError)
-		return
+		log.Fatal("Cannot open file", err)
 	}
-	defer resp.Body.Close()
-	if _, err := io.Copy(w, resp.Body); err != nil {
+	defer file.Close()
+	fmt.Println("reading")
+	if _, err := io.Copy(w, file); err != nil {
+		fmt.Println("err", err)
 		http.Error(w, "Error writing response", http.StatusInternalServerError)
 		return
 	}

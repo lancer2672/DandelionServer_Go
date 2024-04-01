@@ -18,6 +18,7 @@ type Config struct {
 	AwsSecretKey      string `mapstructure:"AWS_SECRET_ACCESS_KEY"`
 	AwsAkid           string `mapstructure:"SERVER_ADDRESS"`
 	MigrationUrl      string `mapstructure:"MIGRATION_URL"`
+	GatewayApiKey     string `mapstructure:"GATEWAY_API_KEY"`
 }
 
 // overrided by env if exists

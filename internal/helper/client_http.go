@@ -4,7 +4,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/lancer2672/DandelionServer_Go/utils"
+	"github.com/lancer2672/DandelionServer_Go/internal/utils"
 )
 
 type ClientHttp struct {
