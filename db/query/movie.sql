@@ -57,7 +57,7 @@ RETURNING *;
 -- name: GetWatchingMovies :many
 SELECT movies.* , movie_history.watched_duration, movie_history.last_watched FROM movies
 JOIN movie_history ON movies.id = movie_history.movie_id
-WHERE movie_history.user_id = $1 AND (movie_history.watched_duration / movies.duration) > 0.9
+WHERE movie_history.user_id = $1 AND (movie_history.watched_duration / movies.duration) > 0.1
 ORDER BY movie_history.last_watched DESC
 LIMIT $2
 OFFSET $3;

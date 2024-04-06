@@ -88,12 +88,13 @@ func runGatewayServer(config utils.Config, conn *sql.DB) {
 
 	mux := http.NewServeMux()
 
-	mux.Handle("/", middleware.Logger(middleware.CheckApiKey(grpcMux)))
+	// mux.Handle("/", middleware.CorsMiddleware(middleware.Logger(middleware.CheckApiKey(grpcMux))))
 	mux.HandleFunc("/movies/stream", shttp.StreamFile)
 	listener, err := net.Listen("tcp", config.ServerAddress)
 	if err != nil {
 		log.Error().Err(err).Msg("Cannot create listener HTTP Gateway")
 	}
+	mux.Handle("/", middleware.Logger(middleware.CheckApiKey(grpcMux)))
 	// err = http.Serve(listener, mux)
 	log.Info().Str("address", config.ServerAddress).Msg("HTTP_GRPC gateway Server started")
 	if err = http.Serve(listener, mux); err != nil {
