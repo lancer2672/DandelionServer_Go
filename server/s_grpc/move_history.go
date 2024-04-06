@@ -13,7 +13,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func (server *Server) CreateMovieHistory(ctx context.Context, req *request.CreateMovieHistoryRequest) (*empty.Empty, error) {
+func (server *MovieService) CreateMovieHistory(ctx context.Context, req *request.CreateMovieHistoryRequest) (*empty.Empty, error) {
 
 	args := db.CreateMovieHistoryParams{
 		UserID:          req.GetUserId(),
@@ -28,7 +28,7 @@ func (server *Server) CreateMovieHistory(ctx context.Context, req *request.Creat
 
 	return &empty.Empty{}, nil
 }
-func (server *Server) GetMovieHistory(ctx context.Context, req *request.GetMovieHistoryRequest) (*request.GetMovieHistoryResponse, error) {
+func (server *MovieService) GetMovieHistory(ctx context.Context, req *request.GetMovieHistoryRequest) (*request.GetMovieHistoryResponse, error) {
 
 	list, err := server.store.GetMovieHistoryByUserId(ctx, req.UserId)
 	if err != nil {

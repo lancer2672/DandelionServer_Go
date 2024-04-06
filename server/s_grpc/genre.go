@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (server *Server) GetListGenres(ctx context.Context, req *request.GetListGenresRequest) (*request.GetListGenresResponse, error) {
+func (server *MovieService) GetListGenres(ctx context.Context, req *request.GetListGenresRequest) (*request.GetListGenresResponse, error) {
 	args := db.GetListGenresParams{
 		Limit:  req.GetLimit(),
 		Offset: req.GetOffset(),

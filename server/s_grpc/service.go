@@ -8,15 +8,15 @@ import (
 	"github.com/lancer2672/DandelionServer_Go/pb/service"
 )
 
-type Server struct {
+type MovieService struct {
 	service.UnimplementedMovieServiceServer
 	config utils.Config
 	store  *db.Store
 }
 
-func NewServer(config utils.Config, conn *sql.DB) *Server {
+func NewMovieService(config utils.Config, conn *sql.DB) *MovieService {
 	store := db.NewStore(conn)
-	return &Server{
+	return &MovieService{
 		config: config,
 		store:  store,
 	}

@@ -17,7 +17,7 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func (server *Server) GetRecentMovies(ctx context.Context, req *request.GetRecentMoviesRequest) (*request.GetRecentMoviesResponse, error) {
+func (server *MovieService) GetRecentMovies(ctx context.Context, req *request.GetRecentMoviesRequest) (*request.GetRecentMoviesResponse, error) {
 	args := db.GetRecentMoviesParams{
 		Limit:  req.GetLimit(),
 		Offset: req.GetOffset(),
@@ -58,7 +58,7 @@ func (server *Server) GetRecentMovies(ctx context.Context, req *request.GetRecen
 	response := &request.GetRecentMoviesResponse{Data: pbList}
 	return response, nil
 }
-func (server *Server) SearchMovies(ctx context.Context, req *request.SearchMoviesRequest) (*request.SearchMoviesResponse, error) {
+func (server *MovieService) SearchMovies(ctx context.Context, req *request.SearchMoviesRequest) (*request.SearchMoviesResponse, error) {
 	args := db.SearchMoviesParams{
 		Column1: sql.NullString{String: req.GetColumn_1(), Valid: true},
 		Limit:   req.GetLimit(),
@@ -103,7 +103,7 @@ func (server *Server) SearchMovies(ctx context.Context, req *request.SearchMovie
 	return response, nil
 }
 
-func (server *Server) CreateMovie(ctx context.Context, req *request.CreateMovieRequest) (*model.Movie, error) {
+func (server *MovieService) CreateMovie(ctx context.Context, req *request.CreateMovieRequest) (*model.Movie, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 
@@ -123,6 +123,7 @@ func (server *Server) CreateMovie(ctx context.Context, req *request.CreateMovieR
 	}
 	_, err := server.store.CreateMovie(ctx, args)
 	if err != nil {
+		log.Print(err)
 		return nil, status.Errorf(codes.Internal, "Failed to create movie")
 	}
 	movie := &model.Movie{
@@ -141,7 +142,7 @@ func (server *Server) CreateMovie(ctx context.Context, req *request.CreateMovieR
 	return movie, nil
 }
 
-func (server *Server) GetListMovies(ctx context.Context, req *request.GetListMoviesRequest) (*request.GetListMoviesResponse, error) {
+func (server *MovieService) GetListMovies(ctx context.Context, req *request.GetListMoviesRequest) (*request.GetListMoviesResponse, error) {
 	args := db.GetListMoviesParams{
 		Limit:  req.GetLimit(),
 		Offset: req.GetOffset(),
@@ -184,7 +185,7 @@ func (server *Server) GetListMovies(ctx context.Context, req *request.GetListMov
 	return response, nil
 }
 
-func (server *Server) GetMovie(ctx context.Context, req *request.GetMovieRequest) (*model.Movie, error) {
+func (server *MovieService) GetMovie(ctx context.Context, req *request.GetMovieRequest) (*model.Movie, error) {
 	movie, err := server.store.GetMovie(ctx, req.GetId())
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to get movie")
@@ -217,7 +218,7 @@ func (server *Server) GetMovie(ctx context.Context, req *request.GetMovieRequest
 	}
 	return pbMovie, nil
 }
-func (server *Server) UpdateMovie(ctx context.Context, req *request.UpdateMovieRequest) (*request.UpdateMovieResponse, error) {
+func (server *MovieService) UpdateMovie(ctx context.Context, req *request.UpdateMovieRequest) (*request.UpdateMovieResponse, error) {
 	args := db.UpdateMovieParams{
 		Title: sql.NullString{
 			String: req.GetTitle(),
@@ -262,7 +263,7 @@ func (server *Server) UpdateMovie(ctx context.Context, req *request.UpdateMovieR
 	}, nil
 }
 
-func (server *Server) GetMoviesByGenre(ctx context.Context, req *request.GetMoviesByGenreRequest) (*request.GetMoviesByGenreResponse, error) {
+func (server *MovieService) GetMoviesByGenre(ctx context.Context, req *request.GetMoviesByGenreRequest) (*request.GetMoviesByGenreResponse, error) {
 	args := db.GetMoviesByGenreParams{
 		GenreID: req.GetGenreId(),
 		Limit:   req.GetLimit(),
@@ -308,7 +309,7 @@ func (server *Server) GetMoviesByGenre(ctx context.Context, req *request.GetMovi
 	return response, nil
 }
 
-func (server *Server) GetMoviesBySerie(ctx context.Context, req *request.GetMoviesBySerieRequest) (*request.GetMoviesBySerieResponse, error) {
+func (server *MovieService) GetMoviesBySerie(ctx context.Context, req *request.GetMoviesBySerieRequest) (*request.GetMoviesBySerieResponse, error) {
 	args := db.GetMoviesBySerieParams{
 		SeriesID: req.GetId(),
 		Limit:    req.GetLimit(),
@@ -351,7 +352,7 @@ func (server *Server) GetMoviesBySerie(ctx context.Context, req *request.GetMovi
 	response := &request.GetMoviesBySerieResponse{Data: pbList}
 	return response, nil
 }
-func (server *Server) GetWatchingMovies(ctx context.Context, req *request.GetWatchingMoviesRequest) (*request.GetWatchingMoviesResponse, error) {
+func (server *MovieService) GetWatchingMovies(ctx context.Context, req *request.GetWatchingMoviesRequest) (*request.GetWatchingMoviesResponse, error) {
 	args := db.GetWatchingMoviesParams{
 		UserID: req.GetUserId(),
 		Limit:  req.GetLimit(),

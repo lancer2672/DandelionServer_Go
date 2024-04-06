@@ -10,7 +10,7 @@ import (
 	"github.com/lancer2672/DandelionServer_Go/pb/service"
 )
 
-func (server *Server) SendFile(r *request.SendFileRequest, stream service.MovieService_SendFileServer) error {
+func (server *MovieService) SendFile(r *request.SendFileRequest, stream service.MovieService_SendFileServer) error {
 	file, err := os.OpenFile("ex.mp4", os.O_RDWR, 0666)
 	if err != nil {
 		log.Fatal("Cannot open file", err)
