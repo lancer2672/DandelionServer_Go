@@ -1,7 +1,8 @@
 syntax = "proto3";
 
 package pb;
-
+import "model/serie.proto";
+import "model/genre.proto";
 import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/lancer2672/DandelionServer_Go/pb/model";
@@ -18,6 +19,8 @@ message Movie {
     int32 views = 9;
     int32 stars = 10;
     google.protobuf.Timestamp created_at = 11;
+    repeated Genre genres = 12;
+    repeated Series series = 13;
 }
 message MovieGenre {
     int32 movie_id = 1;

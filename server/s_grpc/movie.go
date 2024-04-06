@@ -3,6 +3,7 @@ package sgrpc
 import (
 	"context"
 	"database/sql"
+	"encoding/json"
 	"fmt"
 
 	db "github.com/lancer2672/DandelionServer_Go/db/sqlc"
@@ -27,6 +28,17 @@ func (server *Server) GetRecentMovies(ctx context.Context, req *request.GetRecen
 	}
 	var pbList []*model.Movie
 	for _, movie := range list {
+		var genres []*model.Genre
+		err = json.Unmarshal(movie.Genres, &genres)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse genres")
+		}
+
+		var series []*model.Series
+		err = json.Unmarshal(movie.Series, &series)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse series")
+		}
 		pbList = append(pbList, &model.Movie{
 			Id:           movie.ID,
 			Title:        movie.Title,
@@ -37,6 +49,8 @@ func (server *Server) GetRecentMovies(ctx context.Context, req *request.GetRecen
 			FilePath:     movie.FilePath,
 			Thumbnail:    movie.Thumbnail,
 			Views:        movie.Views,
+			Genres:       genres,
+			Series:       series,
 			Stars:        movie.Stars,
 			CreatedAt:    timestamppb.New(movie.CreatedAt),
 		})
@@ -44,7 +58,6 @@ func (server *Server) GetRecentMovies(ctx context.Context, req *request.GetRecen
 	response := &request.GetRecentMoviesResponse{Data: pbList}
 	return response, nil
 }
-
 func (server *Server) SearchMovies(ctx context.Context, req *request.SearchMoviesRequest) (*request.SearchMoviesResponse, error) {
 	args := db.SearchMoviesParams{
 		Column1: sql.NullString{String: req.GetColumn_1(), Valid: true},
@@ -57,6 +70,19 @@ func (server *Server) SearchMovies(ctx context.Context, req *request.SearchMovie
 	}
 	var pbList []*model.Movie
 	for _, movie := range list {
+		// Parse Genres and Series from JSON
+		var genres []*model.Genre
+		err = json.Unmarshal(movie.Genres, &genres)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse genres")
+		}
+
+		var series []*model.Series
+		err = json.Unmarshal(movie.Series, &series)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse series")
+		}
+
 		pbList = append(pbList, &model.Movie{
 			Id:           movie.ID,
 			Title:        movie.Title,
@@ -69,11 +95,14 @@ func (server *Server) SearchMovies(ctx context.Context, req *request.SearchMovie
 			Views:        movie.Views,
 			Stars:        movie.Stars,
 			CreatedAt:    timestamppb.New(movie.CreatedAt),
+			Genres:       genres,
+			Series:       series,
 		})
 	}
 	response := &request.SearchMoviesResponse{Data: pbList}
 	return response, nil
 }
+
 func (server *Server) CreateMovie(ctx context.Context, req *request.CreateMovieRequest) (*model.Movie, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
@@ -92,7 +121,7 @@ func (server *Server) CreateMovie(ctx context.Context, req *request.CreateMovieR
 		Views:        req.GetViews(),
 		Stars:        req.GetStars(),
 	}
-	err := server.store.CreateMovie(ctx, args)
+	_, err := server.store.CreateMovie(ctx, args)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to create movie")
 	}
@@ -123,6 +152,18 @@ func (server *Server) GetListMovies(ctx context.Context, req *request.GetListMov
 	}
 	var pbList []*model.Movie
 	for _, movie := range list {
+		var genres []*model.Genre
+		err = json.Unmarshal(movie.Genres, &genres)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse genres")
+		}
+
+		var series []*model.Series
+		err = json.Unmarshal(movie.Series, &series)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse series")
+		}
+
 		pbList = append(pbList, &model.Movie{
 			Id:           movie.ID,
 			Title:        movie.Title,
@@ -134,6 +175,8 @@ func (server *Server) GetListMovies(ctx context.Context, req *request.GetListMov
 			Thumbnail:    movie.Thumbnail,
 			Views:        movie.Views,
 			Stars:        movie.Stars,
+			Genres:       genres,
+			Series:       series,
 			CreatedAt:    timestamppb.New(movie.CreatedAt),
 		})
 	}
@@ -146,6 +189,17 @@ func (server *Server) GetMovie(ctx context.Context, req *request.GetMovieRequest
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "Failed to get movie")
 	}
+	var genres []*model.Genre
+	err = json.Unmarshal(movie.Genres, &genres)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Failed to parse genres")
+	}
+
+	var series []*model.Series
+	err = json.Unmarshal(movie.Series, &series)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "Failed to parse series")
+	}
 	pbMovie := &model.Movie{
 		Id:           movie.ID,
 		Title:        movie.Title,
@@ -157,6 +211,8 @@ func (server *Server) GetMovie(ctx context.Context, req *request.GetMovieRequest
 		Thumbnail:    movie.Thumbnail,
 		Views:        movie.Views,
 		Stars:        movie.Stars,
+		Genres:       genres,
+		Series:       series,
 		CreatedAt:    timestamppb.New(movie.CreatedAt),
 	}
 	return pbMovie, nil
@@ -198,7 +254,8 @@ func (server *Server) UpdateMovie(ctx context.Context, req *request.UpdateMovieR
 		Thumbnail:    movie.Thumbnail,
 		Views:        movie.Views,
 		Stars:        movie.Stars,
-		CreatedAt:    timestamppb.New(movie.CreatedAt),
+
+		CreatedAt: timestamppb.New(movie.CreatedAt),
 	}
 	return &request.UpdateMovieResponse{
 		Movie: pbMovie,
@@ -213,10 +270,24 @@ func (server *Server) GetMoviesByGenre(ctx context.Context, req *request.GetMovi
 	}
 	list, err := server.store.GetMoviesByGenre(ctx, args)
 	if err != nil {
+		log.Error().Err(err).Msg("Failed to get movies by genre")
 		return nil, status.Errorf(codes.Internal, "Failed to get movies by genre")
 	}
+
 	var pbList []*model.Movie
 	for _, movie := range list {
+		var genres []*model.Genre
+		err = json.Unmarshal(movie.Genres, &genres)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse genres")
+		}
+
+		var series []*model.Series
+		err = json.Unmarshal(movie.Series, &series)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse series")
+		}
+
 		pbList = append(pbList, &model.Movie{
 			Id:           movie.ID,
 			Title:        movie.Title,
@@ -226,6 +297,8 @@ func (server *Server) GetMoviesByGenre(ctx context.Context, req *request.GetMovi
 			Trailer:      movie.Trailer,
 			FilePath:     movie.FilePath,
 			Thumbnail:    movie.Thumbnail,
+			Genres:       genres,
+			Series:       series,
 			Views:        movie.Views,
 			Stars:        movie.Stars,
 			CreatedAt:    timestamppb.New(movie.CreatedAt),
@@ -237,9 +310,9 @@ func (server *Server) GetMoviesByGenre(ctx context.Context, req *request.GetMovi
 
 func (server *Server) GetMoviesBySerie(ctx context.Context, req *request.GetMoviesBySerieRequest) (*request.GetMoviesBySerieResponse, error) {
 	args := db.GetMoviesBySerieParams{
-		ID:     req.GetId(),
-		Limit:  req.GetLimit(),
-		Offset: req.GetOffset(),
+		SeriesID: req.GetId(),
+		Limit:    req.GetLimit(),
+		Offset:   req.GetOffset(),
 	}
 	list, err := server.store.GetMoviesBySerie(ctx, args)
 	if err != nil {
@@ -247,6 +320,18 @@ func (server *Server) GetMoviesBySerie(ctx context.Context, req *request.GetMovi
 	}
 	var pbList []*model.Movie
 	for _, movie := range list {
+		var genres []*model.Genre
+		err = json.Unmarshal(movie.Genres, &genres)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse genres")
+		}
+
+		var series []*model.Series
+		err = json.Unmarshal(movie.Series, &series)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse series")
+		}
+
 		pbList = append(pbList, &model.Movie{
 			Id:           movie.ID,
 			Title:        movie.Title,
@@ -256,6 +341,8 @@ func (server *Server) GetMoviesBySerie(ctx context.Context, req *request.GetMovi
 			Trailer:      movie.Trailer,
 			FilePath:     movie.FilePath,
 			Thumbnail:    movie.Thumbnail,
+			Genres:       genres,
+			Series:       series,
 			Views:        movie.Views,
 			Stars:        movie.Stars,
 			CreatedAt:    timestamppb.New(movie.CreatedAt),
@@ -276,6 +363,18 @@ func (server *Server) GetWatchingMovies(ctx context.Context, req *request.GetWat
 	}
 	var pbList []*model.WatchingMovie
 	for _, movie := range list {
+
+		var genres []*model.Genre
+		err = json.Unmarshal(movie.Genres, &genres)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse genres")
+		}
+
+		var series []*model.Series
+		err = json.Unmarshal(movie.Series, &series)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "Failed to parse series")
+		}
 		pbList = append(pbList, &model.WatchingMovie{
 			Movie: &model.Movie{
 				Id:           movie.ID,
@@ -288,6 +387,8 @@ func (server *Server) GetWatchingMovies(ctx context.Context, req *request.GetWat
 				Thumbnail:    movie.Thumbnail,
 				Views:        movie.Views,
 				Stars:        movie.Stars,
+				Genres:       genres,
+				Series:       series,
 				CreatedAt:    timestamppb.New(movie.CreatedAt),
 			},
 			WatchedDuration: float32(movie.WatchedDuration),
