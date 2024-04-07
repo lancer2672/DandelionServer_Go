@@ -44,11 +44,11 @@ func main() {
 }
 
 func runGrpcServer(config utils.Config, conn *sql.DB) {
-	server := sgrpc.NewServer(config, conn)
+	movieService := sgrpc.NewMovieService(config, conn)
 
 	//allow clients to see avaiable grpc server ~ self document
 	grpcServer := grpc.NewServer(grpc.ChainUnaryInterceptor(middleware.LoggerInterceptor, middleware.CheckApiKeyInterceptor))
-	service.RegisterMovieServiceServer(grpcServer, server)
+	service.RegisterMovieServiceServer(grpcServer, movieService)
 	reflection.Register(grpcServer)
 	listener, err := net.Listen("tcp", config.GRPCServerAddress)
 	if err != nil {
@@ -64,7 +64,7 @@ func runGrpcServer(config utils.Config, conn *sql.DB) {
 }
 
 func runGatewayServer(config utils.Config, conn *sql.DB) {
-	server := sgrpc.NewServer(config, conn)
+	movieService := sgrpc.NewMovieService(config, conn)
 	grpcMux := runtime.NewServeMux(
 		//disable to keep snake_case variable names
 		runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
@@ -80,7 +80,7 @@ func runGatewayServer(config utils.Config, conn *sql.DB) {
 	ctx, cancel := context.WithCancel(context.Background())
 	//prevent system doing unnecessary works
 	defer cancel()
-	err := service.RegisterMovieServiceHandlerServer(ctx, grpcMux, server)
+	err := service.RegisterMovieServiceHandlerServer(ctx, grpcMux, movieService)
 	if err != nil {
 		log.Error().Err(err).Msg("Cannot create listener HTTP Gateway")
 		os.Exit(1)

@@ -1,21 +1,21 @@
 CREATE TABLE "users" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "username" varchar
 );
 
 CREATE TABLE "genres" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar
 );
 
 CREATE TABLE "series" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "name" varchar,
   "thumbnail" varchar
 );
 
 CREATE TABLE "movies" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "title" varchar,
   "duration" integer,
   "description" varchar,
@@ -36,21 +36,21 @@ CREATE TABLE "movie_genres" (
 );
 
 CREATE TABLE "rooms" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "movie_id" integer,
   "created_by" varchar,
   "created_at" timestamp DEFAULT 'now()'
 );
 
 CREATE TABLE "votes" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "user_id" integer,
   "movie_id" integer,
   "stars" integer
 );
 
 CREATE TABLE "movie_history" (
-  "id" integer PRIMARY KEY,
+  "id" SERIAL PRIMARY KEY,
   "user_id" integer,
   "movie_id" integer,
   "watched_duration" integer,

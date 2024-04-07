@@ -1,5 +1,5 @@
 CREATE TABLE movies_series (
-  id INTEGER PRIMARY KEY,
+  id   SERIAL PRIMARY KEY,
   movie_id INTEGER NOT NULL,
   series_id INTEGER NOT NULL
 );
