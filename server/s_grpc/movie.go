@@ -5,12 +5,15 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"strconv"
 
 	db "github.com/lancer2672/DandelionServer_Go/db/sqlc"
 	"github.com/lancer2672/DandelionServer_Go/pb/model"
 	"github.com/lancer2672/DandelionServer_Go/pb/request"
+	"github.com/lancer2672/DandelionServer_Go/val"
 	"github.com/rs/zerolog/log"
 
+	"google.golang.org/genproto/googleapis/rpc/errdetails"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
@@ -103,6 +106,19 @@ func (server *MovieService) SearchMovies(ctx context.Context, req *request.Searc
 	return response, nil
 }
 
+func validateCreateMovieRequest(req *request.CreateMovieRequest) (violations []*errdetails.BadRequest_FieldViolation) {
+	if req.GetTitle() == "" {
+		violations = append(violations, val.FieldViolation("title", fmt.Errorf("Title is required")))
+	}
+	if err := val.IsOnlyNumber(strconv.Itoa(int(req.GetDuration()))); err != nil {
+		violations = append(violations, val.FieldViolation("duration", fmt.Errorf("Duration must be a number")))
+	}
+	if req.GetDescription() == "" {
+		violations = append(violations, val.FieldViolation("description", fmt.Errorf("Description is required")))
+	}
+	return violations
+
+}
 func (server *MovieService) CreateMovie(ctx context.Context, req *request.CreateMovieRequest) (*model.Movie, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
@@ -110,6 +126,10 @@ func (server *MovieService) CreateMovie(ctx context.Context, req *request.Create
 		return nil, status.Errorf(codes.Internal, "Failed to get metadata")
 	}
 	fmt.Println("Metadata", md)
+	violations := validateCreateMovieRequest(req)
+	if len(violations) > 0 {
+		return nil, val.InvalidArgumentsError(violations)
+	}
 	args := db.CreateMovieParams{
 		Title:        req.GetTitle(),
 		Duration:     req.GetDuration(),

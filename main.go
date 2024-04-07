@@ -94,7 +94,7 @@ func runGatewayServer(config utils.Config, conn *sql.DB) {
 	if err != nil {
 		log.Error().Err(err).Msg("Cannot create listener HTTP Gateway")
 	}
-	mux.Handle("/", middleware.Logger(middleware.CheckApiKey(grpcMux)))
+	mux.Handle("/", middleware.Logger(grpcMux))
 	// err = http.Serve(listener, mux)
 	log.Info().Str("address", config.ServerAddress).Msg("HTTP_GRPC gateway Server started")
 	if err = http.Serve(listener, mux); err != nil {
