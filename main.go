@@ -38,8 +38,8 @@ func main() {
 	}
 	// runDatabaseMigration(serverConfig.MigrationUrl, serverConfig.DBSource)
 	// go runGinServer(serverConfig, conn)
-	go runGatewayServer(serverConfig, conn)
-	runGrpcServer(serverConfig, conn)
+	runGatewayServer(serverConfig, conn)
+	// runGrpcServer(serverConfig, conn)
 
 }
 

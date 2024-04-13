@@ -380,6 +380,7 @@ func (server *MovieService) GetWatchingMovies(ctx context.Context, req *request.
 	}
 	list, err := server.store.GetWatchingMovies(ctx, args)
 	if err != nil {
+		log.Err(err).Msg("Failed to get watching movies")
 		return nil, status.Errorf(codes.Internal, "Failed to get watching movies")
 	}
 	var pbList []*model.WatchingMovie
