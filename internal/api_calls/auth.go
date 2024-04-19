@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/lancer2672/DandelionServer_Go/internal/constants"
-	"github.com/lancer2672/DandelionServer_Go/internal/helper"
+	"github.com/lancer2672/DandelionServer_Go/internal/request"
 )
 
 type AuthApier interface {
@@ -25,7 +25,7 @@ type Permission struct {
 }
 
 func CheckApiKey(apikey string) (role *Role, permission *Permission, err error) {
-	err = helper.RetryHandler(func() error {
+	err = request.RetryHandler(func() error {
 
 		resp, err := http.Get(constants.AUTH_PATH + "checkapikey?apikey=" + apikey)
 		if err != nil {

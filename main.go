@@ -12,7 +12,7 @@ import (
 	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
-	"github.com/lancer2672/DandelionServer_Go/internal/helper"
+	"github.com/lancer2672/DandelionServer_Go/internal/request"
 	"github.com/lancer2672/DandelionServer_Go/internal/middleware"
 	"github.com/lancer2672/DandelionServer_Go/internal/utils"
 	"github.com/lancer2672/DandelionServer_Go/pb/service"
@@ -30,7 +30,7 @@ func main() {
 	if err != nil {
 		log.Error().Err(err).Msg("Error loading config")
 	}
-	helper.ConfigHttpClient(serverConfig)
+	request.ConfigHttpClient(serverConfig)
 	conn, err := sql.Open(serverConfig.DBDriver, serverConfig.DBSource)
 	if err != nil {
 		log.Error().Err(err).Msg("Cannot connect to database")

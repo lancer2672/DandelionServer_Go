@@ -1,4 +1,4 @@
-package helper
+package request
 
 import "github.com/lancer2672/DandelionServer_Go/internal/constants"
 
